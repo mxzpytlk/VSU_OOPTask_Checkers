@@ -1,8 +1,8 @@
-package Graph;
+package graph;
 
 import javafx.util.Pair;
-
 import java.util.*;
+
 
 public class Graph<T> implements Iterable<T> {
     private List<List<Pair<Integer, T>>> vEdjLists = new ArrayList<>();

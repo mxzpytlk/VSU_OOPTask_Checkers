@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/project-template.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Graph/Graph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vsu/course2/Field.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vsu/course2/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/vsu/course2/Checker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graph/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Field.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +70,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
