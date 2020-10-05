@@ -5,6 +5,7 @@ import graph.Graph;
 import java.util.Objects;
 
 public class Field {
+
     private static class Cell {
         private final int letter;
         private final int number;
@@ -65,5 +66,23 @@ public class Field {
                 }
             }
         }
+    }
+
+    public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber) {
+        try {
+            if (field.getVertex(new Cell(prevLetter, prevNumber)).curCheck == null) {
+                throw new Exception("This cell doesn't have checker");
+            }
+
+            if (field.getVertex(new Cell(newLetter, newNumber)) != null) {
+                throw new Exception("This cell isn't free");
+            }
+
+            field.getVertex(new Cell(newLetter, newNumber)).setCheck(
+                    field.getVertex(new Cell(prevLetter, prevNumber)).curCheck
+            );
+            field.getVertex(new Cell(prevLetter, prevNumber)).removeCheck();
+        } catch (Exception ignored) { }
+
     }
 }

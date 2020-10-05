@@ -58,6 +58,15 @@ public class Graph<T> implements Iterable<T> {
         }
     }
 
+    public T getVertex(T vert) throws Exception {
+        for (T el : bfs(vEdjLists.get(0).get(0).getValue())) {
+            if (el.equals(vert)) {
+                return el;
+            }
+        }
+        throw new Exception("No such vertex");
+    }
+
     public void removeEdge(T v1, T v2) {
         int index1 = indexOfVertex(v1);
         int index2 = indexOfVertex(v2);
