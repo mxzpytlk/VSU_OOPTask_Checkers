@@ -50,11 +50,11 @@ public class Field {
         }
     }
 
-    private Graph<Cell> field;
+    private Graph<Cell> field = new Graph<>();
 
     Field(int w, int h) {
         for (int i = 0; i < h - 1; i++) {
-            for (int j = 0; j < w; j++) {
+            for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {
                 if (j == 0) {
                     field.addEdge(new Cell(j, i), new Cell(j + 1, i + 1));
                 } else if (j == w - 1) {

@@ -35,6 +35,7 @@ public class Graph<T> implements Iterable<T> {
 
         if (!isEdj(v1, v2)) {
             vEdjLists.get(index1).add(vEdjLists.get(index2).get(0));
+            vEdjLists.get(index2).add(vEdjLists.get(index1).get(0));
             eCount++;
         }
     }
