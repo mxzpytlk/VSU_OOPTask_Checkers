@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Field {
 
-    private static class Cell {
+    public static class Cell {
         private final int letter;
         private final int number;
         private Checker curCheck;
@@ -83,6 +83,9 @@ public class Field {
             );
             field.getVertex(new Cell(prevLetter, prevNumber)).removeCheck();
         } catch (Exception ignored) { }
+    }
 
+    public Cell getCell(int letter, int number) throws Exception {
+        return field.getVertex(new Cell(letter, number));
     }
 }
