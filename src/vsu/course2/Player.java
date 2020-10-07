@@ -15,4 +15,16 @@ public class Player {
 
         this.startPoint = startPoint;
     }
+
+    public ArrayList<Checker> getCheckers() {
+        return playerChecks;
+    }
+
+    public int id() {
+        return playerID;
+    }
+
+    public Field.Cell getStartPoint() {
+        return startPoint;
+    }
 }

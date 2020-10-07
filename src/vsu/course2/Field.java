@@ -1,5 +1,6 @@
 package vsu.course2;
 
+import exceptions.GraphException;
 import graph.Graph;
 
 import java.util.Objects;
@@ -68,7 +69,7 @@ public class Field {
         }
     }
 
-    public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber) {
+    public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber) throws Exception {
         try {
             if (field.getVertex(new Cell(prevLetter, prevNumber)).curCheck == null) {
                 throw new Exception("This cell doesn't have checker");
@@ -82,10 +83,20 @@ public class Field {
                     field.getVertex(new Cell(prevLetter, prevNumber)).curCheck
             );
             field.getVertex(new Cell(prevLetter, prevNumber)).removeCheck();
-        } catch (Exception ignored) { }
+        } catch (GraphException ignored) { }
     }
 
-    public Cell getCell(int letter, int number) throws Exception {
+    public Cell getCell(int letter, int number) throws GraphException {
         return field.getVertex(new Cell(letter, number));
+    }
+
+    public Checker getChecker(int letter, int number) throws GraphException {
+        if (getCell(letter, number).curCheck == null)
+            throw new Exception("There isn't checker on this cell");
+        return getCell(letter, number).curCheck;
+    }
+
+    public void setChecker(Checker checker, int letter, int number) throws Exception {
+        getCell(letter, number).setCheck(checker);
     }
 }

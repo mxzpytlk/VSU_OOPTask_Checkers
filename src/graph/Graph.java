@@ -2,6 +2,7 @@ package graph;
 
 import javafx.util.Pair;
 import java.util.*;
+import exceptions.GraphException;
 
 
 public class Graph<T> implements Iterable<T> {
@@ -58,13 +59,13 @@ public class Graph<T> implements Iterable<T> {
         }
     }
 
-    public T getVertex(T vert) throws Exception {
+    public T getVertex(T vert) throws GraphException {
         for (T el : bfs(vEdjLists.get(0).get(0).getValue())) {
             if (el.equals(vert)) {
                 return el;
             }
         }
-        throw new Exception("No such vertex");
+        throw new GraphException("No such vertex");
     }
 
     public void removeEdge(T v1, T v2) {
