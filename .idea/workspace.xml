@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vsu/course2/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602355056161</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Refactor attack by ordinary checker">
+      <created>1602365936688</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1602365936688</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,17 +150,18 @@
     <MESSAGE value="Now program can move check and attack oponents" />
     <MESSAGE value="King check can move" />
     <MESSAGE value="Field can return line where situated two cells" />
-    <option name="LAST_COMMIT_MESSAGE" value="Field can return line where situated two cells" />
+    <MESSAGE value="Refactor attack by ordinary checker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor attack by ordinary checker" />
   </component>
   <component name="WindowStateProjectService">
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1602343210931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1602343210931" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1602355048720">
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1602365930976">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602355048720" />
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602365930976" />
     <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -172,14 +178,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602355064026">
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602365943752">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1602355064026" />
-    <state x="27" y="93" key="extract.method.dialog" timestamp="1602362968201">
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1602365943752" />
+    <state x="185" y="244" key="extract.method.dialog" timestamp="1602366535468">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="27" y="93" key="extract.method.dialog/0.0.1366.728@0.0.1366.728" timestamp="1602362968201" />
+    <state x="185" y="244" key="extract.method.dialog/0.0.1366.728@0.0.1366.728" timestamp="1602366535468" />
     <state x="339" y="157" key="run.anything.popup" timestamp="1602328353749">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

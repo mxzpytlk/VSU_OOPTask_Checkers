@@ -121,16 +121,19 @@ public class Game {
     private ArrayList<Checker> getAttackWay(Field.Cell nextCell, Stack<Field.Cell> attackedCells,
                                                    Field.Cell visitedCell) {
         if (visitedCell.equals(nextCell)) {
-            ArrayList<Checker> result = new ArrayList<>();
-
-            for (Field.Cell attackedCell : attackedCells) {
-                result.add(attackedCell.getCheck());
-            }
-
-            return result;
+            return attackedCellsToEatenCheckersList(attackedCells);
         } else {
             return attackedCheckers(visitedCell, nextCell, attackedCells);
         }
+    }
+
+    private ArrayList<Checker> attackedCellsToEatenCheckersList(Stack<Field.Cell> attackedCells) {
+        ArrayList<Checker> result = new ArrayList<>();
+
+        for (Field.Cell attackedCell : attackedCells) {
+            result.add(attackedCell.getCheck());
+        }
+        return result;
     }
 
     private boolean canAttack(Field.Cell from, Field.Cell nextCell, Stack<Field.Cell> attackedCells)
@@ -139,6 +142,8 @@ public class Game {
                 && !attackedCells.contains(nextCell) && field.skip(from, nextCell).getCheck() == null;
     }
 
+
+    //Доделать
     private ArrayList<Checker> attackedCheckersByKing (Field.Cell curCell, Field.Cell nextCell,
                                                 Stack<Field.Cell> attackedCells) {
 
@@ -146,19 +151,20 @@ public class Game {
             boolean hasCheckerOnDirection = false;
 
             try {
-
+                //Метод обрабатывает только ту ситуацию, когда дамка бьет по пути проодящему из данной клетки
                 for (Field.Cell cell : field.getDirection(curCell, neighbour)) {
-                    if (cell.getCheck() != null &&
-                            !attackedCells.contains(cell) && !hasCheckerOnDirection) {
-                        if (cell.getCheck().getPlayerID() == players[turnOrder].id()) {
-                            break;
-                        }
-
-                        hasCheckerOnDirection = true;
-                        continue;
+                    if (cell.getCheck().getPlayerID() == players[turnOrder].id()) {
+                        break;
                     }
 
-//                    if (hasCheckerOnDirection && )
+                    if (cell.getCheck() != null &&
+                            !attackedCells.contains(cell) && !hasCheckerOnDirection) {
+                        hasCheckerOnDirection = true;
+                    } else if (hasCheckerOnDirection) {
+                        if (cell.equals(nextCell)) {
+                            return attackedCellsToEatenCheckersList(attackedCells);
+                        }
+                    }
                 }
 
             } catch(GameProcessException ignore) {}
