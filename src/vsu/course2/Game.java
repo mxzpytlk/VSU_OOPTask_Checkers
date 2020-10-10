@@ -30,7 +30,7 @@ public class Game {
 
     public void doStep(int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws GameProcessException {
         if (gameOver()) return;
-        if (!players[turnOrder].getCheckers().contains(field.getCell(prevLetter, prevNumber)))
+        if (!players[turnOrder].getCheckers().contains(field.getChecker(prevLetter, prevNumber)))
             throw new GameProcessException("Player doesn't have checkers on this position");
 
         //Потом обработать ситуацию, когда шашка бьет другую шашку и возвращается назад
@@ -38,7 +38,7 @@ public class Game {
                 Math.abs(players[turnOrder].getStartPoint().getNumber() - nextNumber) &&
                 !field.getChecker(prevLetter, prevNumber).isKing()) {
 
-            throw new Exception("Checker can't go back");
+            throw new GameProcessException("Checker can't go back");
         }
         field.moveChecker(prevLetter, prevNumber, nextLetter, nextNumber);
 

@@ -1,5 +1,6 @@
 package vsu.course2;
 
+import exceptions.GameProcessException;
 import exceptions.GraphException;
 import graph.Graph;
 
@@ -69,30 +70,32 @@ public class Field {
         }
     }
 
-    public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber) throws Exception {
+    public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber)
+                                        throws GameProcessException {
+
+        if (getCell(prevLetter, prevNumber).curCheck == null) {
+            throw new GameProcessException("This cell doesn't have checker");
+        }
+
+        if (getCell(newLetter, newNumber).curCheck != null) {
+            throw new GameProcessException("This cell isn't free");
+        }
+
+        getCell(newLetter, newNumber).setCheck(getCell(prevLetter, prevNumber).curCheck);
+        getCell(prevLetter, prevNumber).removeCheck();
+    }
+
+    public Cell getCell(int letter, int number) throws GameProcessException {
         try {
-            if (field.getVertex(new Cell(prevLetter, prevNumber)).curCheck == null) {
-                throw new Exception("This cell doesn't have checker");
-            }
-
-            if (field.getVertex(new Cell(newLetter, newNumber)) != null) {
-                throw new Exception("This cell isn't free");
-            }
-
-            field.getVertex(new Cell(newLetter, newNumber)).setCheck(
-                    field.getVertex(new Cell(prevLetter, prevNumber)).curCheck
-            );
-            field.getVertex(new Cell(prevLetter, prevNumber)).removeCheck();
-        } catch (GraphException ignored) { }
+            return field.getVertex(new Cell(letter, number));
+        } catch (GraphException e) {
+            throw new GameProcessException("Such cell doesn't exist");
+        }
     }
 
-    public Cell getCell(int letter, int number) throws GraphException {
-        return field.getVertex(new Cell(letter, number));
-    }
-
-    public Checker getChecker(int letter, int number) throws GraphException {
+    public Checker getChecker(int letter, int number) throws GameProcessException {
         if (getCell(letter, number).curCheck == null)
-            throw new Exception("There isn't checker on this cell");
+            throw new GameProcessException("There isn't checker on this cell");
         return getCell(letter, number).curCheck;
     }
 

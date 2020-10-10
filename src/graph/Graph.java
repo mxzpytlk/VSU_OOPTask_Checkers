@@ -1,12 +1,11 @@
 package graph;
 
-import javafx.util.Pair;
 import java.util.*;
 import exceptions.GraphException;
 
 
 public class Graph<T> implements Iterable<T> {
-    private List<List<Pair<Integer, T>>> vEdjLists = new ArrayList<>();
+    private List<List<T>> vEdjLists = new ArrayList<>();
     private int eCount = 0;
 
     public Graph(){ }
@@ -24,13 +23,13 @@ public class Graph<T> implements Iterable<T> {
         int index2 = indexOfVertex(v2);
         if (index1 == -1) {
             vEdjLists.add(new LinkedList<>());
-            vEdjLists.get(vEdjLists.size() - 1).add(new Pair<>(vEdjLists.size() - 1, v1));
+            vEdjLists.get(vEdjLists.size() - 1).add(v1);
             index1 = vEdjLists.size() - 1;
         }
 
         if (index2 == -1) {
             vEdjLists.add(new LinkedList<>());
-            vEdjLists.get(vEdjLists.size() - 1).add(new Pair<>(vEdjLists.size() - 1, v2));
+            vEdjLists.get(vEdjLists.size() - 1).add(v2);
             index2 = vEdjLists.size() - 1;
         }
 
@@ -55,12 +54,12 @@ public class Graph<T> implements Iterable<T> {
     public void addVertex(T v) {
         if (indexOfVertex(v) == -1) {
             vEdjLists.add(new LinkedList<>());
-            vEdjLists.get(vEdjLists.size() - 1).add(new Pair<>(vEdjLists.size() - 1, v));
+            vEdjLists.get(vEdjLists.size() - 1).add(v);
         }
     }
 
     public T getVertex(T vert) throws GraphException {
-        for (T el : bfs(vEdjLists.get(0).get(0).getValue())) {
+        for (T el : bfs(vEdjLists.get(0).get(0))) {
             if (el.equals(vert)) {
                 return el;
             }
@@ -77,14 +76,16 @@ public class Graph<T> implements Iterable<T> {
     }
 
     private int indexOfVertex(T v1) {
-        for (List<Pair<Integer, T>> l : vEdjLists)
-            if (l.get(0).getValue().equals(v1)) return l.get(0).getKey();
+        for (int i = 0; i < vEdjLists.size(); i++)
+            if (vEdjLists.get(i).get(0).equals(v1)) {
+                return i;
+            };
         return -1;
     }
 
 
     public Iterable<T> edjacencies(T v) {
-        Iterator<Pair<Integer, T>> it = vEdjLists.get(indexOfVertex(v)).iterator();
+        Iterator<T> it = vEdjLists.get(indexOfVertex(v)).iterator();
         it.next();
         return () -> new Iterator<>() {
 
@@ -95,7 +96,7 @@ public class Graph<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                return it.next().getValue();
+                return it.next();
             }
         };
     }
@@ -137,6 +138,6 @@ public class Graph<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return bfs(vEdjLists.get(0).get(0).getValue()).iterator();
+        return bfs(vEdjLists.get(0).get(0)).iterator();
     }
 }
