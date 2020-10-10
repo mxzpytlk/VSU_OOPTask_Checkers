@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vsu/course2/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vsu/course2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vsu/course2/Player.java" afterDir="false" />
     </list>
@@ -92,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602329929894</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add attack logic">
+      <created>1602346683114</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1602346683114</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -113,17 +118,18 @@
     <MESSAGE value="Field can move checkers, add class User" />
     <MESSAGE value="Improve player initialization" />
     <MESSAGE value="Now it can be compiled without errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now it can be compiled without errors" />
+    <MESSAGE value="Add attack logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add attack logic" />
   </component>
   <component name="WindowStateProjectService">
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1602343210931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1602343210931" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1602329920848">
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1602346661720">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602329920848" />
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602346661720" />
     <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -140,10 +146,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602329940672">
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602346727367">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1602329940672" />
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1602346727367" />
     <state x="339" y="157" key="run.anything.popup" timestamp="1602328353749">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

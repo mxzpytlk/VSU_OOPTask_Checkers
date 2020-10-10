@@ -1,6 +1,7 @@
 package vsu.course2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player {
     private final int playerID;
@@ -30,5 +31,9 @@ public class Player {
 
     public Field.Cell getStartPoint() {
         return startPoint;
+    }
+
+    public void removeCheck(Checker[] checks) {
+        playerChecks.removeAll(Arrays.asList(checks));
     }
 }

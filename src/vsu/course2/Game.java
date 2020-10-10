@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Game {
-    private Player[] players = new Player[2];
-    private Field field = new Field(8, 8);
+    private final Player[] players = new Player[2];
+    private final Field field = new Field(8, 8);
     private int turnOrder = 0;
 
     public Game() {
@@ -36,8 +36,12 @@ public class Game {
         if (!players[turnOrder].hasCheack(field.getChecker(prevLetter, prevNumber)))
             throw new GameProcessException("Player doesn't have checkers on this position");
 
-        //Потом обработать ситуацию, когда шашка бьет другую шашку и возвращается назад
-        if (!canMakeStep(field.getCell(prevLetter, prevNumber), field.getCell(nextLetter, nextNumber))) {
+        ArrayList<Checker> attackedChecks = attackedCheckers(new Field.Cell(prevLetter, prevNumber),
+                new Field.Cell(nextLetter, nextNumber));
+
+        if (attackedChecks.size() != 0) {
+            players[(turnOrder + 1) % players.length].removeCheck((Checker[]) attackedChecks.toArray());
+        } else if (!canMakeStep(field.getCell(prevLetter, prevNumber), field.getCell(nextLetter, nextNumber))) {
             throw new GameProcessException("Checker can't go back");
         }
 
