@@ -51,15 +51,19 @@ public class Game {
     }
 
     private boolean canMakeStep(Field.Cell curCell, Field.Cell nextCell) {
-        return (Math.abs(players[turnOrder].getStartPoint().getNumber() - curCell.getNumber()) >=
-                Math.abs(players[turnOrder].getStartPoint().getNumber() - nextCell.getNumber())) ||
-                curCell.getCheck().isKing();
+        if (Math.abs(players[turnOrder].getStartPoint().getNumber() - curCell.getNumber()) >=
+                Math.abs(players[turnOrder].getStartPoint().getNumber() - nextCell.getNumber())) {
+            return true;
+        }
+
+        return curCell.getCheck().isKing() &&
+            Math.abs(curCell.getLetter() - nextCell.getLetter()) ==
+                    Math.abs(curCell.getNumber() - nextCell.getNumber());
     }
 
     private ArrayList<Checker> attackedCheckers(Field.Cell curCell, Field.Cell nextCell)
             throws GameProcessException {
 
-        Stack<Field.Cell> attackedCells = new Stack<>();
         if (nextCell.getCheck() != null) {
             throw new GameProcessException("Check can't be attacked if another check stay behind it");
         }
@@ -81,7 +85,7 @@ public class Game {
                     && !attackedCells.contains(cell)) {
                 attackedCells.push(cell);
                 for (Field.Cell visitedCell : field.neighboringCells(cell)) {
-                    if (visitedCell != null) {
+                    if (visitedCell.getCheck() != null || visitedCell.equals(curCell)) {
                         continue;
                     }
 
