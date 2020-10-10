@@ -68,7 +68,9 @@ public class Game {
             throw new GameProcessException("Check can't be attacked if another check stay behind it");
         }
 
-        ArrayList<Checker> result = attackedCheckers(curCell, nextCell, new Stack<Field.Cell>());
+        ArrayList<Checker> result = curCell.getCheck().isKing() ?
+                attackedCheckersByKing(curCell, nextCell, new Stack<>()) :
+                attackedCheckers(curCell, nextCell, new Stack<>());
 
         if (result.isEmpty()) {
             throw new GameProcessException("Check can't attack on this way");
@@ -79,6 +81,41 @@ public class Game {
 
     private ArrayList<Checker> attackedCheckers(Field.Cell curCell, Field.Cell nextCell,
                             Stack<Field.Cell> attackedCells) {
+
+        for (Field.Cell cell : field.neighboringCells(curCell)) {
+            if (cell.getCheck() != null && cell.getCheck().getPlayerID() != players[turnOrder].id()
+                    && !attackedCells.contains(cell)) {
+                attackedCells.push(cell);
+                for (Field.Cell visitedCell : field.neighboringCells(cell)) {
+                    if (visitedCell.getCheck() != null || visitedCell.equals(curCell)) {
+                        continue;
+                    }
+
+                    if (visitedCell.equals(nextCell)) {
+                        ArrayList<Checker> result = new ArrayList<>();
+
+                        for (Field.Cell attackedCell : attackedCells) {
+                            result.add(attackedCell.getCheck());
+                        }
+
+                        return result;
+                    } else {
+                        ArrayList<Checker> result = attackedCheckers(visitedCell,
+                                nextCell, attackedCells);
+                        if (!result.isEmpty()) {
+                            return result;
+                        }
+                    }
+                }
+                attackedCells.pop();
+            }
+        }
+
+        return new ArrayList<>();
+    }
+
+    private ArrayList<Checker> attackedCheckersByKing (Field.Cell curCell, Field.Cell nextCell,
+                                                Stack<Field.Cell> attackedCells) {
 
         for (Field.Cell cell : field.neighboringCells(curCell)) {
             if (cell.getCheck() != null && cell.getCheck().getPlayerID() != players[turnOrder].id()

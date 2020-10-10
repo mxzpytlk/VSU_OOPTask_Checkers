@@ -4,6 +4,7 @@ import exceptions.GameProcessException;
 import exceptions.GraphException;
 import graph.Graph;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Field {
@@ -53,9 +54,14 @@ public class Field {
         }
     }
 
-    private Graph<Cell> field = new Graph<>();
+    private final Graph<Cell> field = new Graph<>();
+    private final int width;
+    private final int height;
 
     Field(int w, int h) {
+        this.width = w;
+        this.height = h;
+
         for (int i = 0; i < h - 1; i++) {
             for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {
                 if (j == 0) {
@@ -109,5 +115,37 @@ public class Field {
 
     public Iterable<Cell> neighboringCells(Cell cell) {
         return field.edjacencies(cell);
+    }
+
+    public Iterable<Cell> getDirection(Cell fst, Cell snd) throws GameProcessException {
+        ArrayList<Cell> direction = new ArrayList<>();
+
+        if (Math.abs(fst.getLetter() - snd.getLetter()) !=
+                Math.abs(fst.getNumber() - snd.getNumber()))
+            throw new GameProcessException("Check can move only on direct line");
+
+        int startLetter = fst.letter;
+        int startNumber = fst.number;
+
+        while (startLetter != 0 || startNumber != 0) {
+            startLetter--;
+            startNumber--;
+        }
+        Cell start = new Cell(startLetter, startNumber);
+
+        int endLetter = snd.letter;
+        int endNumber = snd.number;
+
+        while (endLetter != width || endNumber != height) {
+            endLetter++;
+            endNumber++;
+        }
+        Cell end = new Cell(endLetter, endNumber);
+
+        for (int i = start.getLetter(); i <= end.getLetter(); i++) {
+            direction.add(getCell(i, i));
+        }
+
+        return direction;
     }
 }
