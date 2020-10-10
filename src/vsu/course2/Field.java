@@ -86,8 +86,12 @@ public class Field {
     }
 
     public Cell getCell(int letter, int number) throws GameProcessException {
+        return getCell(new Cell(letter, number));
+    }
+
+    public Cell getCell(Cell cell) throws GameProcessException {
         try {
-            return field.getVertex(new Cell(letter, number));
+            return field.getVertex(cell);
         } catch (GraphException e) {
             throw new GameProcessException("Such cell doesn't exist");
         }
@@ -101,5 +105,9 @@ public class Field {
 
     public void setChecker(Checker checker, int letter, int number) throws Exception {
         getCell(letter, number).setCheck(checker);
+    }
+
+    public Iterable<Cell> neighboringCells(Cell cell) {
+        return field.edjacencies(cell);
     }
 }

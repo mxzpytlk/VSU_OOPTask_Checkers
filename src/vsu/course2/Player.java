@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
     private final int playerID;
     private final ArrayList<Checker> playerChecks = new ArrayList<>();
-    private Field.Cell startPoint;
+    private final Field.Cell startPoint;
 
     public Player(Field.Cell startPoint) {
         playerID = (int) (Math.random() * Integer.MAX_VALUE);
@@ -16,12 +16,16 @@ public class Player {
         this.startPoint = startPoint;
     }
 
-    public ArrayList<Checker> getCheckers() {
-        return playerChecks;
+    public Checker[] getCheckers() {
+        return (Checker[]) playerChecks.toArray();
     }
 
     public int id() {
         return playerID;
+    }
+
+    public boolean hasCheack(Checker check) {
+        return playerChecks.contains(check);
     }
 
     public Field.Cell getStartPoint() {

@@ -15,4 +15,8 @@ public class Checker {
     public Checker(int playerID) {
         this.playerID = playerID;
     }
+
+    public int getPlayerID() {
+        return playerID;
+    }
 }
