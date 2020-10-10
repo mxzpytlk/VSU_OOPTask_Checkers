@@ -52,6 +52,8 @@ public class Field {
         public Checker getCheck() {
             return curCheck;
         }
+
+        public boolean hasCheck() { return curCheck != null; }
     }
 
     private final Graph<Cell> field = new Graph<>();
@@ -117,33 +119,55 @@ public class Field {
         return field.edjacencies(cell);
     }
 
-    public Iterable<Cell> getDirection(Cell fst, Cell snd) throws GameProcessException {
+    public Cell skip(Cell start, Cell end) throws GameProcessException {
+        if (Math.abs(Math.abs(start.getLetter() - end.getLetter()) -
+                Math.abs(start.getNumber() - end.getNumber())) != 1)
+            throw new GameProcessException("Check can skip only one cell");
+
+        if (start.letter > end.letter) {
+            if (start.number > end.number) {
+                return getCell(start.letter - 2, start.number - 2);
+            } else {
+                return getCell(start.letter - 2, start.number + 2);
+            }
+        } else {
+            if (start.number > end.number) {
+                return getCell(start.letter + 2, start.number - 2);
+            } else {
+                return getCell(start.letter + 2, start.number + 2);
+            }
+        }
+    }
+
+    public Iterable<Cell> getDirection(Cell start, Cell end) throws GameProcessException {
         ArrayList<Cell> direction = new ArrayList<>();
 
-        if (Math.abs(fst.getLetter() - snd.getLetter()) !=
-                Math.abs(fst.getNumber() - snd.getNumber()))
+        if (Math.abs(start.getLetter() - end.getLetter()) !=
+                Math.abs(start.getNumber() - end.getNumber()))
             throw new GameProcessException("Check can move only on direct line");
 
-        int startLetter = fst.letter;
-        int startNumber = fst.number;
+        int startLetter = start.letter;
+        int endLetter = end.letter;
+        int endNumber = end.number;
 
-        while (startLetter != 0 || startNumber != 0) {
-            startLetter--;
-            startNumber--;
-        }
-        Cell start = new Cell(startLetter, startNumber);
+        if (startLetter > endLetter) {
+            while (endLetter != 0 || endNumber != 0) {
+                endLetter--;
+                endNumber--;
+            }
 
-        int endLetter = snd.letter;
-        int endNumber = snd.number;
+            for (int i = startLetter - 1; i >= endLetter; i--) {
+                direction.add(getCell(i, i));
+            }
+        } else {
+            while (endLetter != width || endNumber != height) {
+                endLetter++;
+                endNumber++;
+            }
 
-        while (endLetter != width || endNumber != height) {
-            endLetter++;
-            endNumber++;
-        }
-        Cell end = new Cell(endLetter, endNumber);
-
-        for (int i = start.getLetter(); i <= end.getLetter(); i++) {
-            direction.add(getCell(i, i));
+            for (int i = startLetter + 1; i <= endLetter; i++) {
+                direction.add(getCell(i, i));
+            }
         }
 
         return direction;

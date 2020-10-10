@@ -25,7 +25,7 @@ public class Player {
         return playerID;
     }
 
-    public boolean hasCheack(Checker check) {
+    public boolean hasCheck(Checker check) {
         return playerChecks.contains(check);
     }
 

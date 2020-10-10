@@ -33,7 +33,7 @@ public class Game {
 
     public void doStep(int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws GameProcessException {
         if (gameOver()) return;
-        if (!players[turnOrder].hasCheack(field.getChecker(prevLetter, prevNumber)))
+        if (!players[turnOrder].hasCheck(field.getChecker(prevLetter, prevNumber)))
             throw new GameProcessException("Player doesn't have checkers on this position");
 
         ArrayList<Checker> attackedChecks = attackedCheckers(new Field.Cell(prevLetter, prevNumber),
@@ -82,68 +82,86 @@ public class Game {
     private ArrayList<Checker> attackedCheckers(Field.Cell curCell, Field.Cell nextCell,
                             Stack<Field.Cell> attackedCells) {
 
-        for (Field.Cell cell : field.neighboringCells(curCell)) {
-            if (cell.getCheck() != null && cell.getCheck().getPlayerID() != players[turnOrder].id()
-                    && !attackedCells.contains(cell)) {
-                attackedCells.push(cell);
-                for (Field.Cell visitedCell : field.neighboringCells(cell)) {
-                    if (visitedCell.getCheck() != null || visitedCell.equals(curCell)) {
-                        continue;
+        for (Field.Cell neighbour : field.neighboringCells(curCell)) {
+            try {
+                if (canAttack(curCell, neighbour, attackedCells)) {
+
+                    Field.Cell emptyCell = null;
+                    try {
+                        emptyCell = field.skip(curCell, neighbour);
+                        if (emptyCell.hasCheck()) {
+                            break;
+                        }
+                    } catch (GameProcessException e) {
+                        e.printStackTrace();
                     }
 
-                    if (visitedCell.equals(nextCell)) {
-                        ArrayList<Checker> result = new ArrayList<>();
-
-                        for (Field.Cell attackedCell : attackedCells) {
-                            result.add(attackedCell.getCheck());
+                    attackedCells.push(neighbour);
+                    for (Field.Cell visitedCell : field.neighboringCells(emptyCell)) {
+                        if (visitedCell.getCheck() != null || visitedCell.equals(curCell)) {
+                            continue;
                         }
 
-                        return result;
-                    } else {
-                        ArrayList<Checker> result = attackedCheckers(visitedCell,
-                                nextCell, attackedCells);
+                        ArrayList<Checker> result =
+                                getAttackWay(nextCell, attackedCells, visitedCell);
                         if (!result.isEmpty()) {
                             return result;
                         }
                     }
+                    attackedCells.pop();
                 }
-                attackedCells.pop();
+            } catch (GameProcessException e) {
+                e.printStackTrace();
             }
         }
 
         return new ArrayList<>();
     }
 
+    private ArrayList<Checker> getAttackWay(Field.Cell nextCell, Stack<Field.Cell> attackedCells,
+                                                   Field.Cell visitedCell) {
+        if (visitedCell.equals(nextCell)) {
+            ArrayList<Checker> result = new ArrayList<>();
+
+            for (Field.Cell attackedCell : attackedCells) {
+                result.add(attackedCell.getCheck());
+            }
+
+            return result;
+        } else {
+            return attackedCheckers(visitedCell, nextCell, attackedCells);
+        }
+    }
+
+    private boolean canAttack(Field.Cell from, Field.Cell nextCell, Stack<Field.Cell> attackedCells)
+            throws GameProcessException {
+        return nextCell.getCheck() != null && nextCell.getCheck().getPlayerID() != players[turnOrder].id()
+                && !attackedCells.contains(nextCell) && field.skip(from, nextCell).getCheck() == null;
+    }
+
     private ArrayList<Checker> attackedCheckersByKing (Field.Cell curCell, Field.Cell nextCell,
                                                 Stack<Field.Cell> attackedCells) {
 
-        for (Field.Cell cell : field.neighboringCells(curCell)) {
-            if (cell.getCheck() != null && cell.getCheck().getPlayerID() != players[turnOrder].id()
-                    && !attackedCells.contains(cell)) {
-                attackedCells.push(cell);
-                for (Field.Cell visitedCell : field.neighboringCells(cell)) {
-                    if (visitedCell.getCheck() != null || visitedCell.equals(curCell)) {
+        for (Field.Cell neighbour : field.neighboringCells(curCell)) {
+            boolean hasCheckerOnDirection = false;
+
+            try {
+
+                for (Field.Cell cell : field.getDirection(curCell, neighbour)) {
+                    if (cell.getCheck() != null &&
+                            !attackedCells.contains(cell) && !hasCheckerOnDirection) {
+                        if (cell.getCheck().getPlayerID() == players[turnOrder].id()) {
+                            break;
+                        }
+
+                        hasCheckerOnDirection = true;
                         continue;
                     }
 
-                    if (visitedCell.equals(nextCell)) {
-                        ArrayList<Checker> result = new ArrayList<>();
-
-                        for (Field.Cell attackedCell : attackedCells) {
-                            result.add(attackedCell.getCheck());
-                        }
-
-                        return result;
-                    } else {
-                        ArrayList<Checker> result = attackedCheckers(visitedCell,
-                                nextCell, attackedCells);
-                        if (!result.isEmpty()) {
-                            return result;
-                        }
-                    }
+//                    if (hasCheckerOnDirection && )
                 }
-                attackedCells.pop();
-            }
+
+            } catch(GameProcessException ignore) {}
         }
 
         return new ArrayList<>();
