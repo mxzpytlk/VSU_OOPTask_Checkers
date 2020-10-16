@@ -46,6 +46,9 @@ public class Game {
         }
 
         field.moveChecker(prevLetter, prevNumber, nextLetter, nextNumber);
+        if (players[turnOrder].getStartPoint().getLetter() - nextLetter == 0) {
+            field.getChecker(nextLetter, nextNumber).becomeKing();
+        }
 
         turnOrder = (turnOrder + 1) % players.length;
     }
