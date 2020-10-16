@@ -132,6 +132,16 @@ public class Field {
         return way;
     }
 
+    public ArrayList<Checker> checkersOnLine(ArrayList<Field.Cell> line) {
+        ArrayList<Checker> result = new ArrayList<>();
+        for (Cell cell : line) {
+            if (cell.hasCheck()) {
+                result.add(cell.getCheck());
+            }
+        }
+        return result;
+    }
+
     private int getVerticalDirection(Cell start, Cell end) {
         return start.getLetter() < end.getLetter() ? 1 : -1;
     }

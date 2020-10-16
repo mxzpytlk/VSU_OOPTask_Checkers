@@ -3,7 +3,6 @@ package vsu.course2;
 import exceptions.GameProcessException;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Game {
     private final Player[] players = new Player[2];
@@ -36,12 +35,6 @@ public class Game {
         if (!players[turnOrder].hasCheck(field.getChecker(prevLetter, prevNumber)))
             throw new GameProcessException("Player doesn't have checkers on this position");
 
-//        ArrayList<Checker> attackedChecks = attackedCheckers(new Field.Cell(prevLetter, prevNumber),
-//                new Field.Cell(nextLetter, nextNumber));
-//
-//        if (attackedChecks.size() != 0) {
-//            players[(turnOrder + 1) % players.length].removeCheck((Checker[]) attackedChecks.toArray());
-//        } else
         if (!canMakeStep(field.getCell(prevLetter, prevNumber), field.getCell(nextLetter, nextNumber))) {
             throw new GameProcessException("Checker can't go back");
         }
@@ -51,7 +44,7 @@ public class Game {
             field.getChecker(nextLetter, nextNumber).becomeKing();
         }
 
-        turnOrder = (turnOrder + 1) % players.length;
+        changeTurnOrder();
     }
 
     private boolean canMakeStep(Field.Cell curCell, Field.Cell nextCell) {
@@ -65,10 +58,50 @@ public class Game {
                     Math.abs(curCell.getNumber() - nextCell.getNumber());
     }
 
-    public ArrayList<Checker> attackCheckers(ArrayList<Field.Cell> way) {
-        for (int i = 0; i < way.size(); i++) {
-
+    public ArrayList<Checker> attackCheckers(ArrayList<Field.Cell> way) throws GameProcessException {
+        if (field.getCell(way.get(0)).hasCheck() &&
+                field.getCell(way.get(0)).getCheck().getPlayerID() != players[turnOrder].id()) {
+            throw new GameProcessException("Player doesn't have checkers on this position");
         }
+        ArrayList<Checker> eatenChecks =
+                way.get(0).hasCheck() ? attackByKing(way) : attackBySimpleCHeck(way);
+        changeTurnOrder();
+        return eatenChecks;
+    }
+
+    private ArrayList<Checker> attackByKing(ArrayList<Field.Cell> way) throws GameProcessException {
+        ArrayList<Checker> eatenChecks = new ArrayList<>();
+
+        for (int i = 0; i < way.size() - 1; i++) {
+            ArrayList<Field.Cell> directWay = field.getWayBetweenCells(way.get(i), way.get(i + 1));
+
+            if (directWay.get(directWay.size() - 1).hasCheck()) {
+                throw new GameProcessException("There are checkers on the way");
+            }
+
+            if (!canAttack(directWay)) {
+                throw new GameProcessException("Checker can't attack another check " +
+                        "if there is check after enemy");
+            }
+            eatenChecks.addAll(field.checkersOnLine(directWay));
+        }
+        return eatenChecks;
+    }
+
+    private boolean canAttack(ArrayList<Field.Cell> directWay) {
+        boolean hasCheckerOnDirection,
+                result = false;
+
+        for (int i = 1; i < directWay.size() - 1; i++) {
+            hasCheckerOnDirection = directWay.get(i).hasCheck();
+            if (hasCheckerOnDirection) {
+                result = true;
+                if (directWay.get(i + 1).hasCheck()) {
+                    return false;
+                }
+            }
+        }
+        return result;
     }
 
 //    private ArrayList<Checker> attackedCheckers(Field.Cell curCell, Field.Cell nextCell)
@@ -192,5 +225,9 @@ public class Game {
 
     public boolean gameOver() {
         return players[0].getCheckers().length == 0 || players[1].getCheckers().length == 0;
+    }
+
+    private void changeTurnOrder() {
+        turnOrder = (turnOrder + 1) % players.length;
     }
 }

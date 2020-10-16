@@ -140,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602870905820</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Add method which return way between 2 cells">
+      <created>1602873687806</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1602873687806</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,17 +175,18 @@
     <MESSAGE value="Refactor attack by ordinary checker" />
     <MESSAGE value="Start develop kingcheck attack" />
     <MESSAGE value="Checker become king in the end of field" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checker become king in the end of field" />
+    <MESSAGE value="Add method which return way between 2 cells" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add method which return way between 2 cells" />
   </component>
   <component name="WindowStateProjectService">
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1602343210931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1602343210931" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1602870887321">
+    <state x="239" y="0" key="CommitChangelistDialog2" timestamp="1602873683556">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602870887321" />
+    <state x="239" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602873683556" />
     <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -199,10 +207,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1602366905767" />
-    <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602873638318">
+    <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602875982895">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1602873638318" />
+    <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1602875982895" />
     <state x="185" y="244" key="extract.method.dialog" timestamp="1602366535468">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
