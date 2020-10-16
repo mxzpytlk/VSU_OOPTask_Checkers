@@ -57,12 +57,8 @@ public class Field {
     }
 
     private final Graph<Cell> field = new Graph<>();
-    private final int width;
-    private final int height;
 
     Field(int w, int h) {
-        this.width = w;
-        this.height = h;
 
         for (int i = 0; i < h - 1; i++) {
             for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {

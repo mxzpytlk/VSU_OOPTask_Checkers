@@ -69,6 +69,7 @@ public class Game {
                 way.get(0).hasCheck() ? attackByKing(way) : attackBySimpleCHeck(way);
         field.moveChecker(way.get(0), way.get(way.size() - 1));
         changeTurnOrder();
+        players[turnOrder].removeCheck(eatenChecks.toArray(new Checker[0]));
         return eatenChecks;
     }
 
