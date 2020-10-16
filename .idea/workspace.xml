@@ -28,6 +28,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="extractMethod.generateAnnotations" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyGraph" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
@@ -147,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602873687806</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Attack logic for king">
+      <created>1602876020395</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1602876020395</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,17 +184,18 @@
     <MESSAGE value="Start develop kingcheck attack" />
     <MESSAGE value="Checker become king in the end of field" />
     <MESSAGE value="Add method which return way between 2 cells" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add method which return way between 2 cells" />
+    <MESSAGE value="Attack logic for king" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attack logic for king" />
   </component>
   <component name="WindowStateProjectService">
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1602343210931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1602343210931" />
-    <state x="239" y="0" key="CommitChangelistDialog2" timestamp="1602873683556">
+    <state x="239" y="0" key="CommitChangelistDialog2" timestamp="1602876008608">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="239" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602873683556" />
+    <state x="239" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602876008608" />
     <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -211,10 +220,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1602875982895" />
-    <state x="185" y="244" key="extract.method.dialog" timestamp="1602366535468">
+    <state x="363" y="247" key="extract.method.dialog" timestamp="1602876677132">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="185" y="244" key="extract.method.dialog/0.0.1366.728@0.0.1366.728" timestamp="1602366535468" />
+    <state x="363" y="247" key="extract.method.dialog/0.0.1366.728@0.0.1366.728" timestamp="1602876677132" />
     <state x="339" y="157" key="run.anything.popup" timestamp="1602328353749">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

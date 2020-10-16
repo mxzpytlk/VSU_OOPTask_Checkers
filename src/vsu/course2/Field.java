@@ -78,6 +78,10 @@ public class Field {
         }
     }
 
+    public void moveChecker(Cell start, Cell end) throws GameProcessException {
+        moveChecker(start.letter, start.number, end.letter, end.number);
+    }
+
     public void moveChecker(int prevLetter, int prevNumber, int newLetter, int newNumber)
                                         throws GameProcessException {
 
@@ -118,9 +122,7 @@ public class Field {
     public ArrayList<Cell> getWayBetweenCells(Cell start, Cell end) throws GameProcessException {
         ArrayList<Cell> way = new ArrayList<>();
 
-        if (Math.abs(start.getLetter() - end.getLetter()) !=
-                Math.abs(start.getNumber() - end.getNumber())
-                &&  Math.abs(start.getLetter() - end.getLetter()) != 0)
+        if (areOnDirectLine(start, end))
             throw new GameProcessException("Check can move only on direct line");
 
         int verticalDirection = getVerticalDirection(start, end);
@@ -130,6 +132,27 @@ public class Field {
         }
 
         return way;
+    }
+
+    public boolean areOnDirectLine(Cell start, Cell end) {
+        return Math.abs(start.getLetter() - end.getLetter()) !=
+                Math.abs(start.getNumber() - end.getNumber())
+                && Math.abs(start.getLetter() - end.getLetter()) != 0;
+    }
+
+    public Cell getCellBetweenTwoCells(Cell first, Cell second) throws GameProcessException {
+        for (Cell firstNeighbour : neighbours(first)) {
+            for (Cell secondNeighbour : neighbours(second)) {
+                if (firstNeighbour.equals(secondNeighbour)) {
+                    return firstNeighbour;
+                }
+            }
+        }
+        throw new GameProcessException("Cells do not have neighbour");
+    }
+
+    private Iterable<Cell> neighbours(Cell cell) {
+        return field.edjacencies(cell);
     }
 
     public ArrayList<Checker> checkersOnLine(ArrayList<Field.Cell> line) {
