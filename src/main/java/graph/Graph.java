@@ -101,6 +101,10 @@ public class Graph<T> implements Iterable<T> {
         };
     }
 
+    public Iterable<T> bfs() {
+        return bfs(vEdjLists.get(0).get(0));
+    }
+
     public Iterable<T> bfs(T from) {
         return new Iterable<>() {
             private Queue<T> queue = null;

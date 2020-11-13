@@ -74,6 +74,10 @@ public class Field {
         }
     }
 
+    public Iterable<Cell> getCells() {
+        return field.bfs();
+    }
+
     public void moveChecker(Cell start, Cell end) throws GameProcessException {
         moveChecker(start.letter, start.number, end.letter, end.number);
     }

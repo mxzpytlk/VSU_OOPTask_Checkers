@@ -18,7 +18,7 @@ public class Player {
     }
 
     public Checker[] getCheckers() {
-        return (Checker[]) playerChecks.toArray();
+        return playerChecks.toArray(new Checker[0]);
     }
 
     public int id() {

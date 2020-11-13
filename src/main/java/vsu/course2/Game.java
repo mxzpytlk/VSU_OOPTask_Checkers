@@ -28,7 +28,13 @@ public class Game {
                     letter = number % 2 == 0 ? 0 : 1;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Field getField() {
+        return field;
     }
 
     //Сделать проверку на то, что во время хода нельзя съесть чужую шашку

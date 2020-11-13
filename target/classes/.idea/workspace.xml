@@ -23,20 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/ConsoleUserInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/GameProcessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exceptions/GameProcessException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/GraphException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exceptions/GraphException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graph/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graph/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/graph/Graph$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/graph/Graph$2$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/graph/Graph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/graph/Graph$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/graph/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/graph/Graph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/Field.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/Field.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +71,7 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="extractMethod.generateAnnotations" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyGraph" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -84,6 +84,19 @@
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,7 +114,7 @@
       <option name="presentableId" value="Default" />
       <updated>1601221047240</updated>
       <workItem from="1605299391697" duration="525000" />
-      <workItem from="1605300399583" duration="256000" />
+      <workItem from="1605300399583" duration="3531000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -245,6 +258,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Attack logic for simple check" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="479" y="131" width="1024" height="852" key="#Project_Structure" timestamp="1605301554982">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="479" y="131" width="1024" height="852" key="#Project_Structure/72.27.1848.1053@72.27.1848.1053" timestamp="1605301554982" />
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1602343210931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -257,26 +274,30 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="239" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602878052262" />
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602330605582" />
-    <state width="1322" height="173" key="GridCell.Tab.0.center" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1322" height="173" key="GridCell.Tab.0.left" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1322" height="173" key="GridCell.Tab.0.right" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1605300675488">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1605303845906">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="485" y="188" width="1022" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1605300675488" />
+    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602330605582" />
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1605303845906" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1605303845906">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1605303845906" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1605303845905">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1605303845905" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1605303845906">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1605303845906" />
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1605302127205">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1605302127205" />
     <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602878092256">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -285,6 +306,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="500" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1602878024410" />
+    <state x="72" y="49" width="1282" height="699" key="dock-window-1" timestamp="1605301366612">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="72" y="49" width="1282" height="699" key="dock-window-1/72.27.1848.1053@72.27.1848.1053" timestamp="1605301366612" />
     <state x="363" y="247" key="extract.method.dialog" timestamp="1602876677132">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -295,15 +320,6 @@
     <state x="339" y="157" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1602328353749" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/Main.java</url>
-          <line>6</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="field" />
