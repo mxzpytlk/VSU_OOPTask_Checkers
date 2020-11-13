@@ -23,20 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/GameProcessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exceptions/GameProcessException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/GraphException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exceptions/GraphException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graph/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vsu/course2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +60,7 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="extractMethod.generateAnnotations" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyGraph" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -84,6 +73,19 @@
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,7 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1601221047240</updated>
       <workItem from="1605299391697" duration="525000" />
-      <workItem from="1605300399583" duration="256000" />
+      <workItem from="1605300399583" duration="552000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -257,26 +259,30 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="239" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1602878052262" />
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1602330605582">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602330605582" />
-    <state width="1322" height="173" key="GridCell.Tab.0.center" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1322" height="173" key="GridCell.Tab.0.left" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1322" height="173" key="GridCell.Tab.0.right" timestamp="1602330605581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1605300675488">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1605300789932">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="485" y="188" width="1022" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1605300675488" />
+    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602330605582" />
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1605300789932" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1605300789931">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1605300789931" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1605300789930">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1605300789930" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1605300789932">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1605300789932" />
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1605300696540">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="485" y="188" width="1022" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1605300696540" />
     <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1602878092256">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
