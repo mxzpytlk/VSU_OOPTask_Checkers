@@ -1,7 +1,7 @@
 package vsu.course2.game;
 
-import vsu.course2.graph.GraphException;
-import vsu.course2.graph.Graph;
+import vsu.course2.game.exceptions.*;
+import vsu.course2.graph.*;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -81,25 +81,25 @@ public class Field implements Iterable<Field.Cell> {
      *      Position of row.
      * @return
      *      Cell object.
-     * @throws GameProcessException
+     * @throws CellNotExistException
      *      Thrown if this black cell doesn't exist on field;
      */
-    public Cell getCell(int letter, int number) throws GameProcessException {
+    public Cell getCell(int letter, int number) throws CellNotExistException {
         return getCell(new Cell(letter, number));
     }
 
-    public Cell getCell(Cell cell) throws GameProcessException {
+    public Cell getCell(Cell cell) throws CellNotExistException {
         try {
             return field.getVertex(cell);
         } catch (GraphException e) {
-            throw new GameProcessException("Cell with letter " + cell.letter + " and number " + cell.number +
+            throw new CellNotExistException("Cell with letter " + cell.letter + " and number " + cell.number +
                     " doesn't exist.");
         }
     }
 
-    public Checker getChecker(int letter, int number) throws GameProcessException {
+    public Checker getChecker(int letter, int number) throws CellNotExistException {
         if (getCell(letter, number).curCheck == null)
-            throw new GameProcessException("There isn't checker on this cell");
+            throw new CellNotExistException("There isn't checker on this cell");
         return getCell(letter, number).curCheck;
     }
 

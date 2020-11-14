@@ -23,19 +23,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellIsNotFreeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellNotExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellNotHaveChecksException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellsAreNotOnDirectLineException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/MovementWhileAttackCanBeCarriedOutException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/PlayerNotHaveCheckException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/SimpleCheckGoBackException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/GameProcessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/GameProcessException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field$Cell.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService$Direction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/GameProcessException.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,8 +51,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -121,7 +126,7 @@
       <workItem from="1605342888704" duration="121000" />
       <workItem from="1605343761737" duration="1571000" />
       <workItem from="1605354608872" duration="8119000" />
-      <workItem from="1605374346769" duration="8704000" />
+      <workItem from="1605374346769" duration="12585000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -269,11 +274,11 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="479" y="131" width="1024" height="852" key="#Project_Structure/72.27.1848.1053@72.27.1848.1053" timestamp="1605301554982" />
-    <state x="732" y="127" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1605381022992">
+    <state x="732" y="127" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1605384642495">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="488" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1602343210931" />
-    <state x="732" y="127" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1605381022992" />
+    <state x="732" y="127" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1605384642495" />
     <state x="597" y="223" width="788" height="668" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1605344400335">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -290,26 +295,26 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="519" height="506" key="DebuggerActiveHint/72.27.1848.1053@72.27.1848.1053" timestamp="1605382676682" />
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1605382834360">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1605384969816">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602330605582" />
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1605382834360" />
-    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1605382834360">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1605384969816" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1605384969815">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1605382834360" />
-    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1605382834359">
+    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1605384969815" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1605384969815">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1605382834359" />
-    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1605382834360">
+    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1605384969815" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1605384969815">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602330605581" />
-    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1605382834360" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1605384969815" />
     <state width="1802" height="340" key="GridCell.Tab.1.bottom" timestamp="1605382723393">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

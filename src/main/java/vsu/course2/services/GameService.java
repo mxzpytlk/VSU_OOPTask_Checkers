@@ -1,28 +1,31 @@
 package vsu.course2.services;
 
 import vsu.course2.game.*;
+import vsu.course2.game.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
-    FieldService fs = new FieldService();
+    private final FieldService fs = new FieldService();
 
     public GameService() { }
 
-    public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws GameProcessException {
+    public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws PlayerNotHaveCheckException,
+            SimpleCheckGoBackException, MovementWhileAttackCanBeCarriedOutException, CellNotExistException,
+            CellNotHaveChecksException, CellIsNotFreeException {
         if (gameOver(game)) return;
 
         if (!game.getPlayers()[game.getTurnOrder()].hasCheck(game.getField().getChecker(prevLetter, prevNumber)))
-            throw new GameProcessException("Player doesn't have checkers on this position");
+            throw new PlayerNotHaveCheckException("Player doesn't have checkers on this position");
 
         if (!canMakeStep(game, game.getField().getCell(prevLetter, prevNumber),
                 game.getField().getCell(nextLetter, nextNumber))) {
-            throw new GameProcessException("Checker can't go back");
+            throw new SimpleCheckGoBackException("Checker can't go back");
         }
 
         if (playerCanHitEnemy(game)) {
-            throw new GameProcessException("Check can't move if another check can attack enemy.");
+            throw new MovementWhileAttackCanBeCarriedOutException("Check can't move if another check can attack enemy.");
         }
 
         fs.moveChecker(game.getField(), prevLetter, prevNumber, nextLetter, nextNumber);
@@ -46,16 +49,14 @@ public class GameService {
         Field field = game.getField();
         int playerID = game.getPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
-        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
-                Direction.UP : Direction.DOWN;
 
         for (Field.Cell cell : field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
                     && (cell.getNumber() - playerStartPoint.getNumber() != 0)) {
                 try {
-                    if (checkOnNextLeftCellExist(field, playerID, playerStartPoint, direction, cell)) {
+                    if (checkOnNextLeftCellExist(game, cell)) {
                         return true;
-                    } else if (checkOnNextRightCellExist(field, playerID, playerStartPoint, direction, cell)) {
+                    } else if (checkOnNextRightCellExist(game, cell)) {
                         return true;
                     }
                 } catch (GameProcessException e) {
@@ -67,20 +68,53 @@ public class GameService {
         return false;
     }
 
-    private boolean checkOnNextLeftCellExist(Field field, int playerID,
-                                             Field.Cell playerStartPoint,
-                                             Direction direction, Field.Cell curCell) throws GameProcessException {
-        return curCell.getLetter() - playerStartPoint.getLetter() != 0 &&
-                field.getCell(curCell.getLetter() - direction.getCoef(),
-                        curCell.getNumber() + direction.getCoef()).hasCheck() &&
-                field.getCell(curCell.getLetter() - direction.getCoef(),
-                        curCell.getNumber() + direction.getCoef()).getCheck()
-                        .getPlayerID() != playerID;
+    /**
+     * Check if enemy checks on forward left cell exist.
+     * @param game
+     *      Current game.
+     * @param curCell
+     *      Cell which is checked.
+     * @return
+     *      True, if enemy has check on forward left cell.
+     */
+    public boolean checkOnNextLeftCellExist(Game game, Field.Cell curCell) {
+
+        Field field = game.getField();
+        int playerID = game.getPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+                Direction.UP : Direction.DOWN;
+
+        try {
+            return curCell.getLetter() - playerStartPoint.getLetter() != 0 &&
+                    field.getCell(curCell.getLetter() - direction.getCoef(),
+                            curCell.getNumber() + direction.getCoef()).hasCheck() &&
+                    field.getCell(curCell.getLetter() - direction.getCoef(),
+                            curCell.getNumber() + direction.getCoef()).getCheck()
+                            .getPlayerID() != playerID;
+        } catch (CellNotExistException e) {
+            return false;
+        }
     }
 
-    private boolean checkOnNextRightCellExist(Field field, int playerID,
-                                             Field.Cell playerStartPoint,
-                                             Direction direction, Field.Cell curCell) throws GameProcessException {
+    /**
+     * Check if enemy checks on forward right cell exist.
+     * @param game
+     *      Current game.
+     * @param curCell
+     *      Cell which is checked.
+     * @return
+     *      True, if enemy has check on forward right cell.
+     * @throws CellNotExistException
+     *      Thrown if checked cell doesn't exist.
+     */
+    public boolean checkOnNextRightCellExist(Game game, Field.Cell curCell) throws GameProcessException {
+        Field field = game.getField();
+        int playerID = game.getPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+                Direction.UP : Direction.DOWN;
+
         return Math.abs(curCell.getLetter() - playerStartPoint.getLetter()) != 7 &&
                 field.getCell(curCell.getLetter() + direction.getCoef(),
                         curCell.getNumber() + direction.getCoef()).hasCheck() &&
@@ -99,7 +133,7 @@ public class GameService {
                         Math.abs(curCell.getNumber() - nextCell.getNumber());
     }
 
-    public ArrayList<Checker> attackCheckers(Game game, ArrayList<Field.Cell> way) throws GameProcessException {
+    public ArrayList<Checker> attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
 
@@ -108,14 +142,14 @@ public class GameService {
             throw new GameProcessException("Player doesn't have checkers on this position");
         }
         ArrayList<Checker> eatenChecks =
-                way.get(0).hasCheck() ? attackByKing(game, way) : attackBySimpleCHeck(game, way);
+                way.get(0).getCheck().isKing() ? attackByKing(game, way) : attackBySimpleCHeck(game, way);
         fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
         game.changeTurnOrder();
         players[game.getTurnOrder()].removeCheck(eatenChecks.toArray(new Checker[0]));
         return eatenChecks;
     }
 
-    private ArrayList<Checker> attackBySimpleCHeck(Game game, ArrayList<Field.Cell> way) throws GameProcessException {
+    private ArrayList<Checker> attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
         ArrayList<Checker> eatenChecks = new ArrayList<>();

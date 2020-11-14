@@ -1,42 +1,77 @@
 package vsu.course2.services;
 
 import vsu.course2.game.*;
+import vsu.course2.game.exceptions.*;
 
 import java.util.ArrayList;
 
 public class FieldService {
     FieldService() {}
 
-    public void moveChecker(Field field, Field.Cell start, Field.Cell end) throws GameProcessException {
+    /**
+     * Move check from start cell to and cell.
+     * @param field
+     *      Field where checks are situated.
+     * @param start
+     *      Cell where check is.
+     * @param end
+     *      Cell where check must be.
+     * @throws CellNotHaveChecksException
+     *      Thrown if start cell doesn't have check.
+     * @throws CellIsNotFreeException
+     *      Thrown if end cell isn't free.
+     * @throws CellNotExistException
+     *      Thrown if start or end cell doesn't exist.
+     */
+    public void moveChecker(Field field, Field.Cell start, Field.Cell end)
+            throws CellNotHaveChecksException, CellIsNotFreeException, CellNotExistException {
         moveChecker(field, start.getLetter(), start.getNumber(), end.getLetter(), end.getNumber());
     }
 
     public void moveChecker(Field field, int prevLetter, int prevNumber, int newLetter, int newNumber)
-            throws GameProcessException {
+            throws CellNotHaveChecksException, CellIsNotFreeException, CellNotExistException {
 
         if (field.getCell(prevLetter, prevNumber).getCheck() == null) {
-            throw new GameProcessException("This cell doesn't have checker");
+            throw new CellNotHaveChecksException("This cell doesn't have checker");
         }
 
         if (field.getCell(newLetter, newNumber).getCheck() != null) {
-            throw new GameProcessException("This cell isn't free");
+            throw new CellIsNotFreeException("This cell isn't free");
         }
 
         field.getCell(newLetter, newNumber).setCheck(field.getCell(prevLetter, prevNumber).getCheck());
         field.getCell(prevLetter, prevNumber).removeCheck();
     }
 
-    public ArrayList<Field.Cell> getWayBetweenCells(Field field, Field.Cell start, Field.Cell end) throws GameProcessException {
+    /**
+     * Find direct line on field between two cells.
+     * @param field
+     *      Field where cells are situated.
+     * @param start
+     *      First cell.
+     * @param end
+     *      Second cell.
+     * @return
+     *      List with cells which are situated on direct line on field.
+     * @throws CellsAreNotOnDirectLineException
+     *      Thrown if cells are not on direct line.
+     */
+    public ArrayList<Field.Cell> getWayBetweenCells(Field field, Field.Cell start, Field.Cell end) throws
+            CellsAreNotOnDirectLineException {
         ArrayList<Field.Cell> way = new ArrayList<>();
 
         if (areOnDirectLine(start, end))
-            throw new GameProcessException("Check can move only on direct line");
+            throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
 
         int verticalDirection = getVerticalDirection(start, end);
         int horizontalDirection = getHorizontalDirection(start, end);
         for (int i = start.getLetter() + verticalDirection; i != end.getLetter() ; i += verticalDirection) {
-            way.add(field
-                    .getCell(i, start.getNumber() + horizontalDirection * (Math.abs(start.getLetter() - i))));
+            try {
+                way.add(field
+                        .getCell(i, start.getNumber() + horizontalDirection * (Math.abs(start.getLetter() - i))));
+            } catch (CellNotExistException e) {
+                e.printStackTrace();
+            }
         }
 
         return way;

@@ -1,4 +1,4 @@
-package vsu.course2.game;
+package vsu.course2.game.exceptions;
 
 public class GameProcessException extends Exception {
     public GameProcessException() {

@@ -1,6 +1,10 @@
 package vsu.course2.services;
 
 import vsu.course2.game.*;
+import vsu.course2.game.exceptions.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArtificialIntelligenceService {
     private final GameService gs = new GameService();
@@ -18,7 +22,37 @@ public class ArtificialIntelligenceService {
         Field field = game.getField();
 
         for (Field.Cell cell: field) {
-            if (makeStepBySimpleCheck(game, playerID, cell)) break;
+            if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID) {
+                try {
+                    if (makeStepBySimpleCheck(game, playerID, cell)) break;
+                } catch (MovementWhileAttackCanBeCarriedOutException e) {
+                    attackBySimpleCheck(game, cell);
+                }
+            }
+        }
+    }
+
+    private void attackBySimpleCheck(Game game, Field.Cell cell) {
+        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Direction direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
+                Direction.UP : Direction.DOWN;
+
+        try {
+            if (Math.abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
+                    gs.checkOnNextLeftCellExist(game, cell) &&
+                    gs.checkOnNextLeftCellExist(game,
+                            game.getField().getCell(cell.getLetter() - direction.getCoef(),
+                                    cell.getNumber() + direction.getCoef()))) {
+                gs.attackCheckers(game,
+                        Arrays.asList( cell, new Field.Cell(cell.getLetter() - 2 * direction.getCoef(),
+                        cell.getNumber() + 2 * direction.getCoef()) ) );
+            } else {
+                gs.attackCheckers(game,
+                        Arrays.asList( cell, new Field.Cell(cell.getLetter() + 2 * direction.getCoef(),
+                                cell.getNumber() + 2 * direction.getCoef()) ) );
+            }
+        } catch (GameProcessException e) {
+            e.printStackTrace();
         }
     }
 
@@ -33,14 +67,15 @@ public class ArtificialIntelligenceService {
      * @return
      *      True if check has been moved.
      */
-    private boolean makeStepBySimpleCheck(Game game, int playerID, Field.Cell cell) {
+    private boolean makeStepBySimpleCheck(Game game, int playerID, Field.Cell cell) throws
+            MovementWhileAttackCanBeCarriedOutException {
         Field field = game.getField();
         Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
         Direction direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
                 Direction.UP : Direction.DOWN;
 
-        if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
-                && (cell.getNumber() - playerStartPoint.getNumber() != 0)) {
+        if (cell.getNumber() - playerStartPoint.getNumber() != 0) {
+
             try {
                 if (cell.getLetter() != 0
                         && !field.getCell(cell.getLetter() - 1,
@@ -56,7 +91,8 @@ public class ArtificialIntelligenceService {
                             cell.getLetter() + 1, cell.getNumber() + direction.getCoef());
                     return true;
                 }
-            } catch (GameProcessException e) {
+            } catch (CellNotExistException | PlayerNotHaveCheckException | SimpleCheckGoBackException
+                    | CellNotHaveChecksException | CellIsNotFreeException e) {
                 e.printStackTrace();
             }
         }
