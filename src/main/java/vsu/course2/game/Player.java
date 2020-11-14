@@ -33,6 +33,11 @@ public class Player {
         return playerChecks.contains(check);
     }
 
+    /**
+     * Find cell in corner where player start game.
+     * @return
+     *      Corner, where player start game.
+     */
     public Field.Cell getStartPoint() {
         return startPoint;
     }

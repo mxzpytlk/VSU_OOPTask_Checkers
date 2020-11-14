@@ -20,11 +20,12 @@ public class ConsoleInterfaceService {
         game.changeTurnOrder();
 
         Scanner scn = new Scanner(System.in);
+        drawField(cui);
         while (!gs.gameOver(game)) {
+            scn.nextLine();
             ais.makeStep(game, game.getPlayer().getPlayerID());
             cui.changeTurnOrder();
             drawField(cui);
-            scn.nextLine();
         }
     }
 
@@ -37,9 +38,14 @@ public class ConsoleInterfaceService {
         }
 
         Field field = cui.getGame().getField();
+        int firstPlayerId = cui.getPlayers()[0].getPlayerID();
         for (Field.Cell cell : field.getCells()) {
             if (cell.hasCheck()) {
-                desk[cell.getNumber()][cell.getLetter()] = '\u0BE6';
+                if (cell.getCheck().getPlayerID() == firstPlayerId) {
+                    desk[cell.getNumber()][cell.getLetter()] = '\u0BE6';
+                } else {
+                    desk[cell.getNumber()][cell.getLetter()] = '\u229B';
+                }
             }
         }
 

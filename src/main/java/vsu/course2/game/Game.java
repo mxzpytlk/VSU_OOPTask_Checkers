@@ -1,8 +1,5 @@
 package vsu.course2.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
     private final Player[] players = new Player[2];
     private final Field field = new Field(8, 8);
@@ -47,6 +44,9 @@ public class Game {
         return turnOrder;
     }
 
+    /**
+     * Change player who make step.
+     */
     public void changeTurnOrder() {
         turnOrder = (turnOrder + 1) % players.length;
     }
