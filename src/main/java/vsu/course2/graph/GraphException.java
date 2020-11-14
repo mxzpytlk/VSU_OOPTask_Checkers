@@ -1,4 +1,4 @@
-package graph;
+package vsu.course2.graph;
 
 public class GraphException extends Exception {
     public GraphException() {

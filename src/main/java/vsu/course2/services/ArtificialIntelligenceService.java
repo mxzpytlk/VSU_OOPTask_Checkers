@@ -12,14 +12,14 @@ public class ArtificialIntelligenceService {
         for (Field.Cell cell: field.getCells()) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID) {
                 try {
-                    if (cell.getNumber() != 0
-                            && field.getCell(cell.getLetter() + 1, cell.getNumber() - 1).hasCheck()) {
+                    if (cell.getLetter() != 0
+                            && !field.getCell(cell.getLetter() - 1, cell.getNumber() + 1).hasCheck()) {
 
                         gs.doStep(game, cell.getLetter(), cell.getNumber(),
-                                cell.getLetter() + 1, cell.getNumber() - 1);
+                                cell.getLetter() - 1, cell.getNumber() + 1);
                         break;
-                    } else if(cell.getNumber() != 7
-                            && field.getCell(cell.getLetter() + 1, cell.getNumber() + 1).hasCheck()) {
+                    } else if(cell.getLetter() != 7
+                            && !field.getCell(cell.getLetter() + 1, cell.getNumber() + 1).hasCheck()) {
 
                         gs.doStep(game, cell.getLetter(), cell.getNumber(),
                                 cell.getLetter() + 1, cell.getNumber() + 1);

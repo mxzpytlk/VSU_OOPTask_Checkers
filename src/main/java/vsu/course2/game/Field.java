@@ -1,7 +1,7 @@
 package vsu.course2.game;
 
-import graph.GraphException;
-import graph.Graph;
+import vsu.course2.graph.GraphException;
+import vsu.course2.graph.Graph;
 import java.util.Objects;
 
 public class Field {

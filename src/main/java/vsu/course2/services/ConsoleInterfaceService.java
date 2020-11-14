@@ -21,7 +21,7 @@ public class ConsoleInterfaceService {
 
         Scanner scn = new Scanner(System.in);
         while (!gs.gameOver(game)) {
-                ais.makeStep(game, game.getPlayer().getPlayerID());
+            ais.makeStep(game, game.getPlayer().getPlayerID());
             cui.changeTurnOrder();
             drawField(cui);
             scn.nextLine();
@@ -53,5 +53,6 @@ public class ConsoleInterfaceService {
         for (int i = 0; i < 30; i++) {
             System.out.print("-");
         }
+        System.out.println();
     }
 }

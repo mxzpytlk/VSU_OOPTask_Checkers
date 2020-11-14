@@ -1,4 +1,4 @@
-package graph;
+package vsu.course2.graph;
 
 import java.util.*;
 

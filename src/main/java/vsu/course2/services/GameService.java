@@ -35,8 +35,7 @@ public class GameService {
             return true;
         }
 
-        return curCell.getCheck().isKing() &&
-                Math.abs(curCell.getLetter() - nextCell.getLetter()) ==
+        return Math.abs(curCell.getLetter() - nextCell.getLetter()) ==
                         Math.abs(curCell.getNumber() - nextCell.getNumber());
     }
 
