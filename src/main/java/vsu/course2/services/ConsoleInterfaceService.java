@@ -39,17 +39,17 @@ public class ConsoleInterfaceService {
 
         Field field = cui.getGame().getField();
         int firstPlayerId = cui.getPlayers()[0].getPlayerID();
-        for (Field.Cell cell : field.getCells()) {
+        for (Field.Cell cell : field) {
             if (cell.hasCheck()) {
                 if (cell.getCheck().getPlayerID() == firstPlayerId) {
-                    desk[cell.getNumber()][cell.getLetter()] = '\u0BE6';
-                } else {
                     desk[cell.getNumber()][cell.getLetter()] = '\u229B';
+                } else {
+                    desk[cell.getNumber()][cell.getLetter()] = '\u0BE6';
                 }
             }
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 7; i >= 0; i--) {
             for (int j = 0; j < 8; j++) {
                 System.out.print(desk[i][j]);
             }

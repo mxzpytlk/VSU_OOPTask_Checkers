@@ -10,9 +10,9 @@ public class GameService {
 
     public GameService() { }
 
-    //TODO: Сделать проверку на то, что во время хода нельзя съесть чужую шашку
     public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws GameProcessException {
         if (gameOver(game)) return;
+
         if (!game.getPlayers()[game.getTurnOrder()].hasCheck(game.getField().getChecker(prevLetter, prevNumber)))
             throw new GameProcessException("Player doesn't have checkers on this position");
 
@@ -21,12 +21,72 @@ public class GameService {
             throw new GameProcessException("Checker can't go back");
         }
 
+        if (playerCanHitEnemy(game)) {
+            throw new GameProcessException("Check can't move if another check can attack enemy.");
+        }
+
         fs.moveChecker(game.getField(), prevLetter, prevNumber, nextLetter, nextNumber);
         if (game.getPlayers()[game.getTurnOrder()].getStartPoint().getLetter() - nextLetter == 0) {
             game.getField().getChecker(nextLetter, nextNumber).becomeKing();
         }
 
         game.changeTurnOrder();
+    }
+
+    private boolean playerCanHitEnemy(Game game) {
+        return playerCanHitEnemyBySimpleCheck(game) || playerCanHitEnemyByKing(game);
+    }
+
+    private boolean playerCanHitEnemyByKing(Game game) {
+        //TODO:
+        return false;
+    }
+
+    private boolean playerCanHitEnemyBySimpleCheck(Game game) {
+        Field field = game.getField();
+        int playerID = game.getPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+                Direction.UP : Direction.DOWN;
+
+        for (Field.Cell cell : field) {
+            if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
+                    && (cell.getNumber() - playerStartPoint.getNumber() != 0)) {
+                try {
+                    if (checkOnNextLeftCellExist(field, playerID, playerStartPoint, direction, cell)) {
+                        return true;
+                    } else if (checkOnNextRightCellExist(field, playerID, playerStartPoint, direction, cell)) {
+                        return true;
+                    }
+                } catch (GameProcessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkOnNextLeftCellExist(Field field, int playerID,
+                                             Field.Cell playerStartPoint,
+                                             Direction direction, Field.Cell curCell) throws GameProcessException {
+        return curCell.getLetter() - playerStartPoint.getLetter() != 0 &&
+                field.getCell(curCell.getLetter() - direction.getCoef(),
+                        curCell.getNumber() + direction.getCoef()).hasCheck() &&
+                field.getCell(curCell.getLetter() - direction.getCoef(),
+                        curCell.getNumber() + direction.getCoef()).getCheck()
+                        .getPlayerID() != playerID;
+    }
+
+    private boolean checkOnNextRightCellExist(Field field, int playerID,
+                                             Field.Cell playerStartPoint,
+                                             Direction direction, Field.Cell curCell) throws GameProcessException {
+        return Math.abs(curCell.getLetter() - playerStartPoint.getLetter()) != 7 &&
+                field.getCell(curCell.getLetter() + direction.getCoef(),
+                        curCell.getNumber() + direction.getCoef()).hasCheck() &&
+                field.getCell(curCell.getLetter() + direction.getCoef(),
+                        curCell.getNumber() + direction.getCoef()).getCheck()
+                        .getPlayerID() != playerID;
     }
 
     private boolean canMakeStep(Game game, Field.Cell curCell, Field.Cell nextCell) {

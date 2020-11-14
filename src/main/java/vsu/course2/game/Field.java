@@ -2,9 +2,11 @@ package vsu.course2.game;
 
 import vsu.course2.graph.GraphException;
 import vsu.course2.graph.Graph;
+
+import java.util.Iterator;
 import java.util.Objects;
 
-public class Field {
+public class Field implements Iterable<Field.Cell> {
 
     public static class Cell {
         private final int letter;
@@ -71,10 +73,6 @@ public class Field {
         }
     }
 
-    public Iterable<Cell> getCells() {
-        return field.bfs();
-    }
-
     /**
      *Return black cell from field.
      * @param letter
@@ -94,7 +92,8 @@ public class Field {
         try {
             return field.getVertex(cell);
         } catch (GraphException e) {
-            throw new GameProcessException("Such cell doesn't exist");
+            throw new GameProcessException("Cell with letter " + cell.letter + " and number " + cell.number +
+                    " doesn't exist.");
         }
     }
 
@@ -112,4 +111,8 @@ public class Field {
         return field.edjacencies(cell);
     }
 
+    @Override
+    public Iterator<Cell> iterator() {
+        return field.bfs().iterator();
+    }
 }

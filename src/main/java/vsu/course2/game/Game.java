@@ -1,5 +1,7 @@
 package vsu.course2.game;
 
+import java.util.Iterator;
+
 public class Game {
     private final Player[] players = new Player[2];
     private final Field field = new Field(8, 8);
