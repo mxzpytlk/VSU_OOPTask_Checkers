@@ -1,8 +1,11 @@
 package vsu.course2;
 
+import vsu.course2.console.ConsoleUserInterface;
+import vsu.course2.services.ConsoleInterfaceService;
+
 public class Main {
 
     public static void main(String[] args) {
-	    new ConsoleUserInterface().drawField();
+	    new ConsoleInterfaceService().startGame(new ConsoleUserInterface());
     }
 }
