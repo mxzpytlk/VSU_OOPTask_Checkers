@@ -6,18 +6,43 @@ import vsu.course2.game.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class GameService {
     private final FieldService fs = new FieldService();
 
     public GameService() { }
 
-    public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber) throws PlayerNotHaveCheckException,
-            SimpleCheckGoBackException, MovementWhileAttackCanBeCarriedOutException, CellNotExistException,
-            CellNotHaveChecksException, CellIsNotFreeException {
+    /**
+     * Move check from first cell to second.
+     * @param game
+     *      Current game.
+     * @param prevLetter
+     *      Previous cell letter.
+     * @param prevNumber
+     *      Previous cell number.
+     * @param nextLetter
+     *      Next cell letter.
+     * @param nextNumber
+     *      Next cell number.
+     * @throws SimpleCheckGoBackException
+     *      Thrown if player try move simple check back.
+     * @throws MovementWhileAttackCanBeCarriedOutException
+     *      Thrown if player try make step while can attack enemy.
+     * @throws CellNotExistException
+     *      Thrown if previous or next cell are not exist.
+     * @throws CellNotHaveChecksException
+     *      Thrown if player don't have checks on previous cell.
+     * @throws CellIsNotFreeException
+     *      Thrown if nex cell is not free.
+     */
+    public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber)
+            throws SimpleCheckGoBackException, MovementWhileAttackCanBeCarriedOutException,
+            CellNotExistException, CellNotHaveChecksException, CellIsNotFreeException {
         if (gameOver(game)) return;
 
         if (!game.getPlayers()[game.getTurnOrder()].hasCheck(game.getField().getChecker(prevLetter, prevNumber)))
-            throw new PlayerNotHaveCheckException("Player doesn't have checkers on this position");
+            throw new CellNotHaveChecksException("Player doesn't have checkers on this position");
 
         if (!canMakeStep(game, game.getField().getCell(prevLetter, prevNumber),
                 game.getField().getCell(nextLetter, nextNumber))) {
@@ -29,13 +54,20 @@ public class GameService {
         }
 
         fs.moveChecker(game.getField(), prevLetter, prevNumber, nextLetter, nextNumber);
-        if (game.getPlayers()[game.getTurnOrder()].getStartPoint().getLetter() - nextLetter == 0) {
+        if (game.getCurrentPlayer().getStartPoint().getLetter() - nextLetter == 0) {
             game.getField().getChecker(nextLetter, nextNumber).becomeKing();
         }
 
         game.changeTurnOrder();
     }
 
+    /**
+     * Check if current player can attack enemy.
+     * @param game
+     *      Current game.
+     * @return
+     *      True if current player can attack enemy.
+     */
     private boolean playerCanHitEnemy(Game game) {
         return playerCanHitEnemyBySimpleCheck(game) || playerCanHitEnemyByKing(game);
     }
@@ -45,18 +77,32 @@ public class GameService {
         return false;
     }
 
+    /**
+     * Check if current player have simple check, which could attack enemy check.
+     * @param game
+     *      Current game.
+     * @return
+     *      True if current player have simple check, which could attack enemy check.
+     */
     private boolean playerCanHitEnemyBySimpleCheck(Game game) {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint()
+                .equals(new Field.Cell(0, 0)) ?
+                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
         for (Field.Cell cell : field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
-                    && (cell.getNumber() - playerStartPoint.getNumber() != 0)) {
+                    && abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
                 try {
-                    if (checkOnNextLeftCellExist(game, cell)) {
+                    if (cell.getLetter() != 1 && checkOnNextLeftCellExist(game, cell) &&
+                            !field.getCell(cell.getLetter() - direction.getVerticalCoef(),
+                                            cell.getNumber() + direction.getVerticalCoef()).hasCheck()) {
                         return true;
-                    } else if (checkOnNextRightCellExist(game, cell)) {
+                    } else if (cell.getLetter() != field.getHeight() - 2 && checkOnNextRightCellExist(game, cell) &&
+                        !field.getCell(cell.getLetter() + direction.getVerticalCoef(),
+                                        cell.getNumber() + direction.getVerticalCoef()).hasCheck()) {
                         return true;
                     }
                 } catch (GameProcessException e) {
@@ -82,8 +128,9 @@ public class GameService {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
-                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
+        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint()
+                .equals(new Field.Cell(0, 0)) ?
+                    TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
         try {
             return curCell.getLetter() - playerStartPoint.getLetter() != 0 &&
@@ -112,10 +159,11 @@ public class GameService {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
-                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
+        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint()
+                .equals(new Field.Cell(0, 0)) ?
+                    TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
-        return Math.abs(curCell.getLetter() - playerStartPoint.getLetter()) != 7 &&
+        return abs(curCell.getLetter() - playerStartPoint.getLetter()) != field.getHeight() - 1 &&
                 field.getCell(curCell.getLetter() + direction.getVerticalCoef(),
                         curCell.getNumber() + direction.getVerticalCoef()).hasCheck() &&
                 field.getCell(curCell.getLetter() + direction.getVerticalCoef(),
@@ -124,13 +172,13 @@ public class GameService {
     }
 
     private boolean canMakeStep(Game game, Field.Cell curCell, Field.Cell nextCell) {
-        if (Math.abs(game.getPlayers()[game.getTurnOrder()].getStartPoint().getNumber() - curCell.getNumber()) >=
-                Math.abs(game.getPlayers()[game.getTurnOrder()].getStartPoint().getNumber() - nextCell.getNumber())) {
+        if (abs(game.getCurrentPlayer().getStartPoint().getNumber() - curCell.getNumber()) >=
+                abs(game.getCurrentPlayer().getStartPoint().getNumber() - nextCell.getNumber())) {
             return true;
         }
 
-        return Math.abs(curCell.getLetter() - nextCell.getLetter()) ==
-                        Math.abs(curCell.getNumber() - nextCell.getNumber());
+        return abs(curCell.getLetter() - nextCell.getLetter()) ==
+                        abs(curCell.getNumber() - nextCell.getNumber());
     }
 
     public void attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
@@ -152,7 +200,7 @@ public class GameService {
 
     /**
      * Make one player attack another. Find enemy checks which should be deleted. Remove attacked checks from
-     * enemy players list. Move check on first position in list to last position in list.
+     * enemy players list and field. Move check on first position in list to last position in list.
      * @param game
      *      Current game.
      * @param way
@@ -168,16 +216,19 @@ public class GameService {
 
         for (int i = 0; i < way.size() - 1; i++) {
             if (!fs.areOnDirectLine(way.get(i), way.get(i + 1))
-                    || Math.abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2) {
-                throw new GameProcessException("Simple check can't make this move");
+                    || abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2) {
+                throw new CellsAreNotOnDirectLineException(way.get(i).toString() + way.get(i + 1).toString() +
+                        " are mot on direct line.");
             } else if (field.getCell(way.get(i + 1)).hasCheck()) {
-                throw new GameProcessException("Check can not attack enemy if there is another check behind");
+                throw new CellIsNotFreeException(way.get(i).toString() + way.get(i + 1).toString() +
+                        "\nCheck can not attack enemy if there is another check behind");
             } else if (!fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).hasCheck()) {
-                throw new GameProcessException("There is not enemy check on attack way");
+                throw new CellIsEmptyException(way.get(i).toString() + way.get(i + 1).toString() +
+                        "There is not enemy check on attack way");
             }
-
+            fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).removeCheck();
             eatenChecks.add(fs.getCellBetweenTwoCells(field ,way.get(i), way.get(i + 1)).getCheck());
-            if (Math.abs(way.get(i + 1).getLetter() - players[game.getTurnOrder()].getStartPoint().getLetter()) == 7) {
+            if (abs(way.get(i + 1).getLetter() - players[game.getTurnOrder()].getStartPoint().getLetter()) == 7) {
                 way.get(0).getCheck().becomeKing();
                 eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
                 break;

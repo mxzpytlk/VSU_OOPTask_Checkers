@@ -5,6 +5,8 @@ import vsu.course2.game.exceptions.*;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 
 public class ArtificialIntelligenceService {
     private final GameService gs = new GameService();
@@ -34,6 +36,15 @@ public class ArtificialIntelligenceService {
         }
     }
 
+    /**
+     * Try to attack neighbours by check on cell. Return information about attack success.
+     * @param game
+     *      Current game.
+     * @param cell
+     *      Cell from which player try attack neighbours.
+     * @return
+     *      True if player attack enemy.
+     */
     private boolean makeAttackBySimpleCheck(Game game, Field.Cell cell) {
         Field field = game.getField();
         ArrayList<Field.Cell> way = new ArrayList<>();
@@ -65,30 +76,6 @@ public class ArtificialIntelligenceService {
         return false;
     }
 
-//    private void attackBySimpleCheck(Game game, Field.Cell cell) {
-//        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-//        TwoDimensionalDirection direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
-//                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
-//
-//        try {
-//            if (Math.abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
-//                    gs.checkOnNextLeftCellExist(game, cell) &&
-//                    gs.checkOnNextLeftCellExist(game,
-//                            game.getField().getCell(cell.getLetter() - direction.getVerticalCoef(),
-//                                    cell.getNumber() + direction.getVerticalCoef()))) {
-//                gs.attackCheckers(game,
-//                        Arrays.asList( cell, new Field.Cell(cell.getLetter() - 2 * direction.getVerticalCoef(),
-//                        cell.getNumber() + 2 * direction.getVerticalCoef()) ) );
-//            } else {
-//                gs.attackCheckers(game,
-//                        Arrays.asList( cell, new Field.Cell(cell.getLetter() + 2 * direction.getVerticalCoef(),
-//                                cell.getNumber() + 2 * direction.getVerticalCoef()) ) );
-//            }
-//        } catch (GameProcessException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
      * Move forward players simple check if it exists and can be moved.
      * @param game
@@ -99,33 +86,36 @@ public class ArtificialIntelligenceService {
      *      True if check has been moved.
      */
     private boolean makeStepBySimpleCheck(Game game, Field.Cell cell) {
+        //TODO отловить ошибку связанную с тем, что игрок не может сделать шаг
         Field field = game.getField();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
                 TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
-        if (cell.getNumber() - playerStartPoint.getNumber() != 0) {
+        if (abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
 
             try {
-                if (cell.getLetter() != 0
-                        && !field.getCell(cell.getLetter() - 1,
+                if (cell.getLetter() - playerStartPoint.getLetter() != 0
+                        && !field.getCell(cell.getLetter() - direction.getVerticalCoef(),
                         cell.getNumber() + direction.getVerticalCoef()).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),
-                            cell.getLetter() - 1, cell.getNumber() + direction.getVerticalCoef());
+                            cell.getLetter() - direction.getVerticalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef());
                     return true;
-                } else if(cell.getLetter() != 7
-                        && !field.getCell(cell.getLetter() + 1, cell.getNumber()
+                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1
+                        && !field.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
                             + direction.getVerticalCoef()).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),
-                            cell.getLetter() + 1, cell.getNumber() + direction.getVerticalCoef());
+                            cell.getLetter() + direction.getVerticalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef());
                     return true;
                 }
             } catch (MovementWhileAttackCanBeCarriedOutException e) {
                 return false;
-            } catch (CellNotExistException | PlayerNotHaveCheckException | SimpleCheckGoBackException
-                    | CellNotHaveChecksException | CellIsNotFreeException e) {
+            } catch (CellNotExistException | SimpleCheckGoBackException | CellNotHaveChecksException
+                    | CellIsNotFreeException e) {
                 e.printStackTrace();
             }
         }

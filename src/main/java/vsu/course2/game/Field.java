@@ -27,6 +27,14 @@ public class Field implements Iterable<Field.Cell> {
             return Objects.hash(letter, number);
         }
 
+        @Override
+        public String toString() {
+            return "\nCell{\n" +
+                    "   letter=" + letter +
+                    ",\n   number=" + number +
+                    "\n}";
+        }
+
         public Cell(int letter, int number) {
             this.letter = letter;
             this.number = number;
