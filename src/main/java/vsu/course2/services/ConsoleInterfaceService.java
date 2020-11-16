@@ -14,16 +14,16 @@ public class ConsoleInterfaceService {
         Game game = cui.getGame();
         SimpleArtificialIntelligence[] players = cui.getPlayers();
 
-        players[0] = new SimpleArtificialIntelligence(game, game.getPlayer().getPlayerID());
+        players[0] = new SimpleArtificialIntelligence(game, game.getCurrentPlayer().getPlayerID());
         game.changeTurnOrder();
-        players[1] = new SimpleArtificialIntelligence(game, game.getPlayer().getPlayerID());
+        players[1] = new SimpleArtificialIntelligence(game, game.getCurrentPlayer().getPlayerID());
         game.changeTurnOrder();
 
         Scanner scn = new Scanner(System.in);
         drawField(cui);
         while (!gs.gameOver(game)) {
             scn.nextLine();
-            ais.makeStep(game, game.getPlayer().getPlayerID());
+            ais.makeStep(game, game.getCurrentPlayer().getPlayerID());
             cui.changeTurnOrder();
             drawField(cui);
         }

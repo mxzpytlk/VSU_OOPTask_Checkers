@@ -47,8 +47,8 @@ public class GameService {
 
     private boolean playerCanHitEnemyBySimpleCheck(Game game) {
         Field field = game.getField();
-        int playerID = game.getPlayer().getPlayerID();
-        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        int playerID = game.getCurrentPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
 
         for (Field.Cell cell : field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
@@ -80,9 +80,9 @@ public class GameService {
     public boolean checkOnNextLeftCellExist(Game game, Field.Cell curCell) {
 
         Field field = game.getField();
-        int playerID = game.getPlayer().getPlayerID();
-        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
-        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+        int playerID = game.getCurrentPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        Direction direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
                 Direction.UP : Direction.DOWN;
 
         try {
@@ -110,9 +110,9 @@ public class GameService {
      */
     public boolean checkOnNextRightCellExist(Game game, Field.Cell curCell) throws GameProcessException {
         Field field = game.getField();
-        int playerID = game.getPlayer().getPlayerID();
-        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
-        Direction direction = game.getPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+        int playerID = game.getCurrentPlayer().getPlayerID();
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        Direction direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
                 Direction.UP : Direction.DOWN;
 
         return Math.abs(curCell.getLetter() - playerStartPoint.getLetter()) != 7 &&
@@ -133,7 +133,7 @@ public class GameService {
                         Math.abs(curCell.getNumber() - nextCell.getNumber());
     }
 
-    public ArrayList<Checker> attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
+    public void attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
 
@@ -141,22 +141,34 @@ public class GameService {
                 field.getCell(way.get(0)).getCheck().getPlayerID() != players[game.getTurnOrder()].id()) {
             throw new GameProcessException("Player doesn't have checkers on this position");
         }
-        ArrayList<Checker> eatenChecks =
-                way.get(0).getCheck().isKing() ? attackByKing(game, way) : attackBySimpleCHeck(game, way);
-        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
+
+        if (way.get(0).getCheck().isKing()) {
+            attackByKing(game, way);
+        } else {
+            attackBySimpleCHeck(game, way);
+        }
         game.changeTurnOrder();
-        players[game.getTurnOrder()].removeCheck(eatenChecks.toArray(new Checker[0]));
-        return eatenChecks;
     }
 
-    private ArrayList<Checker> attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
+    /**
+     * Make one player attack another. Find enemy checks which should be deleted. Remove attacked checks from
+     * enemy players list. Move check on first position in list to last position in list.
+     * @param game
+     *      Current game.
+     * @param way
+     *      List with cells where player should have check which make attack. First position is players check
+     *      which make attack other is cells where players check stay after each enemy check attack.
+     * @throws GameProcessException
+     *      Thrown if check try to attack enemy check which is far from, try to go back
+     */
+    private void attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
         ArrayList<Checker> eatenChecks = new ArrayList<>();
 
         for (int i = 0; i < way.size() - 1; i++) {
             if (!fs.areOnDirectLine(way.get(i), way.get(i + 1))
-                    || Math.abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2){
+                    || Math.abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2) {
                 throw new GameProcessException("Simple check can't make this move");
             } else if (field.getCell(way.get(i + 1)).hasCheck()) {
                 throw new GameProcessException("Check can not attack enemy if there is another check behind");
@@ -165,13 +177,14 @@ public class GameService {
             }
 
             eatenChecks.add(fs.getCellBetweenTwoCells(field ,way.get(i), way.get(i + 1)).getCheck());
-            if (Math.abs(way.get(i + 1).getLetter() - players[game.getTurnOrder()].getStartPoint().getLetter()) == 8) {
+            if (Math.abs(way.get(i + 1).getLetter() - players[game.getTurnOrder()].getStartPoint().getLetter()) == 7) {
                 way.get(0).getCheck().becomeKing();
                 eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
                 break;
             }
         }
-        return eatenChecks;
+        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
+        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
     }
 
     private ArrayList<Checker> attackByKing(Game game, List<Field.Cell> way) throws GameProcessException {

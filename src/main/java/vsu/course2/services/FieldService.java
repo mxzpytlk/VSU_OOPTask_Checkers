@@ -60,7 +60,7 @@ public class FieldService {
             CellsAreNotOnDirectLineException {
         ArrayList<Field.Cell> way = new ArrayList<>();
 
-        if (areOnDirectLine(start, end))
+        if (!areOnDirectLine(start, end))
             throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
 
         int verticalDirection = getVerticalDirection(start, end);
@@ -77,6 +77,15 @@ public class FieldService {
         return way;
     }
 
+    /**
+     * Check if forward way between cells exists.
+     * @param start
+     *      First cell.
+     * @param end
+     *      Second cell.
+     * @return
+     *      True, if forward way between cells exists.
+     */
     public boolean areOnDirectLine(Field.Cell start, Field.Cell end) {
         return Math.abs(start.getLetter() - end.getLetter()) !=
                 Math.abs(start.getNumber() - end.getNumber())
@@ -110,5 +119,43 @@ public class FieldService {
             }
         }
         return result;
+    }
+
+    public ArrayList<Field.Cell> getLineWhere2CellsSituated(Field field, Field.Cell start, Field.Cell end)
+            throws CellsAreNotOnDirectLineException {
+        if (!areOnDirectLine(start, end))
+            throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
+
+        ArrayList<Field.Cell> way = new ArrayList<>();
+
+        Field.Cell down = start.getNumber() > end.getNumber() ? end : start;
+        Field.Cell up = start.getNumber() > end.getNumber() ? start : end;
+
+        if (down.getLetter() < up.getLetter()) {
+            int leftPos = down.getNumber() >= down.getLetter() ? 0 : down.getLetter() - down.getNumber();
+            int rightPos = down.getNumber() <= down.getLetter() ? field.getWidth() - 1 :
+                    field.getWidth() - 1 - (down.getLetter() - down.getNumber());
+            for (int i = leftPos; i <= rightPos; i++) {
+                try {
+                    way.add(field.getCell(i, down.getNumber() - down.getLetter() + i));
+                } catch (CellNotExistException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            int leftPos = up.getNumber() + up.getLetter() <= field.getHeight() ? 0 :
+                    up.getLetter() + up.getNumber() - field.getHeight();
+            int rightPos = up.getNumber() + up.getLetter() >= field.getHeight() ? field.getWidth() - 1 :
+                    up.getLetter() + up.getNumber();
+            for (int i = rightPos; i >= leftPos; i--) {
+                try {
+                    way.add(field.getCell(i, down.getNumber() + down.getLetter() - i));
+                } catch (CellNotExistException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return way;
     }
 }

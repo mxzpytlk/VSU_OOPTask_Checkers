@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 public class ArtificialIntelligenceService {
     private final GameService gs = new GameService();
+    private final FieldService fs = new FieldService();
 
     ArtificialIntelligenceService() {}
 
@@ -23,17 +24,30 @@ public class ArtificialIntelligenceService {
 
         for (Field.Cell cell: field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID) {
-                try {
-                    if (makeStepBySimpleCheck(game, playerID, cell)) break;
-                } catch (MovementWhileAttackCanBeCarriedOutException e) {
-                    attackBySimpleCheck(game, cell);
+                if (makeStepBySimpleCheck(game, cell)) {
+                    break;
+                }
+                if (makeAttackBySimpleCheck(game, cell)) {
+
                 }
             }
         }
     }
 
+    private boolean makeAttackBySimpleCheck(Game game, Field.Cell cell) {
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        Direction direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
+                Direction.UP : Direction.DOWN;
+
+        ArrayList<Field.Cell> way = new ArrayList<>();
+
+        for (Field.Cell neighbour : game.getField().neighbours(cell)) {
+
+        }
+    }
+
     private void attackBySimpleCheck(Game game, Field.Cell cell) {
-        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         Direction direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
                 Direction.UP : Direction.DOWN;
 
@@ -60,17 +74,14 @@ public class ArtificialIntelligenceService {
      * Move forward players simple check if it exists and can be moved.
      * @param game
      *      Current game.
-     * @param playerID
-     *      ID of player, who's step is current.
      * @param cell
      *      Current cell from which check moves.
      * @return
      *      True if check has been moved.
      */
-    private boolean makeStepBySimpleCheck(Game game, int playerID, Field.Cell cell) throws
-            MovementWhileAttackCanBeCarriedOutException {
+    private boolean makeStepBySimpleCheck(Game game, Field.Cell cell) {
         Field field = game.getField();
-        Field.Cell playerStartPoint =  game.getPlayer().getStartPoint();
+        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         Direction direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
                 Direction.UP : Direction.DOWN;
 
@@ -91,6 +102,8 @@ public class ArtificialIntelligenceService {
                             cell.getLetter() + 1, cell.getNumber() + direction.getCoef());
                     return true;
                 }
+            } catch (MovementWhileAttackCanBeCarriedOutException e) {
+                return false;
             } catch (CellNotExistException | PlayerNotHaveCheckException | SimpleCheckGoBackException
                     | CellNotHaveChecksException | CellIsNotFreeException e) {
                 e.printStackTrace();

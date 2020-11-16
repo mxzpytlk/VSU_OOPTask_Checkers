@@ -1,7 +1,5 @@
 package vsu.course2.game;
 
-import java.util.Iterator;
-
 public class Game {
     private final Player[] players = new Player[2];
     private final Field field = new Field(8, 8);
@@ -34,8 +32,12 @@ public class Game {
         return field;
     }
 
-    public Player getPlayer() {
+    public Player getCurrentPlayer() {
         return players[turnOrder];
+    }
+
+    public Player getEnemyPlayer() {
+        return players[(turnOrder + 1) % players.length];
     }
 
     public Player[] getPlayers() {

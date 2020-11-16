@@ -56,8 +56,11 @@ public class Field implements Iterable<Field.Cell> {
     }
 
     private final Graph<Cell> field = new Graph<>();
+    private final int width, height;
 
     Field(int w, int h) {
+        this.width = w;
+        this.height = h;
 
         for (int i = 0; i < h - 1; i++) {
             for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {
@@ -71,6 +74,14 @@ public class Field implements Iterable<Field.Cell> {
                 }
             }
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     /**
