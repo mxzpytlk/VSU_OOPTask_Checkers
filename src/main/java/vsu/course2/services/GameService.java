@@ -82,15 +82,15 @@ public class GameService {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-        Direction direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
-                Direction.UP : Direction.DOWN;
+        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
         try {
             return curCell.getLetter() - playerStartPoint.getLetter() != 0 &&
-                    field.getCell(curCell.getLetter() - direction.getCoef(),
-                            curCell.getNumber() + direction.getCoef()).hasCheck() &&
-                    field.getCell(curCell.getLetter() - direction.getCoef(),
-                            curCell.getNumber() + direction.getCoef()).getCheck()
+                    field.getCell(curCell.getLetter() - direction.getVerticalCoef(),
+                            curCell.getNumber() + direction.getVerticalCoef()).hasCheck() &&
+                    field.getCell(curCell.getLetter() - direction.getVerticalCoef(),
+                            curCell.getNumber() + direction.getVerticalCoef()).getCheck()
                             .getPlayerID() != playerID;
         } catch (CellNotExistException e) {
             return false;
@@ -112,14 +112,14 @@ public class GameService {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-        Direction direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
-                Direction.UP : Direction.DOWN;
+        TwoDimensionalDirection direction = game.getCurrentPlayer().getStartPoint().equals(new Field.Cell(0, 0)) ?
+                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
 
         return Math.abs(curCell.getLetter() - playerStartPoint.getLetter()) != 7 &&
-                field.getCell(curCell.getLetter() + direction.getCoef(),
-                        curCell.getNumber() + direction.getCoef()).hasCheck() &&
-                field.getCell(curCell.getLetter() + direction.getCoef(),
-                        curCell.getNumber() + direction.getCoef()).getCheck()
+                field.getCell(curCell.getLetter() + direction.getVerticalCoef(),
+                        curCell.getNumber() + direction.getVerticalCoef()).hasCheck() &&
+                field.getCell(curCell.getLetter() + direction.getVerticalCoef(),
+                        curCell.getNumber() + direction.getVerticalCoef()).getCheck()
                         .getPlayerID() != playerID;
     }
 
@@ -159,7 +159,7 @@ public class GameService {
      *      List with cells where player should have check which make attack. First position is players check
      *      which make attack other is cells where players check stay after each enemy check attack.
      * @throws GameProcessException
-     *      Thrown if check try to attack enemy check which is far from, try to go back
+     *      Thrown if check try to attack enemy check which is far from, try to go back or try to attack empty cell.
      */
     private void attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();

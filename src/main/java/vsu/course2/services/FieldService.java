@@ -87,7 +87,7 @@ public class FieldService {
      *      True, if forward way between cells exists.
      */
     public boolean areOnDirectLine(Field.Cell start, Field.Cell end) {
-        return Math.abs(start.getLetter() - end.getLetter()) !=
+        return Math.abs(start.getLetter() - end.getLetter()) ==
                 Math.abs(start.getNumber() - end.getNumber())
                 && Math.abs(start.getLetter() - end.getLetter()) != 0;
     }
@@ -121,10 +121,24 @@ public class FieldService {
         return result;
     }
 
-    public ArrayList<Field.Cell> getLineWhere2CellsSituated(Field field, Field.Cell start, Field.Cell end)
+    /**
+     * Find direct line on which 2 cells are situated.
+     * @param field
+     *      Current gamefield.
+     * @param start
+     *      1st cell.
+     * @param end
+     *      2nd cell.
+     * @return
+     *      ArrayList with cells on direct line in order from down to up.
+     * @throws CellsAreNotOnDirectLineException
+     *      Thrown if cells are not on direct line.
+     */
+    public ArrayList<Field.Cell> getLineWhere2CellsAreSituated(Field field, Field.Cell start, Field.Cell end)
             throws CellsAreNotOnDirectLineException {
         if (!areOnDirectLine(start, end))
-            throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
+            throw new CellsAreNotOnDirectLineException("Cell [" + start.getLetter() + ", " + start.getNumber() +
+                    "] and [" + end.getLetter() + ", " + end.getNumber() + "]" + " are not on direct line.");
 
         ArrayList<Field.Cell> way = new ArrayList<>();
 
@@ -157,5 +171,46 @@ public class FieldService {
         }
 
         return way;
+    }
+
+    /**
+     * Check if cell exist on field.
+     * @param field
+     *      Field where cell is checked.
+     * @param letter
+     *      Letter of checked cell.
+     * @param number
+     *      Number of checked cell.
+     * @return
+     *      True if cell exist on field.
+     */
+    public boolean cellExist(Field field, int letter, int number) {
+        return number >= 0 && number < field.getHeight() && letter >= 0 && letter < field.getWidth();
+    }
+
+    /**
+     * Find direction from start cell to end cell.
+     * @param start
+     *      First cell.
+     * @param end
+     *      Second cell.
+     * @return
+     *      Twodimensional direction from start to end. For example: UP_RIGHT, DOWN_LEFT.
+     * @throws CellsAreEqualsException
+     *      Thrown if cells have the same letters and numbers.
+     */
+    public TwoDimensionalDirection findDirectionFromStartToEnd(Field.Cell start, Field.Cell end)
+            throws CellsAreEqualsException {
+        if (start.getLetter() > end.getLetter() && start.getNumber() > end.getNumber()) {
+            return TwoDimensionalDirection.DOWN_LEFT;
+        } else if (start.getLetter() < end.getLetter() && start.getNumber() > end.getNumber()) {
+            return TwoDimensionalDirection.DOWN_RIGHT;
+        } else if(start.getLetter() > end.getLetter() && start.getNumber() < end.getNumber()) {
+            return TwoDimensionalDirection.UP_LEFT;
+        } else if(start.getLetter() < end.getLetter() && start.getNumber() < end.getNumber()) {
+            return TwoDimensionalDirection.UP_RIGHT;
+        }
+        throw new CellsAreEqualsException("Cell [" + start.getLetter() + ", " + start.getNumber() +
+                "] and cell [" + end.getLetter() + ", " + end.getNumber() + "] are equal");
     }
 }
