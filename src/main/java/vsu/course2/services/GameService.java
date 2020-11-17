@@ -187,7 +187,7 @@ public class GameService {
      */
     private void attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
-        Player[] players = game.getPlayers();
+
         ArrayList<Checker> eatenChecks = new ArrayList<>();
 
         for (int i = 0; i < way.size() - 1; i++) {
@@ -252,6 +252,20 @@ public class GameService {
     }
 
     public boolean gameOver(Game game) {
-        return game.getPlayers()[0].getCheckers().length == 0 || game.getPlayers()[1].getCheckers().length == 0;
+        Field field = game.getField();
+        int firstPlayerID = game.getCurrentPlayer().getPlayerID();
+        int secondPlayerID = game.getEnemyPlayer().getPlayerID();
+        boolean firstPlayerHasChecks = false;
+        boolean secondPlayerHasChecks = false;
+        for (Field.Cell cell : field) {
+            firstPlayerHasChecks = firstPlayerHasChecks ||
+                    (cell.hasCheck() && cell.getCheck().getPlayerID() == firstPlayerID);
+            secondPlayerHasChecks = secondPlayerHasChecks ||
+                    (cell.hasCheck() && cell.getCheck().getPlayerID() == secondPlayerID);
+            if (firstPlayerHasChecks && secondPlayerHasChecks) {
+                return false;
+            }
+        }
+        return true;
     }
 }
