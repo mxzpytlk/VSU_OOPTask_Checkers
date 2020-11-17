@@ -42,9 +42,9 @@ public class ConsoleInterfaceService {
         for (Field.Cell cell : field) {
             if (cell.hasCheck()) {
                 if (cell.getCheck().getPlayerID() == firstPlayerId) {
-                    desk[cell.getNumber()][cell.getLetter()] = '\u229B';
+                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u2741';
                 } else {
-                    desk[cell.getNumber()][cell.getLetter()] = '\u0BE6';
+                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u0BE6' : '\u06DE';
                 }
             }
         }
