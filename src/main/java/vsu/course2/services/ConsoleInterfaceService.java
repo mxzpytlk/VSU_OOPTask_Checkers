@@ -1,35 +1,37 @@
 package vsu.course2.services;
 
-import vsu.course2.console.*;
 import vsu.course2.game.*;
 
 import java.util.Scanner;
 
+/**
+ * Service which present checkers game in console.
+ */
 public class ConsoleInterfaceService {
     private final GameService gs = new GameService();
     private final ArtificialIntelligenceService ais = new ArtificialIntelligenceService();
 
     public ConsoleInterfaceService() { }
-    public void startGame(ConsoleUserInterface cui) {
-        Game game = cui.getGame();
-        SimpleArtificialIntelligence[] players = cui.getPlayers();
 
-        players[0] = new SimpleArtificialIntelligence(game, game.getCurrentPlayer().getPlayerID());
-        game.changeTurnOrder();
-        players[1] = new SimpleArtificialIntelligence(game, game.getCurrentPlayer().getPlayerID());
-        game.changeTurnOrder();
-
+    /**
+     * Show game process from start to end by step in console.
+     * @param game Current game
+     */
+    public void startGame(Game game) {
         Scanner scn = new Scanner(System.in);
-        drawField(cui);
+        drawField(game);
         while (!gs.gameOver(game)) {
             scn.nextLine();
-            ais.makeStep(game, game.getCurrentPlayer().getPlayerID());
-            cui.changeTurnOrder();
-            drawField(cui);
+            ais.makeStep(game);
+            drawField(game);
         }
     }
 
-    private void drawField(ConsoleUserInterface cui) {
+    /**
+     * Draw game field in current state.
+     * @param game Current game.
+     */
+    private void drawField(Game game) {
         char[][] desk = new char[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -37,8 +39,8 @@ public class ConsoleInterfaceService {
             }
         }
 
-        Field field = cui.getGame().getField();
-        int firstPlayerId = cui.getPlayers()[0].getPlayerID();
+        Field field = game.getField();
+        int firstPlayerId = game.getPlayers()[0].getPlayerID();
         for (Field.Cell cell : field) {
             if (cell.hasCheck()) {
                 if (cell.getCheck().getPlayerID() == firstPlayerId) {
@@ -49,8 +51,8 @@ public class ConsoleInterfaceService {
             }
         }
 
-        for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = game.getField().getHeight() - 1; i >= 0; i--) {
+            for (int j = 0; j < game.getField().getWidth(); j++) {
                 System.out.print(desk[i][j]);
             }
             System.out.println();

@@ -1,6 +1,7 @@
 package vsu.course2.game;
 
 public class Checker {
+
     private final int playerID;
     private boolean isKing = false;
 

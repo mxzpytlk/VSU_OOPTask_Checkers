@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
-
+/**
+ * Service which controls players behaviour.
+ */
 public class ArtificialIntelligenceService {
     private final GameService gs = new GameService();
     private final FieldService fs = new FieldService();
@@ -16,13 +18,11 @@ public class ArtificialIntelligenceService {
 
     /**
      * Move first players check which program founds and which can be moved.
-     * @param game
-     *      Current game.
-     * @param playerID
-     *      ID of player, who's step is current.
+     * @param game Current game.
      */
-    public void makeStep(Game game, int playerID) {
+    public void makeStep(Game game) {
         Field field = game.getField();
+        int playerID = game.getCurrentPlayer().getPlayerID();
 
         for (Field.Cell cell: field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID) {
@@ -38,12 +38,9 @@ public class ArtificialIntelligenceService {
 
     /**
      * Try to attack neighbours by check on cell. Return information about attack success.
-     * @param game
-     *      Current game.
-     * @param cell
-     *      Cell from which player try attack neighbours.
-     * @return
-     *      True if player attack enemy.
+     * @param game Current game.
+     * @param cell Cell from which player try attack neighbours.
+     * @return True if player attack enemy.
      */
     private boolean makeAttackBySimpleCheck(Game game, Field.Cell cell) {
         Field field = game.getField();
@@ -52,7 +49,7 @@ public class ArtificialIntelligenceService {
 
         for (Field.Cell neighbour : game.getField().neighbours(cell)) {
             try {
-                TwoDimensionalDirection direction = fs.findDirectionFromStartToEnd(cell, neighbour);
+                TwoDimensionalDirection direction = fs.getDirectionFromStartToEnd(cell, neighbour);
                 if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
                         cell.getNumber() + direction.getVerticalCoef() * 2) &&
                     field.getCell(cell.getLetter() + direction.getHorizontalCoef(),
@@ -78,15 +75,11 @@ public class ArtificialIntelligenceService {
 
     /**
      * Move forward players simple check if it exists and can be moved.
-     * @param game
-     *      Current game.
-     * @param cell
-     *      Current cell from which check moves.
-     * @return
-     *      True if check has been moved.
+     * @param game Current game.
+     * @param cell Current cell from which check moves.
+     * @return True if check has been moved.
      */
     private boolean makeStepBySimpleCheck(Game game, Field.Cell cell) {
-        //TODO отловить ошибку связанную с тем, что игрок не может сделать шаг
         Field field = game.getField();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
@@ -95,16 +88,16 @@ public class ArtificialIntelligenceService {
         if (abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
 
             try {
-                if (cell.getLetter() - playerStartPoint.getLetter() != 0
-                        && !field.getCell(cell.getLetter() - direction.getVerticalCoef(),
+                if (cell.getLetter() - playerStartPoint.getLetter() != 0 &&
+                        !field.getCell(cell.getLetter() - direction.getVerticalCoef(),
                         cell.getNumber() + direction.getVerticalCoef()).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),
                             cell.getLetter() - direction.getVerticalCoef(),
                             cell.getNumber() + direction.getVerticalCoef());
                     return true;
-                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1
-                        && !field.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
+                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
+                        !field.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
                             + direction.getVerticalCoef()).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),

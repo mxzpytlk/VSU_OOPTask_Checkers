@@ -92,17 +92,6 @@ public class Field implements Iterable<Field.Cell> {
         return height;
     }
 
-    /**
-     *Return black cell from field.
-     * @param letter
-     *      Position of column.
-     * @param number
-     *      Position of row.
-     * @return
-     *      Cell object.
-     * @throws CellNotExistException
-     *      Thrown if this black cell doesn't exist on field;
-     */
     public Cell getCell(int letter, int number) throws CellNotExistException {
         return getCell(new Cell(letter, number));
     }

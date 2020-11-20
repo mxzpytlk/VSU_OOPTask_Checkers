@@ -2,9 +2,8 @@ package vsu.course2.graph;
 
 import java.util.*;
 
-
 public class Graph<T> implements Iterable<T> {
-    private List<List<T>> vEdjLists = new ArrayList<>();
+    private final List<List<T>> vEdjLists = new ArrayList<>();
     private int eCount = 0;
 
     public Graph(){ }

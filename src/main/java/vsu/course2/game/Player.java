@@ -34,9 +34,8 @@ public class Player {
     }
 
     /**
-     * Find cell in corner where player start game.
-     * @return
-     *      Corner, where player start game.
+     * Find cell, which is situated in down left corner relatively player.
+     * @return Corner, which is situated in down left corner relatively player.
      */
     public Field.Cell getStartPoint() {
         return startPoint;

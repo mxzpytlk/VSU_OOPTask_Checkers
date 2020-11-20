@@ -15,26 +15,16 @@ public class GameService {
 
     /**
      * Move check from first cell to second.
-     * @param game
-     *      Current game.
-     * @param prevLetter
-     *      Previous cell letter.
-     * @param prevNumber
-     *      Previous cell number.
-     * @param nextLetter
-     *      Next cell letter.
-     * @param nextNumber
-     *      Next cell number.
-     * @throws SimpleCheckGoBackException
-     *      Thrown if player try move simple check back.
-     * @throws MovementWhileAttackCanBeCarriedOutException
-     *      Thrown if player try make step while can attack enemy.
-     * @throws CellNotExistException
-     *      Thrown if previous or next cell are not exist.
-     * @throws CellNotHaveChecksException
-     *      Thrown if player don't have checks on previous cell.
-     * @throws CellIsNotFreeException
-     *      Thrown if nex cell is not free.
+     * @param game Current game.
+     * @param prevLetter Previous cell letter.
+     * @param prevNumber Previous cell number.
+     * @param nextLetter Next cell letter.
+     * @param nextNumber Next cell number.
+     * @throws SimpleCheckGoBackException Thrown if player try move simple check back.
+     * @throws MovementWhileAttackCanBeCarriedOutException Thrown if player try make step while can attack enemy.
+     * @throws CellNotExistException Thrown if previous or next cell are not exist.
+     * @throws CellNotHaveChecksException Thrown if player don't have checks on previous cell.
+     * @throws CellIsNotFreeException Thrown if next cell is not free.
      */
     public void doStep(Game game, int prevLetter, int prevNumber, int nextLetter, int nextNumber)
             throws SimpleCheckGoBackException, MovementWhileAttackCanBeCarriedOutException,
@@ -63,10 +53,8 @@ public class GameService {
 
     /**
      * Check if current player can attack enemy.
-     * @param game
-     *      Current game.
-     * @return
-     *      True if current player can attack enemy.
+     * @param game Current game.
+     * @return True if current player can attack enemy.
      */
     private boolean playerCanHitEnemy(Game game) {
         return playerCanHitEnemyBySimpleCheck(game) || playerCanHitEnemyByKing(game);
@@ -79,10 +67,8 @@ public class GameService {
 
     /**
      * Check if current player have simple check, which could attack enemy check.
-     * @param game
-     *      Current game.
-     * @return
-     *      True if current player have simple check, which could attack enemy check.
+     * @param game Current game.
+     * @return True if current player have simple check, which could attack enemy check.
      */
     private boolean playerCanHitEnemyBySimpleCheck(Game game) {
         Field field = game.getField();
@@ -121,6 +107,14 @@ public class GameService {
         return false;
     }
 
+    /**
+     * Find next cell on direction.
+     * @param game Current game.
+     * @param curCell Cell, from which next cells is found,
+     * @param direction Direction in which next cell is found.
+     * @return Next cell on direction.
+     * @throws CellNotExistException Thrown if cell is not exist.
+     */
     public Field.Cell getNextCell(Game game, Field.Cell curCell, TwoDimensionalDirection direction)
             throws CellNotExistException {
         Field field = game.getField();
@@ -130,14 +124,10 @@ public class GameService {
 
     /**
      * Check if enemy checks next cell in direction exist.
-     * @param game
-     *      Current game.
-     * @param curCell
-     *      Cell which is checked.
-     * @param direction
-     *      Direction, where function check checker existing.
-     * @return
-     *      True, if check on next cell exist .
+     * @param game Current game.
+     * @param curCell Cell which is checked.
+     * @param direction Direction, where function check checker existing.
+     * @return True, if check on next cell exist .
      */
     public boolean checkOnNextCellExist(Game game, Field.Cell curCell, TwoDimensionalDirection direction) {
         try {
@@ -147,6 +137,13 @@ public class GameService {
         }
     }
 
+    /**
+     * Check if cells situated un direct line and player can make step.
+     * @param game Current game.
+     * @param curCell Cell from which step possibility is checking.
+     * @param nextCell Cell from which step possibility is checking.
+     * @return True if cells situated un direct line and player can make step.
+     */
     private boolean canMakeStep(Game game, Field.Cell curCell, Field.Cell nextCell) {
         if (abs(game.getCurrentPlayer().getStartPoint().getNumber() - curCell.getNumber()) >=
                 abs(game.getCurrentPlayer().getStartPoint().getNumber() - nextCell.getNumber())) {
@@ -157,6 +154,16 @@ public class GameService {
                         abs(curCell.getNumber() - nextCell.getNumber());
     }
 
+    /**
+     * Make one player attack another. Find enemy checks which should be deleted. Remove attacked checks from
+     * enemy players list and field. Move check on first position in list to last position in list.
+     * @param game Current game.
+     * @param way
+     *      List with cells where player should have check which make attack. First position is players check
+     *      which make attack other is cells where players check stay after each enemy check attack.
+     * @throws GameProcessException
+     *      Thrown if check try to attack enemy check which is far from, try to go back or try to attack empty cell.
+     */
     public void attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
@@ -175,15 +182,14 @@ public class GameService {
     }
 
     /**
-     * Make one player attack another. Find enemy checks which should be deleted. Remove attacked checks from
-     * enemy players list and field. Move check on first position in list to last position in list.
-     * @param game
-     *      Current game.
-     * @param way
-     *      List with cells where player should have check which make attack. First position is players check
-     *      which make attack other is cells where players check stay after each enemy check attack.
-     * @throws GameProcessException
-     *      Thrown if check try to attack enemy check which is far from, try to go back or try to attack empty cell.
+     * Make one player attack another by simple check. Find enemy checks which should be deleted. Remove attacked checks
+     * from enemy players list and field. Move check on first position in list to last position in list.
+     * @param game Current game.
+     * @param way List with cells where player should have check which make attack. First position is players check
+     *            which make attack other is cells where players check stay after each enemy check attack. Cells must be
+     *            separate by only one cell with enemies check.
+     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
+     * to attack empty cell.
      */
     private void attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
@@ -215,6 +221,15 @@ public class GameService {
         fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
     }
 
+    /**
+     * Make one player attack another by king check. Find enemy checks which should be deleted. Remove attacked checks
+     * from enemy players list and field. Move check on first position in list to last position in list.
+     * @param game Current game.
+     * @param way List with cells where player should have check which make attack. First position is players check
+     *            which make attack other is cells where players check stay after each enemy check attack.
+     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
+     * to attack empty cell.
+     */
     private ArrayList<Checker> attackByKing(Game game, List<Field.Cell> way) throws GameProcessException {
         Field field = game.getField();
         ArrayList<Checker> eatenChecks = new ArrayList<>();
@@ -235,6 +250,11 @@ public class GameService {
         return eatenChecks;
     }
 
+    /**
+     * Check if simple checker can attack enemy by way.
+     * @param directWay List with cells, which is on players attack way.
+     * @return True if simple checker can attack enemy by way.
+     */
     private boolean canAttack(ArrayList<Field.Cell> directWay) {
         boolean hasCheckerOnDirection,
                 result = false;
@@ -251,6 +271,11 @@ public class GameService {
         return result;
     }
 
+    /**
+     * Check if one player does not have check.
+     * @param game Current game.
+     * @return True if one player does not have check.
+     */
     public boolean gameOver(Game game) {
         Field field = game.getField();
         int firstPlayerID = game.getCurrentPlayer().getPlayerID();
