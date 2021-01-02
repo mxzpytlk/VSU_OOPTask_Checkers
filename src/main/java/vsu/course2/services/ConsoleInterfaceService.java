@@ -1,9 +1,13 @@
 package vsu.course2.services;
 
+import com.google.gson.Gson;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -22,9 +26,25 @@ public class ConsoleInterfaceService {
         Scanner scn = new Scanner(System.in);
         drawField(game);
         while (!gs.gameOver(game)) {
-            scn.nextLine();
-            ais.makeStep(game);
-            drawField(game);
+            String command = scn.nextLine();
+            if (command.equals("JSON")) {
+                saveGame(game);
+            } else {
+                ais.makeStep(game);
+                drawField(game);
+            }
+        }
+    }
+
+    private void saveGame(Game game) {
+        Gson gson = new Gson();
+        String JSONGame = gson.toJson(game);
+        try {
+            FileWriter fw = new FileWriter("src/main/resources/game.json");
+            fw.write(JSONGame);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
