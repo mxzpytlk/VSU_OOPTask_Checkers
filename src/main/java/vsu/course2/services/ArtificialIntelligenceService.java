@@ -47,21 +47,21 @@ public class ArtificialIntelligenceService {
         ArrayList<Cell> way = new ArrayList<>();
         way.add(cell);
 
-        for (Cell neighbour : game.getField().neighbours(cell)) {
+        for (Cell neighbour : fs.neighbours(cell, game.getField())) {
             try {
                 TwoDimensionalDirection direction = fs.getDirectionFromStartToEnd(cell, neighbour);
                 if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
                         cell.getNumber() + direction.getVerticalCoef() * 2) &&
-                    field.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                            cell.getNumber() + direction.getVerticalCoef()).hasCheck() &&
-                    field.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                            cell.getNumber() + direction.getVerticalCoef()).getCheck().getPlayerID() ==
+                    fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef(), field).hasCheck() &&
+                    fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef(), field).getCheck().getPlayerID() ==
                         game.getEnemyPlayer().getPlayerID() &&
-                    !field.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
-                                cell.getNumber() + direction.getVerticalCoef() * 2).hasCheck()
+                    !fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
+                                cell.getNumber() + direction.getVerticalCoef() * 2, field).hasCheck()
                     ) {
-                    way.add(field.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
-                            cell.getNumber() + direction.getVerticalCoef() * 2));
+                    way.add(fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
+                            cell.getNumber() + direction.getVerticalCoef() * 2, field));
                     gs.attackCheckers(game, way);
                     return true;
                 }
@@ -84,7 +84,7 @@ public class ArtificialIntelligenceService {
         Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection direction = null;
         try {
-            direction = playerStartPoint.equals(field.getCell(0, 0)) ?
+            direction = playerStartPoint.equals(fs.getCell(0, 0, field)) ?
                     TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
         } catch (CellNotExistException e) {
             e.printStackTrace();
@@ -94,16 +94,16 @@ public class ArtificialIntelligenceService {
 
             try {
                 if (cell.getLetter() - playerStartPoint.getLetter() != 0 &&
-                        !field.getCell(cell.getLetter() - direction.getVerticalCoef(),
-                        cell.getNumber() + direction.getVerticalCoef()).hasCheck()) {
+                        !fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
+                        cell.getNumber() + direction.getVerticalCoef(), field).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),
                             cell.getLetter() - direction.getVerticalCoef(),
                             cell.getNumber() + direction.getVerticalCoef());
                     return true;
                 } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
-                        !field.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
-                            + direction.getVerticalCoef()).hasCheck()) {
+                        !fs.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
+                            + direction.getVerticalCoef(), field).hasCheck()) {
 
                     gs.doStep(game, cell.getLetter(), cell.getNumber(),
                             cell.getLetter() + direction.getVerticalCoef(),

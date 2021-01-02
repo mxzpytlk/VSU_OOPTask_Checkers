@@ -1,5 +1,6 @@
 package vsu.course2.services;
 
+import vsu.course2.graph.GraphException;
 import vsu.course2.models.game.Checker;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
@@ -10,7 +11,32 @@ import java.util.ArrayList;
 
 public class FieldService {
 
+    public Cell getCell(int letter, int number, Field field) throws CellNotExistException {
+        return getCell(new Cell(letter, number), field);
+    }
 
+    public Cell getCell(Cell cell, Field field) throws CellNotExistException {
+        try {
+            return field.getField().getVertex(cell);
+        } catch (GraphException e) {
+            throw new CellNotExistException("Cell with letter " + cell.getLetter() + " and number " + cell.getNumber() +
+                    " doesn't exist.");
+        }
+    }
+
+    public Checker getChecker(int letter, int number, Field field) throws CellNotExistException {
+        if (getCell(letter, number, field).getCheck() == null)
+            throw new CellNotExistException("There isn't checker on this cell");
+        return getCell(letter, number, field).getCheck();
+    }
+
+    public void setChecker(Checker checker, int letter, int number, Field field) throws Exception {
+        getCell(letter, number, field).setCheck(checker);
+    }
+
+    public Iterable<Cell> neighbours(Cell cell, Field field) {
+        return field.getField().edjacencies(cell);
+    }
 
     /**
      * Move check from start cell to and cell.
@@ -29,16 +55,16 @@ public class FieldService {
     public void moveChecker(Field field, int prevLetter, int prevNumber, int newLetter, int newNumber)
             throws CellNotHaveChecksException, CellIsNotFreeException, CellNotExistException {
 
-        if (field.getCell(prevLetter, prevNumber).getCheck() == null) {
+        if (getCell(prevLetter, prevNumber, field).getCheck() == null) {
             throw new CellNotHaveChecksException("This cell doesn't have checker");
         }
 
-        if (field.getCell(newLetter, newNumber).getCheck() != null) {
+        if (getCell(newLetter, newNumber, field).getCheck() != null) {
             throw new CellIsNotFreeException("This cell isn't free");
         }
 
-        field.getCell(newLetter, newNumber).setCheck(field.getCell(prevLetter, prevNumber).getCheck());
-        field.getCell(prevLetter, prevNumber).removeCheck();
+        getCell(newLetter, newNumber, field).setCheck(getCell(prevLetter, prevNumber, field).getCheck());
+        getCell(prevLetter, prevNumber, field).removeCheck();
     }
 
     /**
@@ -60,9 +86,8 @@ public class FieldService {
         for (int i = start.getLetter() + direction.getVerticalCoef(); i < end.getLetter() ;
              i += direction.getVerticalCoef()) {
             try {
-                way.add(field
-                        .getCell(i, start.getNumber() +
-                                direction.getHorizontalCoef() * (Math.abs(start.getLetter() - i))));
+                way.add(getCell(i, start.getNumber() +
+                                direction.getHorizontalCoef() * (Math.abs(start.getLetter() - i)), field));
             } catch (CellNotExistException e) {
                 e.printStackTrace();
             }
@@ -92,8 +117,8 @@ public class FieldService {
      * @throws GameProcessException Throws if cells situated far from each other.
      */
     public Cell getCellBetweenTwoCells(Field field, Cell first, Cell second) throws GameProcessException {
-        for (Cell firstNeighbour : field.neighbours(first)) {
-            for (Cell secondNeighbour : field.neighbours(second)) {
+        for (Cell firstNeighbour : neighbours(first, field)) {
+            for (Cell secondNeighbour : neighbours(second, field)) {
                 if (firstNeighbour.equals(secondNeighbour)) {
                     return firstNeighbour;
                 }

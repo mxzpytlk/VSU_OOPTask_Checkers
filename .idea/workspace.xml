@@ -23,11 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/field/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/field/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/field/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
     </list>
@@ -72,6 +70,11 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="vsu.course2.models.game.field" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
@@ -124,7 +127,7 @@
       <workItem from="1606293344608" duration="2790000" />
       <workItem from="1607004551657" duration="1250000" />
       <workItem from="1607098005650" duration="624000" />
-      <workItem from="1609582369412" duration="1284000" />
+      <workItem from="1609582369412" duration="2681000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>

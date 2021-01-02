@@ -1,8 +1,6 @@
 package vsu.course2.models.game.field;
 
-import vsu.course2.graph.*;
-import vsu.course2.models.game.Checker;
-import vsu.course2.models.game.exceptions.CellNotExistException;
+import vsu.course2.graph.Graph;
 
 import java.util.Iterator;
 
@@ -37,31 +35,8 @@ public class Field implements Iterable<Cell> {
         return height;
     }
 
-    public Cell getCell(int letter, int number) throws CellNotExistException {
-        return getCell(new Cell(letter, number));
-    }
-
-    public Cell getCell(Cell cell) throws CellNotExistException {
-        try {
-            return field.getVertex(cell);
-        } catch (GraphException e) {
-            throw new CellNotExistException("Cell with letter " + cell.getLetter() + " and number " + cell.getNumber() +
-                    " doesn't exist.");
-        }
-    }
-
-    public Checker getChecker(int letter, int number) throws CellNotExistException {
-        if (getCell(letter, number).getCheck() == null)
-            throw new CellNotExistException("There isn't checker on this cell");
-        return getCell(letter, number).getCheck();
-    }
-
-    public void setChecker(Checker checker, int letter, int number) throws Exception {
-        getCell(letter, number).setCheck(checker);
-    }
-
-    public Iterable<Cell> neighbours(Cell cell) {
-        return field.edjacencies(cell);
+    public Graph<Cell> getField() {
+        return field;
     }
 
     @Override

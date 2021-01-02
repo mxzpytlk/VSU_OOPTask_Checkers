@@ -1,23 +1,25 @@
 package vsu.course2.models.game;
 
 import vsu.course2.models.game.field.Field;
+import vsu.course2.services.FieldService;
 
 public class Game {
     private final Player[] players = new Player[2];
     private final Field field = new Field(8, 8);
+    private final FieldService fs = new FieldService();
     private int turnOrder = 0;
 
     public Game() {
         try {
-            players[0] = new Player(field.getCell(0, 0));
-            players[1] = new Player(field.getCell(7, 7));
+            players[0] = new Player(fs.getCell(0, 0, field));
+            players[1] = new Player(fs.getCell(7, 7, field));
 
             int letter = 0;
             int number = 0;
 
             for (int i = 0; i < 12; i++) {
-                field.setChecker(players[0].getCheckers()[i], letter, number);
-                field.setChecker(players[1].getCheckers()[i], 7 - letter, 7 - number);
+                fs.setChecker(players[0].getCheckers()[i], letter, number, field);
+                fs.setChecker(players[1].getCheckers()[i], 7 - letter, 7 - number, field);
                 if (letter != 6 && letter != 7) {
                     letter += 2;
                 } else {
