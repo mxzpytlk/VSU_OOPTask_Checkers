@@ -23,32 +23,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/console/ConsoleUserInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/console/SimpleArtificialIntelligence.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/graph/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Checker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/TwoDimensionalDirection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/TwoDimensionalDirection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellIsEmptyException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellIsEmptyException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellIsNotFreeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellIsNotFreeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellNotExistException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellNotExistException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellNotHaveChecksException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellNotHaveChecksException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellsAreEqualsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellsAreEqualsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/CellsAreNotOnDirectLineException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/CellsAreNotOnDirectLineException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/GameProcessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/GameProcessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/MovementWhileAttackCanBeCarriedOutException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/MovementWhileAttackCanBeCarriedOutException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/game/exceptions/SimpleCheckGoBackException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/exceptions/SimpleCheckGoBackException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/console/ConsoleUserInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/console/SimpleArtificialIntelligence.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Checker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Checker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/game/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$2$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/graph/Graph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Checker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field$Cell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Field.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/TwoDimensionalDirection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellIsEmptyException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellIsNotFreeException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellNotExistException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellNotHaveChecksException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellsAreEqualsException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/CellsAreNotOnDirectLineException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/GameProcessException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/MovementWhileAttackCanBeCarriedOutException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/game/exceptions/SimpleCheckGoBackException.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,17 +117,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -138,7 +141,12 @@
       <workItem from="1605548444480" duration="5157000" />
       <workItem from="1605602455681" duration="6945000" />
       <workItem from="1605894117611" duration="190000" />
-      <workItem from="1605898792298" duration="5982000" />
+      <workItem from="1605898792298" duration="6470000" />
+      <workItem from="1606055413753" duration="3731000" />
+      <workItem from="1606293344608" duration="2790000" />
+      <workItem from="1607004551657" duration="1250000" />
+      <workItem from="1607098005650" duration="624000" />
+      <workItem from="1609582369412" duration="561000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>

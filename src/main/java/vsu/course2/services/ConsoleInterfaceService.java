@@ -1,6 +1,7 @@
 package vsu.course2.services;
 
-import vsu.course2.game.*;
+import vsu.course2.models.game.Field;
+import vsu.course2.models.game.Game;
 
 import java.util.Scanner;
 
@@ -11,7 +12,6 @@ public class ConsoleInterfaceService {
     private final GameService gs = new GameService();
     private final ArtificialIntelligenceService ais = new ArtificialIntelligenceService();
 
-    public ConsoleInterfaceService() { }
 
     /**
      * Show game process from start to end by step in console.

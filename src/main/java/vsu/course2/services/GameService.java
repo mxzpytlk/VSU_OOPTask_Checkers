@@ -1,7 +1,7 @@
 package vsu.course2.services;
 
-import vsu.course2.game.*;
-import vsu.course2.game.exceptions.*;
+import vsu.course2.models.game.*;
+import vsu.course2.models.game.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,6 @@ import static java.lang.Math.abs;
 
 public class GameService {
     private final FieldService fs = new FieldService();
-
-    public GameService() { }
 
     /**
      * Move check from first cell to second.
@@ -61,8 +59,8 @@ public class GameService {
     }
 
     private boolean playerCanHitEnemyByKing(Game game) {
-        //TODO:
-        return false;
+        //TODO
+        return playerCanHitEnemyBySimpleCheck(game) ;
     }
 
     /**
@@ -71,39 +69,51 @@ public class GameService {
      * @return True if current player have simple check, which could attack enemy check.
      */
     private boolean playerCanHitEnemyBySimpleCheck(Game game) {
+        try {
+            if (checkPlayerCanHitBySimple(game)) return true;
+        } catch (GameProcessException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if current player have simple check, which could attack enemy check.
+     * @param game Current game.
+     * @return True if current player have simple check, which could attack enemy check.
+     * @throws CellNotExistException Thrown if method implementation had logic mistakes.
+     */
+    private boolean checkPlayerCanHitBySimple(Game game) throws CellNotExistException {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
-        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        Field.Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection leftDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(new Field.Cell(0, 0)) ?
+                .equals(field.getCell(0, 0)) ?
                 TwoDimensionalDirection.UP_LEFT : TwoDimensionalDirection.DOWN_RIGHT;
         TwoDimensionalDirection rightDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(new Field.Cell(0, 0)) ?
+                .equals(field.getCell(0, 0)) ?
                 TwoDimensionalDirection.UP_RIGHT : TwoDimensionalDirection.DOWN_LEFT;
 
         for (Field.Cell cell : field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
                     && abs(cell.getNumber() - playerStartPoint.getNumber()) < field.getHeight() - 2) {
-                try {
-                    if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
-                            checkOnNextCellExist(game, cell, leftDirection) &&
+                if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
+                        checkOnNextCellExist(game, cell, leftDirection) &&
                         getNextCell(game, cell, leftDirection).getCheck().getPlayerID() != playerID &&
                         !field.getCell(cell.getLetter() + 2 * leftDirection.getHorizontalCoef(),
-                                        cell.getNumber() + 2 * leftDirection.getVerticalCoef()).hasCheck()) {
-                        return true;
-                    } else if (abs(cell.getLetter() - playerStartPoint.getLetter()) < field.getWidth() - 2 &&
-                            checkOnNextCellExist(game, cell, rightDirection) &&
-                            getNextCell(game, cell, rightDirection).getCheck().getPlayerID() != playerID &&
-                            !field.getCell(cell.getLetter() + 2 * rightDirection.getHorizontalCoef(),
-                                    cell.getNumber() + 2 * rightDirection.getVerticalCoef()).hasCheck()) {
-                        return true;
-                    }
-                } catch (GameProcessException e) {
-                    e.printStackTrace();
+                                cell.getNumber() + 2 * leftDirection.getVerticalCoef()).hasCheck()) {
+                    return true;
+                } else if (abs(cell.getLetter() - playerStartPoint.getLetter()) < field.getWidth() - 2 &&
+                        checkOnNextCellExist(game, cell, rightDirection) &&
+                        getNextCell(game, cell, rightDirection).getCheck().getPlayerID() != playerID &&
+                        !field.getCell(cell.getLetter() + 2 * rightDirection.getHorizontalCoef(),
+                                cell.getNumber() + 2 * rightDirection.getVerticalCoef()).hasCheck()) {
+                    return true;
                 }
+
             }
         }
-
         return false;
     }
 

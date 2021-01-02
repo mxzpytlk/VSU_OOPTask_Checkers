@@ -1,7 +1,7 @@
 package vsu.course2.services;
 
-import vsu.course2.game.*;
-import vsu.course2.game.exceptions.*;
+import vsu.course2.models.game.*;
+import vsu.course2.models.game.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -13,8 +13,6 @@ import static java.lang.Math.abs;
 public class ArtificialIntelligenceService {
     private final GameService gs = new GameService();
     private final FieldService fs = new FieldService();
-
-    ArtificialIntelligenceService() {}
 
     /**
      * Move first players check which program founds and which can be moved.
@@ -82,8 +80,13 @@ public class ArtificialIntelligenceService {
     private boolean makeStepBySimpleCheck(Game game, Field.Cell cell) {
         Field field = game.getField();
         Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-        TwoDimensionalDirection direction = playerStartPoint.equals(new Field.Cell(0, 0)) ?
-                TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
+        TwoDimensionalDirection direction = null;
+        try {
+            direction = playerStartPoint.equals(field.getCell(0, 0)) ?
+                    TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
+        } catch (CellNotExistException e) {
+            e.printStackTrace();
+        }
 
         if (abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
 

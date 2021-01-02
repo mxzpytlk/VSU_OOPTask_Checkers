@@ -1,12 +1,15 @@
 package vsu.course2.services;
 
-import vsu.course2.game.*;
-import vsu.course2.game.exceptions.*;
+import vsu.course2.models.game.Checker;
+import vsu.course2.models.game.Field;
+import vsu.course2.models.game.TwoDimensionalDirection;
+import vsu.course2.models.game.exceptions.*;
 
 import java.util.ArrayList;
 
 public class FieldService {
-    FieldService() {}
+
+
 
     /**
      * Move check from start cell to and cell.
