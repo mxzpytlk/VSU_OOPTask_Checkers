@@ -2,6 +2,8 @@ package vsu.course2.services;
 
 import vsu.course2.models.game.*;
 import vsu.course2.models.game.exceptions.*;
+import vsu.course2.models.game.field.Cell;
+import vsu.course2.models.game.field.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +89,7 @@ public class GameService {
     private boolean checkPlayerCanHitBySimple(Game game) throws CellNotExistException {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
-        Field.Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
+        Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection leftDirection = game.getCurrentPlayer().getStartPoint()
                 .equals(field.getCell(0, 0)) ?
                 TwoDimensionalDirection.UP_LEFT : TwoDimensionalDirection.DOWN_RIGHT;
@@ -95,7 +97,7 @@ public class GameService {
                 .equals(field.getCell(0, 0)) ?
                 TwoDimensionalDirection.UP_RIGHT : TwoDimensionalDirection.DOWN_LEFT;
 
-        for (Field.Cell cell : field) {
+        for (Cell cell : field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
                     && abs(cell.getNumber() - playerStartPoint.getNumber()) < field.getHeight() - 2) {
                 if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
@@ -125,7 +127,7 @@ public class GameService {
      * @return Next cell on direction.
      * @throws CellNotExistException Thrown if cell is not exist.
      */
-    public Field.Cell getNextCell(Game game, Field.Cell curCell, TwoDimensionalDirection direction)
+    public Cell getNextCell(Game game, Cell curCell, TwoDimensionalDirection direction)
             throws CellNotExistException {
         Field field = game.getField();
         return field.getCell(curCell.getLetter() + direction.getHorizontalCoef(),
@@ -139,7 +141,7 @@ public class GameService {
      * @param direction Direction, where function check checker existing.
      * @return True, if check on next cell exist .
      */
-    public boolean checkOnNextCellExist(Game game, Field.Cell curCell, TwoDimensionalDirection direction) {
+    public boolean checkOnNextCellExist(Game game, Cell curCell, TwoDimensionalDirection direction) {
         try {
             return getNextCell(game, curCell, direction).hasCheck();
         } catch (CellNotExistException e) {
@@ -154,7 +156,7 @@ public class GameService {
      * @param nextCell Cell from which step possibility is checking.
      * @return True if cells situated un direct line and player can make step.
      */
-    private boolean canMakeStep(Game game, Field.Cell curCell, Field.Cell nextCell) {
+    private boolean canMakeStep(Game game, Cell curCell, Cell nextCell) {
         if (abs(game.getCurrentPlayer().getStartPoint().getNumber() - curCell.getNumber()) >=
                 abs(game.getCurrentPlayer().getStartPoint().getNumber() - nextCell.getNumber())) {
             return true;
@@ -174,7 +176,7 @@ public class GameService {
      * @throws GameProcessException
      *      Thrown if check try to attack enemy check which is far from, try to go back or try to attack empty cell.
      */
-    public void attackCheckers(Game game, List<Field.Cell> way) throws GameProcessException {
+    public void attackCheckers(Game game, List<Cell> way) throws GameProcessException {
         Field field = game.getField();
         Player[] players = game.getPlayers();
 
@@ -201,7 +203,7 @@ public class GameService {
      * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
      * to attack empty cell.
      */
-    private void attackBySimpleCHeck(Game game, List<Field.Cell> way) throws GameProcessException {
+    private void attackBySimpleCHeck(Game game, List<Cell> way) throws GameProcessException {
         Field field = game.getField();
 
         ArrayList<Checker> eatenChecks = new ArrayList<>();
@@ -240,12 +242,12 @@ public class GameService {
      * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
      * to attack empty cell.
      */
-    private ArrayList<Checker> attackByKing(Game game, List<Field.Cell> way) throws GameProcessException {
+    private ArrayList<Checker> attackByKing(Game game, List<Cell> way) throws GameProcessException {
         Field field = game.getField();
         ArrayList<Checker> eatenChecks = new ArrayList<>();
 
         for (int i = 0; i < way.size() - 1; i++) {
-            ArrayList<Field.Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
+            ArrayList<Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
 
             if (directWay.get(directWay.size() - 1).hasCheck()) {
                 throw new GameProcessException("There are checkers on the way");
@@ -265,7 +267,7 @@ public class GameService {
      * @param directWay List with cells, which is on players attack way.
      * @return True if simple checker can attack enemy by way.
      */
-    private boolean canAttack(ArrayList<Field.Cell> directWay) {
+    private boolean canAttack(ArrayList<Cell> directWay) {
         boolean hasCheckerOnDirection,
                 result = false;
 
@@ -292,7 +294,7 @@ public class GameService {
         int secondPlayerID = game.getEnemyPlayer().getPlayerID();
         boolean firstPlayerHasChecks = false;
         boolean secondPlayerHasChecks = false;
-        for (Field.Cell cell : field) {
+        for (Cell cell : field) {
             firstPlayerHasChecks = firstPlayerHasChecks ||
                     (cell.hasCheck() && cell.getCheck().getPlayerID() == firstPlayerID);
             secondPlayerHasChecks = secondPlayerHasChecks ||

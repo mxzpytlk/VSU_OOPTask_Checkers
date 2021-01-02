@@ -1,7 +1,8 @@
 package vsu.course2.services;
 
 import vsu.course2.models.game.Checker;
-import vsu.course2.models.game.Field;
+import vsu.course2.models.game.field.Cell;
+import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.TwoDimensionalDirection;
 import vsu.course2.models.game.exceptions.*;
 
@@ -20,7 +21,7 @@ public class FieldService {
      * @throws CellIsNotFreeException Thrown if end cell isn't free.
      * @throws CellNotExistException Thrown if start or end cell doesn't exist.
      */
-    public void moveChecker(Field field, Field.Cell start, Field.Cell end)
+    public void moveChecker(Field field, Cell start, Cell end)
             throws CellNotHaveChecksException, CellIsNotFreeException, CellNotExistException {
         moveChecker(field, start.getLetter(), start.getNumber(), end.getLetter(), end.getNumber());
     }
@@ -48,9 +49,9 @@ public class FieldService {
      * @return List with cells which are situated on direct line between start and end cells.
      * @throws CellsAreNotOnDirectLineException Thrown if cells are not on direct line.
      */
-    public ArrayList<Field.Cell> getWayBetweenCells(Field field, Field.Cell start, Field.Cell end) throws
+    public ArrayList<Cell> getWayBetweenCells(Field field, Cell start, Cell end) throws
             CellsAreNotOnDirectLineException, CellsAreEqualsException {
-        ArrayList<Field.Cell> way = new ArrayList<>();
+        ArrayList<Cell> way = new ArrayList<>();
 
         if (!areOnDirectLine(start, end))
             throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
@@ -76,7 +77,7 @@ public class FieldService {
      * @param end Second cell.
      * @return True, if forward way between cells exists.
      */
-    public boolean areOnDirectLine(Field.Cell start, Field.Cell end) {
+    public boolean areOnDirectLine(Cell start, Cell end) {
         return Math.abs(start.getLetter() - end.getLetter()) ==
                 Math.abs(start.getNumber() - end.getNumber())
                 && Math.abs(start.getLetter() - end.getLetter()) != 0;
@@ -90,9 +91,9 @@ public class FieldService {
      * @return Cell which is between first and second cells.
      * @throws GameProcessException Throws if cells situated far from each other.
      */
-    public Field.Cell getCellBetweenTwoCells(Field field, Field.Cell first, Field.Cell second) throws GameProcessException {
-        for (Field.Cell firstNeighbour : field.neighbours(first)) {
-            for (Field.Cell secondNeighbour : field.neighbours(second)) {
+    public Cell getCellBetweenTwoCells(Field field, Cell first, Cell second) throws GameProcessException {
+        for (Cell firstNeighbour : field.neighbours(first)) {
+            for (Cell secondNeighbour : field.neighbours(second)) {
                 if (firstNeighbour.equals(secondNeighbour)) {
                     return firstNeighbour;
                 }
@@ -106,9 +107,9 @@ public class FieldService {
      * @param line Direct way on field.
      * @return List which contains checkers which are on line.
      */
-    public ArrayList<Checker> checkersOnLine(ArrayList<Field.Cell> line) {
+    public ArrayList<Checker> checkersOnLine(ArrayList<Cell> line) {
         ArrayList<Checker> result = new ArrayList<>();
-        for (Field.Cell cell : line) {
+        for (Cell cell : line) {
             if (cell.hasCheck()) {
                 result.add(cell.getCheck());
             }
@@ -134,7 +135,7 @@ public class FieldService {
      * @return Twodimensional direction from start to end. For example: UP_RIGHT, DOWN_LEFT.
      * @throws CellsAreEqualsException Thrown if cells have the same letters and numbers.
      */
-    public TwoDimensionalDirection getDirectionFromStartToEnd(Field.Cell start, Field.Cell end)
+    public TwoDimensionalDirection getDirectionFromStartToEnd(Cell start, Cell end)
             throws CellsAreEqualsException {
         if (start.getLetter() > end.getLetter() && start.getNumber() > end.getNumber()) {
             return TwoDimensionalDirection.DOWN_LEFT;

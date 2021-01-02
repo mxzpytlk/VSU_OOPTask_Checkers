@@ -2,6 +2,8 @@ package vsu.course2.services;
 
 import vsu.course2.models.game.*;
 import vsu.course2.models.game.exceptions.*;
+import vsu.course2.models.game.field.Cell;
+import vsu.course2.models.game.field.Field;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ public class ArtificialIntelligenceService {
         Field field = game.getField();
         int playerID = game.getCurrentPlayer().getPlayerID();
 
-        for (Field.Cell cell: field) {
+        for (Cell cell: field) {
             if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID) {
                 if (makeStepBySimpleCheck(game, cell)) {
                     break;
@@ -40,12 +42,12 @@ public class ArtificialIntelligenceService {
      * @param cell Cell from which player try attack neighbours.
      * @return True if player attack enemy.
      */
-    private boolean makeAttackBySimpleCheck(Game game, Field.Cell cell) {
+    private boolean makeAttackBySimpleCheck(Game game, Cell cell) {
         Field field = game.getField();
-        ArrayList<Field.Cell> way = new ArrayList<>();
+        ArrayList<Cell> way = new ArrayList<>();
         way.add(cell);
 
-        for (Field.Cell neighbour : game.getField().neighbours(cell)) {
+        for (Cell neighbour : game.getField().neighbours(cell)) {
             try {
                 TwoDimensionalDirection direction = fs.getDirectionFromStartToEnd(cell, neighbour);
                 if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
@@ -77,9 +79,9 @@ public class ArtificialIntelligenceService {
      * @param cell Current cell from which check moves.
      * @return True if check has been moved.
      */
-    private boolean makeStepBySimpleCheck(Game game, Field.Cell cell) {
+    private boolean makeStepBySimpleCheck(Game game, Cell cell) {
         Field field = game.getField();
-        Field.Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+        Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection direction = null;
         try {
             direction = playerStartPoint.equals(field.getCell(0, 0)) ?

@@ -1,14 +1,16 @@
 package vsu.course2.models.game;
 
+import vsu.course2.models.game.field.Cell;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player {
     private final int playerID;
     private final ArrayList<Checker> playerChecks = new ArrayList<>();
-    private final Field.Cell startPoint;
+    private final Cell startPoint;
 
-    public Player(Field.Cell startPoint) {
+    public Player(Cell startPoint) {
         playerID = (int) (Math.random() * Integer.MAX_VALUE);
         for (int i = 0; i < 12; i++) {
             playerChecks.add(new Checker(playerID));
@@ -37,7 +39,7 @@ public class Player {
      * Find cell, which is situated in down left corner relatively player.
      * @return Corner, which is situated in down left corner relatively player.
      */
-    public Field.Cell getStartPoint() {
+    public Cell getStartPoint() {
         return startPoint;
     }
 

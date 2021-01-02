@@ -1,6 +1,7 @@
 package vsu.course2.services;
 
-import vsu.course2.models.game.Field;
+import vsu.course2.models.game.field.Cell;
+import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
 
 import java.util.Scanner;
@@ -41,7 +42,7 @@ public class ConsoleInterfaceService {
 
         Field field = game.getField();
         int firstPlayerId = game.getPlayers()[0].getPlayerID();
-        for (Field.Cell cell : field) {
+        for (Cell cell : field) {
             if (cell.hasCheck()) {
                 if (cell.getCheck().getPlayerID() == firstPlayerId) {
                     desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u2741';
