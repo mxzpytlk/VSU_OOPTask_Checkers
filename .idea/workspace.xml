@@ -23,11 +23,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/field/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/field/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +132,7 @@
       <workItem from="1606293344608" duration="2790000" />
       <workItem from="1607004551657" duration="1250000" />
       <workItem from="1607098005650" duration="624000" />
-      <workItem from="1609582369412" duration="2681000" />
+      <workItem from="1609582369412" duration="4119000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>

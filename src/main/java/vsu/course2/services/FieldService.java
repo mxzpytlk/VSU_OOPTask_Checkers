@@ -1,5 +1,6 @@
 package vsu.course2.services;
 
+import vsu.course2.graph.Graph;
 import vsu.course2.graph.GraphException;
 import vsu.course2.models.game.Checker;
 import vsu.course2.models.game.field.Cell;
@@ -10,6 +11,23 @@ import vsu.course2.models.game.exceptions.*;
 import java.util.ArrayList;
 
 public class FieldService {
+
+    public Field createField(int w, int h) {
+        Graph<Cell> field = new Graph<>();
+        for (int i = 0; i < h - 1; i++) {
+            for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {
+                if (j == 0) {
+                    field.addEdge(new Cell(j, i), new Cell(j + 1, i + 1));
+                } else if (j == w - 1) {
+                    field.addEdge(new Cell(j, i), new Cell(j - 1, i + 1));
+                } else {
+                    field.addEdge(new Cell(j, i), new Cell(j + 1, i + 1));
+                    field.addEdge(new Cell(j, i), new Cell(j - 1, i + 1));
+                }
+            }
+        }
+        return new Field(field, w, h);
+    }
 
     public Cell getCell(int letter, int number, Field field) throws CellNotExistException {
         return getCell(new Cell(letter, number), field);

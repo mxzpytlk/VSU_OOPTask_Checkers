@@ -5,11 +5,12 @@ import vsu.course2.services.FieldService;
 
 public class Game {
     private final Player[] players = new Player[2];
-    private final Field field = new Field(8, 8);
+    private final Field field;
     private final FieldService fs = new FieldService();
     private int turnOrder = 0;
 
     public Game() {
+        this.field = fs.createField(8, 8);
         try {
             players[0] = new Player(fs.getCell(0, 0, field));
             players[1] = new Player(fs.getCell(7, 7, field));

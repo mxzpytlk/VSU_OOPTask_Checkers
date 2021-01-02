@@ -181,7 +181,7 @@ public class GameService {
         Player[] players = game.getPlayers();
 
         if (fs.getCell(way.get(0), field).hasCheck() &&
-                fs.getCell(way.get(0), field).getCheck().getPlayerID() != players[game.getTurnOrder()].id()) {
+                fs.getCell(way.get(0), field).getCheck().getPlayerID() != players[game.getTurnOrder()].getPlayerID()) {
             throw new GameProcessException("Player doesn't have checkers on this position");
         }
 

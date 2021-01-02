@@ -27,10 +27,6 @@ public class Player {
         return playerID;
     }
 
-    public int id() {
-        return playerID;
-    }
-
     public boolean hasCheck(Checker check) {
         return playerChecks.contains(check);
     }
