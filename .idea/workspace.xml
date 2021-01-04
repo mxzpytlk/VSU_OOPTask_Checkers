@@ -24,13 +24,9 @@
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/game.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/game.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +71,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveInnerDialog.RECENTS_KEY">
@@ -125,7 +121,8 @@
       <workItem from="1609582369412" duration="5032000" />
       <workItem from="1609587673181" duration="4114000" />
       <workItem from="1609675598520" duration="1769000" />
-      <workItem from="1609753075771" duration="1741000" />
+      <workItem from="1609753075771" duration="3190000" />
+      <workItem from="1609756297891" duration="417000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -269,15 +266,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Attack logic for simple check" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="vsu.course2.models.game.field.Field" memberName="field" />

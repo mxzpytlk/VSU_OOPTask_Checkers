@@ -135,14 +135,8 @@ public class FieldService {
      * @throws GameProcessException Throws if cells situated far from each other.
      */
     public Cell getCellBetweenTwoCells(Field field, Cell first, Cell second) throws GameProcessException {
-        for (Cell firstNeighbour : neighbours(first, field)) {
-            for (Cell secondNeighbour : neighbours(second, field)) {
-                if (firstNeighbour.equals(secondNeighbour)) {
-                    return firstNeighbour;
-                }
-            }
-        }
-        throw new GameProcessException("Cells do not have neighbour");
+        return getCell((first.getLetter() + second.getLetter()) / 2,
+                (first.getNumber() + second.getNumber()) / 2, field);
     }
 
     /**
