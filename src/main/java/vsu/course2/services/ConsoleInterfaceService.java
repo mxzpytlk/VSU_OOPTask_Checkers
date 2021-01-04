@@ -5,9 +5,10 @@ import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -22,18 +23,29 @@ public class ConsoleInterfaceService {
      * Show game process from start to end by step in console.
      * @param game Current game
      */
-    public void startGame(Game game) {
+    public void startGame(Game game) throws IOException {
         Scanner scn = new Scanner(System.in);
         drawField(game);
         while (!gs.gameOver(game)) {
             String command = scn.nextLine();
-            if (command.equals("JSON")) {
+            if (command.equals("save")) {
                 saveGame(game);
-            } else {
+            } else if (command.equals("load")) {
+                game = loadGame();
+                drawField(game);
+            }
+            else {
                 ais.makeStep(game);
                 drawField(game);
             }
         }
+    }
+
+    private Game loadGame() throws IOException {
+        Gson gson = new Gson();
+        String JSONGame = Files.lines(Paths.get("src/main/resources/game.json"), StandardCharsets.UTF_8)
+                .reduce("", (prev, cur) -> prev + "" + cur);
+        return gson.fromJson(JSONGame, Game.class);
     }
 
     private void saveGame(Game game) {
