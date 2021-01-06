@@ -5,8 +5,7 @@ import vsu.course2.models.game.exceptions.*;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -304,5 +303,90 @@ public class GameService {
             }
         }
         return true;
+    }
+
+    public Map<Cell, List<List<Cell>>> getPossibleWays(Game game) {
+        Field field = game.getField();
+        Map<Cell, List<List<Cell>>> attacks = new HashMap<>();
+        Map<Cell, List<List<Cell>>> steps = new HashMap<>();
+        for (Cell cell : field) {
+            if (cell.getCheck() != null && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
+                    && !cell.getCheck().isKing()) {
+                List<List<Cell>> possibleWays = getPossibleAttacksToSimpleCheck(cell, game);
+                if (possibleWays.size() > 0) {
+                    attacks.put(cell, possibleWays);
+                }
+            }
+
+            if (cell.getCheck() != null && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
+                    &&  attacks.size() == 0) {
+
+
+                List<List<Cell>> possibleWays = getPossibleWaysToSimpleCheck(cell, game);
+                if (possibleWays.size() > 0) {
+                    steps.put(cell, possibleWays);
+                }
+            }
+        }
+        return attacks.size() > 0 ? attacks : steps;
+    }
+
+    private List<List<Cell>> getPossibleWaysToSimpleCheck(Cell cell, Game game) {
+        List<List<Cell>> ways = new ArrayList<>();
+        Field field = game.getField();
+
+        Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
+
+        if (abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
+            try {
+                TwoDimensionalDirection direction = playerStartPoint.equals(fs.getCell(0, 0, field)) ?
+                        TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
+                if (cell.getLetter() - playerStartPoint.getLetter() != 0 &&
+                        !fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
+                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck()) {
+
+                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef(), field)));
+                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
+                        !fs.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
+                                + direction.getVerticalCoef(), field).hasCheck()) {
+
+                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() + direction.getVerticalCoef(),
+                            cell.getNumber() + direction.getVerticalCoef(), field)));
+                }
+            } catch (CellNotExistException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ways;
+    }
+
+    private List<List<Cell>> getPossibleAttacksToSimpleCheck(Cell cell, Game game) {
+        List<List<Cell>> ways = new ArrayList<>();
+        Field field = game.getField();
+
+        for (Cell neighbour : fs.neighbours(cell, game.getField())) {
+            try {
+                TwoDimensionalDirection direction = fs.getDirectionFromStartToEnd(cell, neighbour);
+                if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
+                        cell.getNumber() + direction.getVerticalCoef() * 2) &&
+                        fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
+                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck() &&
+                        fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
+                                cell.getNumber() + direction.getVerticalCoef(), field).getCheck().getPlayerID() ==
+                                game.getEnemyPlayer().getPlayerID() &&
+                        !fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
+                                cell.getNumber() + direction.getVerticalCoef() * 2, field).hasCheck()
+                ) {
+                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
+                            cell.getNumber() + direction.getVerticalCoef() * 2, field)));
+                }
+
+            } catch (GameProcessException e) {
+                e.printStackTrace();
+            }
+        }
+        return ways;
     }
 }

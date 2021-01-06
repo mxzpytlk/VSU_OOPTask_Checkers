@@ -24,10 +24,10 @@
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/game.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/game.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/example1.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/example1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/example2.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/example2.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +43,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="newStepAlg" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenRunner">
@@ -136,7 +141,7 @@
       <workItem from="1609753075771" duration="3190000" />
       <workItem from="1609756297891" duration="1478000" />
       <workItem from="1609760543679" duration="2446000" />
-      <workItem from="1609931029284" duration="1636000" />
+      <workItem from="1609931029284" duration="8198000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -280,6 +285,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="Attack logic for simple check" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java</url>
+          <line>26</line>
+          <properties class="vsu.course2.services.ArtificialIntelligenceService" method="makeStep">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="vsu.course2.models.game.field.Field" memberName="field" />
