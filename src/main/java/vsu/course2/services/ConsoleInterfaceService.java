@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -27,11 +28,20 @@ public class ConsoleInterfaceService {
         Scanner scn = new Scanner(System.in);
         drawField(game);
         while (!gs.gameOver(game)) {
-            String command = scn.nextLine();
+            String[] inputArr = scn.nextLine().split("\\s+");
+            String command = "";
+            String[] args = new String[0];
+            if (inputArr.length > 0) {
+                command = inputArr[0];
+                if (inputArr.length > 1) {
+                    args = Arrays.copyOfRange(inputArr, 1, inputArr.length);
+                }
+            }
+
             if (command.equals("save")) {
-                saveGame(game);
+                saveGame(game, args);
             } else if (command.equals("load")) {
-                game = loadGame();
+                game = loadGame(args);
                 drawField(game);
             }
             else {
@@ -41,18 +51,32 @@ public class ConsoleInterfaceService {
         }
     }
 
-    private Game loadGame() throws IOException {
+    /**
+     * Load game from JSON.
+     * @param args Load command arguments. First argument is fileName which is in directory src/main/resources/.
+     * @return Game from JSON format.
+     * @throws IOException
+     */
+    private Game loadGame(String[] args) throws IOException {
         Gson gson = new Gson();
-        String JSONGame = Files.lines(Paths.get("src/main/resources/game.json"), StandardCharsets.UTF_8)
+        String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
+        String JSONGame = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)
                 .reduce("", (prev, cur) -> prev + "" + cur);
         return gson.fromJson(JSONGame, Game.class);
     }
 
-    private void saveGame(Game game) {
+    /**
+     * Save game in JSON file;
+     * @param game Current game.
+     * @param args Save command arguments. First argument is fileName which is in directory src/main/resources/.
+     */
+    private void saveGame(Game game, String[] args) {
+        String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
+
         Gson gson = new Gson();
         String JSONGame = gson.toJson(game);
         try {
-            FileWriter fw = new FileWriter("src/main/resources/game.json");
+            FileWriter fw = new FileWriter(fileName);
             fw.write(JSONGame);
             fw.close();
         } catch (IOException e) {

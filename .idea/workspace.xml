@@ -24,7 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VSU_OOPTask_Checkers.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/game.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/game.json" afterDir="false" />
     </list>
@@ -89,6 +90,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -122,7 +134,9 @@
       <workItem from="1609587673181" duration="4114000" />
       <workItem from="1609675598520" duration="1769000" />
       <workItem from="1609753075771" duration="3190000" />
-      <workItem from="1609756297891" duration="417000" />
+      <workItem from="1609756297891" duration="1478000" />
+      <workItem from="1609760543679" duration="2446000" />
+      <workItem from="1609931029284" duration="1636000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
