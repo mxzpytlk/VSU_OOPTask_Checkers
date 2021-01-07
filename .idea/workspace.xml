@@ -23,10 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="Реализовано движение дамки">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/example1.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/example2.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/game.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/king_example.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/king_example.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/attack_by_king.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/attack_several_by_king.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/attack_several_by_simple.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/FieldService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,15 +315,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Реализовано движение дамки" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="vsu.course2.models.game.field.Field" memberName="field" />

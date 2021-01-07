@@ -248,38 +248,21 @@ public class GameService {
         for (int i = 0; i < way.size() - 1; i++) {
             ArrayList<Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
 
-            if (directWay.get(directWay.size() - 1).hasCheck()) {
+            if (way.get(i + 1).hasCheck()) {
                 throw new GameProcessException("There are checkers on the way");
             }
 
-            if (!canAttack(directWay)) {
-                throw new GameProcessException("Checker can't attack another check " +
-                        "if there is check after enemy");
-            }
             eatenChecks.addAll(fs.checkersOnLine(directWay));
-        }
-        return eatenChecks;
-    }
-
-    /**
-     * Check if simple checker can attack enemy by way.
-     * @param directWay List with cells, which is on players attack way.
-     * @return True if simple checker can attack enemy by way.
-     */
-    private boolean canAttack(ArrayList<Cell> directWay) {
-        boolean hasCheckerOnDirection,
-                result = false;
-
-        for (int i = 1; i < directWay.size() - 1; i++) {
-            hasCheckerOnDirection = directWay.get(i).hasCheck();
-            if (hasCheckerOnDirection) {
-                result = true;
-                if (directWay.get(i + 1).hasCheck()) {
-                    return false;
-                }
+            for (Cell cell : directWay) {
+                cell.removeCheck();
             }
         }
-        return result;
+
+
+
+        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
+        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
+        return eatenChecks;
     }
 
     /**
@@ -299,6 +282,14 @@ public class GameService {
             if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && !cell.getCheck().isKing()) {
                 List<List<Cell>> possibleWays = getPossibleAttacksToSimpleCheck(cell, game);
+                if (possibleWays.size() > 0) {
+                    attacks.put(cell, possibleWays);
+                }
+            }
+
+            if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
+                    && cell.getCheck().isKing()) {
+                List<List<Cell>> possibleWays = getPossibleAttacksToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     attacks.put(cell, possibleWays);
                 }
@@ -401,6 +392,42 @@ public class GameService {
                 ways.add(Arrays.asList(cell, nextPos));
             }
         }
+        return ways;
+    }
+
+    private List<List<Cell>> getPossibleAttacksToKing(Cell cell, Game game) {
+        List<List<Cell>> ways = new ArrayList<>();
+        Field field = game.getField();
+        TwoDimensionalDirection[] directions = {TwoDimensionalDirection.DOWN_LEFT,
+                TwoDimensionalDirection.DOWN_RIGHT,
+                TwoDimensionalDirection.UP_RIGHT,
+                TwoDimensionalDirection.UP_LEFT};
+
+        for (TwoDimensionalDirection direction : directions) {
+            List<Cell> wayToBoard = fs.getWayToBoard(cell, direction, field);
+            boolean shouldAddCell = false;
+            for (int i = 0; i < wayToBoard.size() - 1; i++) {
+                if (wayToBoard.get(i).getCheck() != null
+                        && (game.getCurrentPlayer().hasCheck(wayToBoard.get(i).getCheck())
+                            || wayToBoard.get(i + 1).getCheck() != null)) {
+                    break;
+                }
+
+                try {
+                    if (wayToBoard.get(i).hasCheck() && wayToBoard.get(i + 1).getCheck() == null
+                            && game.getEnemyPlayer().hasCheck(wayToBoard.get(i).getCheck())) {
+                        ways.add(Arrays.asList(cell, getNextCell(game, wayToBoard.get(i), direction)));
+                        i++;
+                        shouldAddCell = true;
+                    } else if (shouldAddCell) {
+                        ways.add(Arrays.asList(cell, getNextCell(game, wayToBoard.get(i), direction)));
+                    }
+                } catch (CellNotExistException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return ways;
     }
 }

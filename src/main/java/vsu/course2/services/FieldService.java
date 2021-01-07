@@ -117,6 +117,11 @@ public class FieldService {
         return way;
     }
 
+    public boolean isOnBoard(Cell cell, Field field) {
+        return cell.getLetter() == 0 || cell.getLetter() == field.getWidth() - 1
+                || cell.getNumber() == 0 || cell.getNumber() == field.getHeight() - 1;
+    }
+
     /**
      * Check if forward way between cells exists.
      * @param start First cell.
