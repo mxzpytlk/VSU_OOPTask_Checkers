@@ -4,11 +4,11 @@ import vsu.course2.models.game.Game;
 import vsu.course2.models.game.exceptions.GameProcessException;
 import vsu.course2.models.game.field.Cell;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Service which controls players behaviour.
@@ -22,9 +22,11 @@ public class ArtificialIntelligenceService {
      * @param game Current game.
      */
     public void makeStep(Game game) {
-        List<List<Cell>> possibleWays = gs.getPossibleWays(game).values()
-                .stream().map(list -> list.get(0))
-                .collect(toList());
+        var allWaysForCells = gs.getPossibleWays(game).values();
+        List<List<Cell>> possibleWays = new LinkedList<>();
+        for (List<List<Cell>> waysForOneCell: allWaysForCells) {
+            possibleWays.addAll(waysForOneCell);
+        }
         Random rand = new Random();
         try {
             System.out.println(possibleWays.size());
