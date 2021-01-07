@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Checker {
 
-    private final int playerID;
+    private final int ID;
     private boolean isKing = false;
 
     public void becomeKing() {
@@ -15,12 +15,12 @@ public class Checker {
         return isKing;
     }
 
-    public Checker(int playerID) {
-        this.playerID = playerID;
+    public Checker() {
+        this.ID = (int) (Math.random() * Integer.MAX_VALUE);
     }
 
-    public int getPlayerID() {
-        return playerID;
+    public int getID() {
+        return ID;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class Checker {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Checker checker = (Checker) o;
-        return playerID == checker.playerID && isKing == checker.isKing;
+        return ID == checker.ID && isKing == checker.isKing;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerID, isKing);
+        return Objects.hash(ID, isKing);
     }
 }

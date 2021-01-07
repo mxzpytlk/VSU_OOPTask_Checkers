@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player {
-    private final int playerID;
     private final ArrayList<Checker> playerChecks = new ArrayList<>();
     private final Cell startPoint;
 
     public Player(Cell startPoint) {
-        playerID = (int) (Math.random() * Integer.MAX_VALUE);
         for (int i = 0; i < 12; i++) {
-            playerChecks.add(new Checker(playerID));
+            playerChecks.add(new Checker());
         }
 
         this.startPoint = startPoint;
@@ -21,10 +19,6 @@ public class Player {
 
     public Checker[] getCheckers() {
         return playerChecks.toArray(new Checker[0]);
-    }
-
-    public int getPlayerID() {
-        return playerID;
     }
 
     public boolean hasCheck(Checker check) {

@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.Math.abs;
-
 /**
  * Service which controls players behaviour.
  */

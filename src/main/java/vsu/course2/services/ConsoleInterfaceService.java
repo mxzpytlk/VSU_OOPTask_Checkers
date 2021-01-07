@@ -1,6 +1,7 @@
 package vsu.course2.services;
 
 import com.google.gson.Gson;
+import vsu.course2.models.game.Player;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
@@ -97,10 +98,10 @@ public class ConsoleInterfaceService {
         }
 
         Field field = game.getField();
-        int firstPlayerId = game.getPlayers()[0].getPlayerID();
+        Player firstPlayer = game.getPlayers()[0];
         for (Cell cell : field) {
             if (cell.hasCheck()) {
-                if (cell.getCheck().getPlayerID() == firstPlayerId) {
+                if (firstPlayer.hasCheck(cell.getCheck())) {
                     desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u2741';
                 } else {
                     desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u0BE6' : '\u06DE';

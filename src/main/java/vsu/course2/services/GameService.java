@@ -87,7 +87,7 @@ public class GameService {
      */
     private boolean checkPlayerCanHitBySimple(Game game) throws CellNotExistException {
         Field field = game.getField();
-        int playerID = game.getCurrentPlayer().getPlayerID();
+        Player curPlayer = game.getCurrentPlayer();
         Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
         TwoDimensionalDirection leftDirection = game.getCurrentPlayer().getStartPoint()
                 .equals(fs.getCell(0, 0, field)) ?
@@ -97,17 +97,17 @@ public class GameService {
                 TwoDimensionalDirection.UP_RIGHT : TwoDimensionalDirection.DOWN_LEFT;
 
         for (Cell cell : field) {
-            if (cell.hasCheck() && cell.getCheck().getPlayerID() == playerID
+            if (cell.hasCheck() && curPlayer.hasCheck(cell.getCheck())
                     && abs(cell.getNumber() - playerStartPoint.getNumber()) < field.getHeight() - 2) {
                 if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
                         checkOnNextCellExist(game, cell, leftDirection) &&
-                        getNextCell(game, cell, leftDirection).getCheck().getPlayerID() != playerID &&
+                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, leftDirection).getCheck()) &&
                         !fs.getCell(cell.getLetter() + 2 * leftDirection.getHorizontalCoef(),
                                 cell.getNumber() + 2 * leftDirection.getVerticalCoef(), field).hasCheck()) {
                     return true;
                 } else if (abs(cell.getLetter() - playerStartPoint.getLetter()) < field.getWidth() - 2 &&
                         checkOnNextCellExist(game, cell, rightDirection) &&
-                        getNextCell(game, cell, rightDirection).getCheck().getPlayerID() != playerID &&
+                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, rightDirection).getCheck()) &&
                         !fs.getCell(cell.getLetter() + 2 * rightDirection.getHorizontalCoef(),
                                 cell.getNumber() + 2 * rightDirection.getVerticalCoef(), field).hasCheck()) {
                     return true;
@@ -177,10 +177,10 @@ public class GameService {
      */
     public void attackCheckers(Game game, List<Cell> way) throws GameProcessException {
         Field field = game.getField();
-        Player[] players = game.getPlayers();
+
 
         if (fs.getCell(way.get(0), field).hasCheck() &&
-                fs.getCell(way.get(0), field).getCheck().getPlayerID() != players[game.getTurnOrder()].getPlayerID()) {
+                game.getEnemyPlayer().hasCheck(fs.getCell(way.get(0), field).getCheck())) {
             throw new GameProcessException("Player doesn't have checkers on this position");
         }
 
@@ -219,8 +219,8 @@ public class GameService {
                 throw new CellIsEmptyException(way.get(i).toString() + way.get(i + 1).toString() +
                         "There is not enemy check on attack way");
             }
-            fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).removeCheck();
             eatenChecks.add(fs.getCellBetweenTwoCells(field ,way.get(i), way.get(i + 1)).getCheck());
+            fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).removeCheck();
             if (abs(way.get(i + 1).getNumber() - game.getCurrentPlayer().getStartPoint().getNumber()) ==
                     field.getHeight() - 1) {
                 way.get(0).getCheck().becomeKing();
@@ -288,21 +288,7 @@ public class GameService {
      * @return True if one player does not have check.
      */
     public boolean gameOver(Game game) {
-        Field field = game.getField();
-        int firstPlayerID = game.getCurrentPlayer().getPlayerID();
-        int secondPlayerID = game.getEnemyPlayer().getPlayerID();
-        boolean firstPlayerHasChecks = false;
-        boolean secondPlayerHasChecks = false;
-        for (Cell cell : field) {
-            firstPlayerHasChecks = firstPlayerHasChecks ||
-                    (cell.hasCheck() && cell.getCheck().getPlayerID() == firstPlayerID);
-            secondPlayerHasChecks = secondPlayerHasChecks ||
-                    (cell.hasCheck() && cell.getCheck().getPlayerID() == secondPlayerID);
-            if (firstPlayerHasChecks && secondPlayerHasChecks) {
-                return false;
-            }
-        }
-        return true;
+        return game.getPlayers()[0].getCheckers().length == 0 && game.getPlayers()[1].getCheckers().length == 0;
     }
 
     public Map<Cell, List<List<Cell>>> getPossibleWays(Game game) {
@@ -310,7 +296,7 @@ public class GameService {
         Map<Cell, List<List<Cell>>> attacks = new HashMap<>();
         Map<Cell, List<List<Cell>>> steps = new HashMap<>();
         for (Cell cell : field) {
-            if (cell.getCheck() != null && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
+            if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && !cell.getCheck().isKing()) {
                 List<List<Cell>> possibleWays = getPossibleAttacksToSimpleCheck(cell, game);
                 if (possibleWays.size() > 0) {
@@ -319,8 +305,7 @@ public class GameService {
             }
 
             if (cell.hasCheck() && !cell.getCheck().isKing()
-                    && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
-                    &&  attacks.size() == 0) {
+                    && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
 
                 List<List<Cell>> possibleWays = getPossibleWaysToSimpleCheck(cell, game);
@@ -330,8 +315,7 @@ public class GameService {
             }
 
             if (cell.hasCheck() && cell.getCheck().isKing()
-                    && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
-                    &&  attacks.size() == 0) {
+                    && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
 
                 List<List<Cell>> possibleWays = getPossibleWaysToKing(cell, game);
@@ -384,10 +368,9 @@ public class GameService {
                 if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
                         cell.getNumber() + direction.getVerticalCoef() * 2) &&
                         fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck() &&
-                        fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                                cell.getNumber() + direction.getVerticalCoef(), field).getCheck().getPlayerID() ==
-                                game.getEnemyPlayer().getPlayerID() &&
+                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck()
+                        && game.getEnemyPlayer().hasCheck(fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
+                                        cell.getNumber() + direction.getVerticalCoef(), field).getCheck()) &&
                         !fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
                                 cell.getNumber() + direction.getVerticalCoef() * 2, field).hasCheck()
                 ) {
