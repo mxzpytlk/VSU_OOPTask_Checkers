@@ -11,6 +11,8 @@ import static java.lang.Math.abs;
 
 public class GameService {
     private final FieldService fs = new FieldService();
+    private final SimpleCheckMoveService scm = new SimpleCheckMoveService();
+    private final KingMoveService kms = new KingMoveService();
 
     /**
      * Move check from first cell to second.
@@ -56,66 +58,7 @@ public class GameService {
      * @return True if current player can attack enemy.
      */
     private boolean playerCanHitEnemy(Game game) {
-        return playerCanHitEnemyBySimpleCheck(game) || playerCanHitEnemyByKing(game);
-    }
-
-    private boolean playerCanHitEnemyByKing(Game game) {
-        //TODO
-        return playerCanHitEnemyBySimpleCheck(game) ;
-    }
-
-    /**
-     * Check if current player have simple check, which could attack enemy check.
-     * @param game Current game.
-     * @return True if current player have simple check, which could attack enemy check.
-     */
-    private boolean playerCanHitEnemyBySimpleCheck(Game game) {
-        try {
-            if (checkPlayerCanHitBySimple(game)) return true;
-        } catch (GameProcessException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if current player have simple check, which could attack enemy check.
-     * @param game Current game.
-     * @return True if current player have simple check, which could attack enemy check.
-     * @throws CellNotExistException Thrown if method implementation had logic mistakes.
-     */
-    private boolean checkPlayerCanHitBySimple(Game game) throws CellNotExistException {
-        Field field = game.getField();
-        Player curPlayer = game.getCurrentPlayer();
-        Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
-        TwoDimensionalDirection leftDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(fs.getCell(0, 0, field)) ?
-                TwoDimensionalDirection.UP_LEFT : TwoDimensionalDirection.DOWN_RIGHT;
-        TwoDimensionalDirection rightDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(fs.getCell(0, 0, field)) ?
-                TwoDimensionalDirection.UP_RIGHT : TwoDimensionalDirection.DOWN_LEFT;
-
-        for (Cell cell : field) {
-            if (cell.hasCheck() && curPlayer.hasCheck(cell.getCheck())
-                    && abs(cell.getNumber() - playerStartPoint.getNumber()) < field.getHeight() - 2) {
-                if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
-                        checkOnNextCellExist(game, cell, leftDirection) &&
-                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, leftDirection).getCheck()) &&
-                        !fs.getCell(cell.getLetter() + 2 * leftDirection.getHorizontalCoef(),
-                                cell.getNumber() + 2 * leftDirection.getVerticalCoef(), field).hasCheck()) {
-                    return true;
-                } else if (abs(cell.getLetter() - playerStartPoint.getLetter()) < field.getWidth() - 2 &&
-                        checkOnNextCellExist(game, cell, rightDirection) &&
-                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, rightDirection).getCheck()) &&
-                        !fs.getCell(cell.getLetter() + 2 * rightDirection.getHorizontalCoef(),
-                                cell.getNumber() + 2 * rightDirection.getVerticalCoef(), field).hasCheck()) {
-                    return true;
-                }
-
-            }
-        }
-        return false;
+        return scm.playerCanHitEnemyBySimpleCheck(game);
     }
 
     /**
@@ -185,84 +128,11 @@ public class GameService {
         }
 
         if (way.get(0).getCheck().isKing()) {
-            attackByKing(game, way);
+            kms.attackByKing(game, way);
         } else {
-            attackBySimpleCHeck(game, way);
+            scm.attackBySimpleCHeck(game, way);
         }
         game.changeTurnOrder();
-    }
-
-    /**
-     * Make one player attack another by simple check. Find enemy checks which should be deleted. Remove attacked checks
-     * from enemy players list and field. Move check on first position in list to last position in list.
-     * @param game Current game.
-     * @param way List with cells where player should have check which make attack. First position is players check
-     *            which make attack other is cells where players check stay after each enemy check attack. Cells must be
-     *            separate by only one cell with enemies check.
-     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
-     * to attack empty cell.
-     */
-    private void attackBySimpleCHeck(Game game, List<Cell> way) throws GameProcessException {
-        Field field = game.getField();
-
-        ArrayList<Checker> eatenChecks = new ArrayList<>();
-
-        for (int i = 0; i < way.size() - 1; i++) {
-            if (!fs.areOnDirectLine(way.get(i), way.get(i + 1))
-                    || abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2) {
-                throw new CellsAreNotOnDirectLineException(way.get(i).toString() + way.get(i + 1).toString() +
-                        " are mot on direct line.");
-            } else if (fs.getCell(way.get(i + 1), field).hasCheck()) {
-                throw new CellIsNotFreeException(way.get(i).toString() + way.get(i + 1).toString() +
-                        "\nCheck can not attack enemy if there is another check behind");
-            } else if (!fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).hasCheck()) {
-                throw new CellIsEmptyException(way.get(i).toString() + way.get(i + 1).toString() +
-                        "There is not enemy check on attack way");
-            }
-            eatenChecks.add(fs.getCellBetweenTwoCells(field ,way.get(i), way.get(i + 1)).getCheck());
-            fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).removeCheck();
-            if (abs(way.get(i + 1).getNumber() - game.getCurrentPlayer().getStartPoint().getNumber()) ==
-                    field.getHeight() - 1) {
-                way.get(0).getCheck().becomeKing();
-                eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
-                break;
-            }
-        }
-        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
-        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
-    }
-
-    /**
-     * Make one player attack another by king check. Find enemy checks which should be deleted. Remove attacked checks
-     * from enemy players list and field. Move check on first position in list to last position in list.
-     * @param game Current game.
-     * @param way List with cells where player should have check which make attack. First position is players check
-     *            which make attack other is cells where players check stay after each enemy check attack.
-     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
-     * to attack empty cell.
-     */
-    private ArrayList<Checker> attackByKing(Game game, List<Cell> way) throws GameProcessException {
-        Field field = game.getField();
-        ArrayList<Checker> eatenChecks = new ArrayList<>();
-
-        for (int i = 0; i < way.size() - 1; i++) {
-            ArrayList<Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
-
-            if (way.get(i + 1).hasCheck()) {
-                throw new GameProcessException("There are checkers on the way");
-            }
-
-            eatenChecks.addAll(fs.checkersOnLine(directWay));
-            for (Cell cell : directWay) {
-                cell.removeCheck();
-            }
-        }
-
-
-
-        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
-        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
-        return eatenChecks;
     }
 
     /**
@@ -281,7 +151,7 @@ public class GameService {
         for (Cell cell : field) {
             if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && !cell.getCheck().isKing()) {
-                List<List<Cell>> possibleWays = getPossibleAttacksToSimpleCheck(cell, game);
+                List<List<Cell>> possibleWays = scm.getPossibleAttacksToSimpleCheck(cell, game);
                 if (possibleWays.size() > 0) {
                     attacks.put(cell, possibleWays);
                 }
@@ -289,7 +159,7 @@ public class GameService {
 
             if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && cell.getCheck().isKing()) {
-                List<List<Cell>> possibleWays = getPossibleAttacksToKing(cell, game);
+                List<List<Cell>> possibleWays = kms.getPossibleAttacksToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     attacks.put(cell, possibleWays);
                 }
@@ -299,7 +169,7 @@ public class GameService {
                     && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
 
-                List<List<Cell>> possibleWays = getPossibleWaysToSimpleCheck(cell, game);
+                List<List<Cell>> possibleWays = scm.getPossibleWaysToSimpleCheck(cell, game);
                 if (possibleWays.size() > 0) {
                     steps.put(cell, possibleWays);
                 }
@@ -308,126 +178,12 @@ public class GameService {
             if (cell.hasCheck() && cell.getCheck().isKing()
                     && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
-
-                List<List<Cell>> possibleWays = getPossibleWaysToKing(cell, game);
+                List<List<Cell>> possibleWays = kms.getPossibleWaysToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     steps.put(cell, possibleWays);
                 }
             }
         }
         return attacks.size() > 0 ? attacks : steps;
-    }
-
-    private List<List<Cell>> getPossibleWaysToSimpleCheck(Cell cell, Game game) {
-        List<List<Cell>> ways = new ArrayList<>();
-        Field field = game.getField();
-
-        Cell playerStartPoint =  game.getCurrentPlayer().getStartPoint();
-
-        if (abs(cell.getNumber() - playerStartPoint.getNumber()) != field.getHeight() - 1) {
-            try {
-                TwoDimensionalDirection direction = playerStartPoint.equals(fs.getCell(0, 0, field)) ?
-                        TwoDimensionalDirection.UP : TwoDimensionalDirection.DOWN;
-                if (cell.getLetter() - playerStartPoint.getLetter() != 0 &&
-                        !fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
-                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck()) {
-
-                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
-                            cell.getNumber() + direction.getVerticalCoef(), field)));
-                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
-                        !fs.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
-                                + direction.getVerticalCoef(), field).hasCheck()) {
-
-                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() + direction.getVerticalCoef(),
-                            cell.getNumber() + direction.getVerticalCoef(), field)));
-                }
-            } catch (CellNotExistException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return ways;
-    }
-
-    private List<List<Cell>> getPossibleAttacksToSimpleCheck(Cell cell, Game game) {
-        List<List<Cell>> ways = new ArrayList<>();
-        Field field = game.getField();
-
-        for (Cell neighbour : fs.neighbours(cell, game.getField())) {
-            try {
-                TwoDimensionalDirection direction = fs.getDirectionFromStartToEnd(cell, neighbour);
-                if (fs.cellExist(field, cell.getLetter() + direction.getHorizontalCoef() * 2,
-                        cell.getNumber() + direction.getVerticalCoef() * 2) &&
-                        fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                                cell.getNumber() + direction.getVerticalCoef(), field).hasCheck()
-                        && game.getEnemyPlayer().hasCheck(fs.getCell(cell.getLetter() + direction.getHorizontalCoef(),
-                                        cell.getNumber() + direction.getVerticalCoef(), field).getCheck()) &&
-                        !fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
-                                cell.getNumber() + direction.getVerticalCoef() * 2, field).hasCheck()
-                ) {
-                    ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() + direction.getHorizontalCoef() * 2,
-                            cell.getNumber() + direction.getVerticalCoef() * 2, field)));
-                }
-
-            } catch (GameProcessException e) {
-                e.printStackTrace();
-            }
-        }
-        return ways;
-    }
-
-    private List<List<Cell>> getPossibleWaysToKing(Cell cell, Game game) {
-        List<List<Cell>> ways = new LinkedList<>();
-        TwoDimensionalDirection[] directions = {TwoDimensionalDirection.DOWN_LEFT,
-                TwoDimensionalDirection.DOWN_RIGHT,
-                TwoDimensionalDirection.UP_RIGHT,
-                TwoDimensionalDirection.UP_LEFT};
-
-        for (TwoDimensionalDirection direction : directions) {
-            List<Cell> way = fs.getWayToBoard(cell, direction, game.getField());
-            for (Cell nextPos : way) {
-                if (nextPos.hasCheck()) {
-                    break;
-                }
-                ways.add(Arrays.asList(cell, nextPos));
-            }
-        }
-        return ways;
-    }
-
-    private List<List<Cell>> getPossibleAttacksToKing(Cell cell, Game game) {
-        List<List<Cell>> ways = new ArrayList<>();
-        Field field = game.getField();
-        TwoDimensionalDirection[] directions = {TwoDimensionalDirection.DOWN_LEFT,
-                TwoDimensionalDirection.DOWN_RIGHT,
-                TwoDimensionalDirection.UP_RIGHT,
-                TwoDimensionalDirection.UP_LEFT};
-
-        for (TwoDimensionalDirection direction : directions) {
-            List<Cell> wayToBoard = fs.getWayToBoard(cell, direction, field);
-            boolean shouldAddCell = false;
-            for (int i = 0; i < wayToBoard.size() - 1; i++) {
-                if (wayToBoard.get(i).getCheck() != null
-                        && (game.getCurrentPlayer().hasCheck(wayToBoard.get(i).getCheck())
-                            || wayToBoard.get(i + 1).getCheck() != null)) {
-                    break;
-                }
-
-                try {
-                    if (wayToBoard.get(i).hasCheck() && wayToBoard.get(i + 1).getCheck() == null
-                            && game.getEnemyPlayer().hasCheck(wayToBoard.get(i).getCheck())) {
-                        ways.add(Arrays.asList(cell, getNextCell(game, wayToBoard.get(i), direction)));
-                        i++;
-                        shouldAddCell = true;
-                    } else if (shouldAddCell) {
-                        ways.add(Arrays.asList(cell, getNextCell(game, wayToBoard.get(i), direction)));
-                    }
-                } catch (CellNotExistException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return ways;
     }
 }
