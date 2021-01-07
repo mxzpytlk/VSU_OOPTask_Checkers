@@ -23,11 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/example1.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/example1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/example2.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/example2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/FieldService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,17 +87,6 @@
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -282,7 +267,8 @@
     <MESSAGE value="Add method which return way between 2 cells" />
     <MESSAGE value="Attack logic for king" />
     <MESSAGE value="Attack logic for simple check" />
-    <option name="LAST_COMMIT_MESSAGE" value="Attack logic for simple check" />
+    <MESSAGE value="Реализована атака дамкой" />
+    <option name="LAST_COMMIT_MESSAGE" value="Реализована атака дамкой" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -290,7 +276,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java</url>
           <line>26</line>
-          <properties class="vsu.course2.services.ArtificialIntelligenceService" method="makeStep">
+          <properties class="vsu.course2.services.ArtificialIntelligenceService">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="2" />

@@ -10,6 +10,8 @@ import vsu.course2.models.game.exceptions.*;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 public class FieldService {
 
     public Field createField(int w, int h) {
@@ -101,11 +103,11 @@ public class FieldService {
             throw new CellsAreNotOnDirectLineException("Check can move only on direct line");
 
         TwoDimensionalDirection direction = getDirectionFromStartToEnd(start, end);
-        for (int i = start.getLetter() + direction.getVerticalCoef(); i < end.getLetter() ;
-             i += direction.getVerticalCoef()) {
+        for (int i = 1; i < abs(start.getNumber() - end.getNumber()) ;
+             i++) {
             try {
-                way.add(getCell(i, start.getNumber() +
-                                direction.getHorizontalCoef() * (Math.abs(start.getLetter() - i)), field));
+                way.add(getCell(start.getLetter() + i * direction.getHorizontalCoef(),
+                        start.getNumber() + i * direction.getHorizontalCoef(), field));
             } catch (CellNotExistException e) {
                 e.printStackTrace();
             }
@@ -121,9 +123,9 @@ public class FieldService {
      * @return True, if forward way between cells exists.
      */
     public boolean areOnDirectLine(Cell start, Cell end) {
-        return Math.abs(start.getLetter() - end.getLetter()) ==
-                Math.abs(start.getNumber() - end.getNumber())
-                && Math.abs(start.getLetter() - end.getLetter()) != 0;
+        return abs(start.getLetter() - end.getLetter()) ==
+                abs(start.getNumber() - end.getNumber())
+                && abs(start.getLetter() - end.getLetter()) != 0;
     }
 
     /**
