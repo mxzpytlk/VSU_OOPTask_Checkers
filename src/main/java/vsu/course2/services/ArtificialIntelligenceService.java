@@ -1,8 +1,11 @@
 package vsu.course2.services;
 
 import vsu.course2.models.game.Game;
+import vsu.course2.models.game.exceptions.CellsAreEqualsException;
+import vsu.course2.models.game.exceptions.CellsAreNotOnDirectLineException;
 import vsu.course2.models.game.exceptions.GameProcessException;
 import vsu.course2.models.game.field.Cell;
+import vsu.course2.models.game.field.Field;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +32,8 @@ public class ArtificialIntelligenceService {
         }
         Random rand = new Random();
         try {
-            System.out.println(possibleWays.size());
             List<Cell> way = possibleWays.get(rand.nextInt(possibleWays.size()));
-            if (abs(way.get(0).getLetter() - way.get(1).getLetter()) == 1) {
+            if (isStep(way, game.getField())) {
                 gs.doStep(game, way.get(0).getLetter(), way.get(0).getNumber(),
                             way.get(1).getLetter(), way.get(1).getNumber());
             } else {
@@ -40,5 +42,18 @@ public class ArtificialIntelligenceService {
         } catch (GameProcessException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isStep(List<Cell> way, Field field) {
+        try {
+            for (Cell cell : fs.getWayBetweenCells(field, way.get(0), way.get(1))) {
+                if (cell.hasCheck()) {
+                    return false;
+                }
+            }
+        } catch (CellsAreNotOnDirectLineException | CellsAreEqualsException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

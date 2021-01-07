@@ -318,11 +318,23 @@ public class GameService {
                 }
             }
 
-            if (cell.getCheck() != null && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
+            if (cell.hasCheck() && !cell.getCheck().isKing()
+                    && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
                     &&  attacks.size() == 0) {
 
 
                 List<List<Cell>> possibleWays = getPossibleWaysToSimpleCheck(cell, game);
+                if (possibleWays.size() > 0) {
+                    steps.put(cell, possibleWays);
+                }
+            }
+
+            if (cell.hasCheck() && cell.getCheck().isKing()
+                    && cell.getCheck().getPlayerID() == game.getCurrentPlayer().getPlayerID()
+                    &&  attacks.size() == 0) {
+
+
+                List<List<Cell>> possibleWays = getPossibleWaysToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     steps.put(cell, possibleWays);
                 }
@@ -385,6 +397,25 @@ public class GameService {
 
             } catch (GameProcessException e) {
                 e.printStackTrace();
+            }
+        }
+        return ways;
+    }
+
+    private List<List<Cell>> getPossibleWaysToKing(Cell cell, Game game) {
+        List<List<Cell>> ways = new LinkedList<>();
+        TwoDimensionalDirection[] directions = {TwoDimensionalDirection.DOWN_LEFT,
+                TwoDimensionalDirection.DOWN_RIGHT,
+                TwoDimensionalDirection.UP_RIGHT,
+                TwoDimensionalDirection.UP_LEFT};
+
+        for (TwoDimensionalDirection direction : directions) {
+            List<Cell> way = fs.getWayToBoard(cell, direction, game.getField());
+            for (Cell nextPos : way) {
+                if (nextPos.hasCheck()) {
+                    break;
+                }
+                ways.add(Arrays.asList(cell, nextPos));
             }
         }
         return ways;

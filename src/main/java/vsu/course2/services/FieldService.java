@@ -9,6 +9,7 @@ import vsu.course2.models.game.TwoDimensionalDirection;
 import vsu.course2.models.game.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -107,7 +108,7 @@ public class FieldService {
              i++) {
             try {
                 way.add(getCell(start.getLetter() + i * direction.getHorizontalCoef(),
-                        start.getNumber() + i * direction.getHorizontalCoef(), field));
+                        start.getNumber() + i * direction.getVerticalCoef(), field));
             } catch (CellNotExistException e) {
                 e.printStackTrace();
             }
@@ -187,5 +188,23 @@ public class FieldService {
         }
         throw new CellsAreEqualsException("Cell [" + start.getLetter() + ", " + start.getNumber() +
                 "] and cell [" + end.getLetter() + ", " + end.getNumber() + "] are equal");
+    }
+
+    public List<Cell> getWayToBoard(Cell cell, TwoDimensionalDirection direction, Field field) {
+        ArrayList<Cell> way = new ArrayList<>();
+
+        for (int i = 1; cell.getLetter() + i * direction.getHorizontalCoef() >= 0
+                && cell.getLetter() + i * direction.getHorizontalCoef() < field.getWidth()
+                && cell.getNumber() + i * direction.getVerticalCoef() >= 0
+                && cell.getNumber() + i * direction.getVerticalCoef() < field.getHeight(); i++) {
+                try {
+                    way.add(getCell(cell.getLetter() + i * direction.getHorizontalCoef(),
+                            cell.getNumber() + i * direction.getVerticalCoef(), field));
+                } catch (CellNotExistException e) {
+                    e.printStackTrace();
+                }
+        }
+
+        return way;
     }
 }
