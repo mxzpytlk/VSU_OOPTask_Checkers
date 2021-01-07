@@ -23,14 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="Реализовано движение дамки">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ArtificialIntelligenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ArtificialIntelligenceService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/GameService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/example1.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/example2.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/game.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/king_example.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/king_example.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

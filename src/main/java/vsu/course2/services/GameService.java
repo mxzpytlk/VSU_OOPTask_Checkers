@@ -288,7 +288,7 @@ public class GameService {
      * @return True if one player does not have check.
      */
     public boolean gameOver(Game game) {
-        return game.getPlayers()[0].getCheckers().length == 0 && game.getPlayers()[1].getCheckers().length == 0;
+        return game.getPlayers()[0].getCheckers().length == 0 || game.getPlayers()[1].getCheckers().length == 0;
     }
 
     public Map<Cell, List<List<Cell>>> getPossibleWays(Game game) {
