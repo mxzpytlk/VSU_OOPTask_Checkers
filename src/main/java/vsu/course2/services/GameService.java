@@ -224,7 +224,9 @@ public class GameService {
             if (abs(way.get(i + 1).getNumber() - game.getCurrentPlayer().getStartPoint().getNumber()) ==
                     field.getHeight() - 1) {
                 way.get(0).getCheck().becomeKing();
-                eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
+                if (i < way.size() - 2) {
+                    eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
+                }
                 break;
             }
         }
