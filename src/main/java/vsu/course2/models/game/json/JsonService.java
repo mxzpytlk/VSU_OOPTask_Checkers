@@ -6,15 +6,19 @@ import vsu.course2.models.game.field.Field;
 
 
 public class JsonService<T> {
-    public String serialize(Object object) {
-        Gson gson = new Gson();
+    Gson gson;
+
+    public JsonService() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Field.class, new FieldDeserializer());
+        this.gson = builder.create();
+    }
+
+    public String serialize(T object) {
         return gson.toJson(object);
     }
 
     public T deserialize(String json, Class<T> type) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Field.class, new FieldDeserializer());
-        Gson gson = builder.create();
         return gson.fromJson(json, type);
     }
 }

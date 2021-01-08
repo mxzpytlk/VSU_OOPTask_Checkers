@@ -4,11 +4,11 @@ import vsu.course2.models.game.*;
 import vsu.course2.models.game.exceptions.*;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
+import vsu.course2.utills.CloneService;
 
 import java.util.*;
 
 import static java.lang.Math.abs;
-import static vsu.course2.utills.Cloner.makeClone;
 
 public class GameService {
     private final FieldService fs = new FieldService();
@@ -380,15 +380,20 @@ public class GameService {
         List<List<Cell>> finalWays = new LinkedList<>();
 
         for (List<Cell> way : ways) {
-            Game newGame = (Game) makeClone(game);
+            Game newGame = new CloneService<Game>().makeClone(game);
 
             try {
                 attackCheckers(newGame, way);
                 newGame.changeTurnOrder();
-                List<List<Cell>> newWays = getPossibleAttacksToSimpleCheck(way.get(way.size() - 1), newGame);
+                List<List<Cell>> newWays =
+                        getPossibleAttacksToSimpleCheck(fs.getCell(way.get(way.size() - 1), newGame.getField()), newGame);
+                if (newWays.size() == 0) {
+                    finalWays.add(way);
+                }
+
                 for (List<Cell> newWay : newWays) {
                     List<Cell> addedWay = new LinkedList<>(way);
-                    addedWay.addAll(newWay.subList(1, newWay.size() - 1));
+                    addedWay.addAll(newWay.subList(1, newWay.size()));
                     finalWays.add(addedWay);
                 }
             } catch (GameProcessException e) {

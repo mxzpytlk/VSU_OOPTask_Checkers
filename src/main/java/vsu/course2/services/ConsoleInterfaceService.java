@@ -1,6 +1,5 @@
 package vsu.course2.services;
 
-import com.google.gson.Gson;
 import vsu.course2.models.game.Player;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
