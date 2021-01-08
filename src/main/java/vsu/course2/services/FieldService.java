@@ -98,7 +98,7 @@ public class FieldService {
             throw new CellNotHaveChecksException("This cell doesn't have checker");
         }
 
-        if (getCell(newLetter, newNumber, field).getCheck() != null) {
+        if (getCell(newLetter, newNumber, field).hasCheck()) {
             throw new CellIsNotFreeException("This cell isn't free");
         }
 

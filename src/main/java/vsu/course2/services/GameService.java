@@ -251,10 +251,6 @@ public class GameService {
         for (int i = 0; i < way.size() - 1; i++) {
             ArrayList<Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
 
-            if (way.get(i + 1).hasCheck()) {
-                throw new GameProcessException("There are checkers on the way");
-            }
-
             eatenChecks.addAll(fs.checkersOnLine(directWay));
             for (Cell cell : directWay) {
                 cell.removeCheck();
@@ -386,7 +382,12 @@ public class GameService {
                 attackCheckers(newGame, way);
                 newGame.changeTurnOrder();
                 List<List<Cell>> newWays =
-                        getPossibleAttacksToSimpleCheck(fs.getCell(way.get(way.size() - 1), newGame.getField()), newGame);
+                        !fs.getCell(fs.getCell(way.get(way.size() - 1), newGame.getField()), newGame.getField()).
+                                getCheck().isKing() ?
+                        getPossibleAttacksToSimpleCheck(fs.getCell(way.get(way.size() - 1),
+                                newGame.getField()), newGame) :
+                                getPossibleAttacksToKing(fs.getCell(way.get(way.size() - 1),
+                                        newGame.getField()), newGame);
                 if (newWays.size() == 0) {
                     finalWays.add(way);
                 }
@@ -437,9 +438,9 @@ public class GameService {
             List<Cell> wayToBoard = fs.getWayToBoard(cell, direction, field);
             boolean shouldAddCell = false;
             for (int i = 0; i < wayToBoard.size() - 1; i++) {
-                if (wayToBoard.get(i).getCheck() != null
+                if (wayToBoard.get(i).hasCheck()
                         && (game.getCurrentPlayer().hasCheck(wayToBoard.get(i).getCheck())
-                        || wayToBoard.get(i + 1).getCheck() != null)) {
+                        || wayToBoard.get(i + 1).hasCheck())) {
                     break;
                 }
 
@@ -450,7 +451,7 @@ public class GameService {
                         i++;
                         shouldAddCell = true;
                     } else if (shouldAddCell) {
-                        ways.add(Arrays.asList(cell, getNextCell(game, wayToBoard.get(i), direction)));
+                        ways.add(Arrays.asList(cell, fs.getCell(wayToBoard.get(i), game.getField())));
                     }
                 } catch (CellNotExistException e) {
                     e.printStackTrace();
@@ -458,6 +459,30 @@ public class GameService {
             }
         }
 
-        return ways;
+        List<List<Cell>> finalWays = new LinkedList<>();
+
+        for (List<Cell> way : ways) {
+            Game newGame = new CloneService<Game>().makeClone(game);
+
+            try {
+                attackCheckers(newGame, way);
+                newGame.changeTurnOrder();
+                List<List<Cell>> newWays =
+                        getPossibleAttacksToKing(fs.getCell(way.get(way.size() - 1), newGame.getField()), newGame);
+                if (newWays.size() == 0) {
+                    finalWays.add(way);
+                }
+
+                for (List<Cell> newWay : newWays) {
+                    List<Cell> addedWay = new LinkedList<>(way);
+                    addedWay.addAll(newWay.subList(1, newWay.size()));
+                    finalWays.add(addedWay);
+                }
+            } catch (GameProcessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return finalWays;
     }
 }
