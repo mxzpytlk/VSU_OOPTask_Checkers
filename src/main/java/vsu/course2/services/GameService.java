@@ -11,8 +11,6 @@ import static java.lang.Math.abs;
 
 public class GameService {
     private final FieldService fs = new FieldService();
-    private final SimpleCheckMoveService scm = new SimpleCheckMoveService();
-    private final KingMoveService kms = new KingMoveService();
 
     /**
      * Move check from first cell to second.
@@ -128,11 +126,86 @@ public class GameService {
         }
 
         if (way.get(0).getCheck().isKing()) {
-            kms.attackByKing(game, way);
+            attackByKing(game, way);
         } else {
-            scm.attackBySimpleCHeck(game, way);
+            attackBySimpleCHeck(game, way);
         }
         game.changeTurnOrder();
+    }
+
+    /**
+     * Make one player attack another by simple check. Find enemy checks which should be deleted. Remove attacked checks
+     * from enemy players list and field. Move check on first position in list to last position in list.
+     * @param game Current game.
+     * @param way List with cells where player should have check which make attack. First position is players check
+     *            which make attack other is cells where players check stay after each enemy check attack. Cells must be
+     *            separate by only one cell with enemies check.
+     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
+     * to attack empty cell.
+     */
+    private void attackBySimpleCHeck(Game game, List<Cell> way) throws GameProcessException {
+        Field field = game.getField();
+
+        ArrayList<Checker> eatenChecks = new ArrayList<>();
+
+        for (int i = 0; i < way.size() - 1; i++) {
+            if (!fs.areOnDirectLine(way.get(i), way.get(i + 1))
+                    || abs(way.get(i).getLetter() - way.get(i + 1).getLetter()) != 2) {
+                throw new CellsAreNotOnDirectLineException(way.get(i).toString() + way.get(i + 1).toString() +
+                        " are mot on direct line.");
+            } else if (fs.getCell(way.get(i + 1), field).hasCheck()) {
+                throw new CellIsNotFreeException(way.get(i).toString() + way.get(i + 1).toString() +
+                        "\nCheck can not attack enemy if there is another check behind");
+            } else if (!fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).hasCheck()) {
+                throw new CellIsEmptyException(way.get(i).toString() + way.get(i + 1).toString() +
+                        "There is not enemy check on attack way");
+            }
+            eatenChecks.add(fs.getCellBetweenTwoCells(field ,way.get(i), way.get(i + 1)).getCheck());
+            fs.getCellBetweenTwoCells(field, way.get(i), way.get(i + 1)).removeCheck();
+            if (abs(way.get(i + 1).getNumber() - game.getCurrentPlayer().getStartPoint().getNumber()) ==
+                    field.getHeight() - 1) {
+                way.get(0).getCheck().becomeKing();
+                if (i < way.size() - 2) {
+                    eatenChecks.addAll(attackByKing(game, way.subList(i + 1, way.size() - 1)));
+                }
+                break;
+            }
+        }
+        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
+        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
+    }
+
+    /**
+     * Make one player attack another by king check. Find enemy checks which should be deleted. Remove attacked checks
+     * from enemy players list and field. Move check on first position in list to last position in list.
+     * @param game Current game.
+     * @param way List with cells where player should have check which make attack. First position is players check
+     *            which make attack other is cells where players check stay after each enemy check attack.
+     * @throws GameProcessException Thrown if check try to attack enemy check which is far from, try to go back or try
+     * to attack empty cell.
+     */
+    private ArrayList<Checker> attackByKing(Game game, List<Cell> way) throws GameProcessException {
+        Field field = game.getField();
+        ArrayList<Checker> eatenChecks = new ArrayList<>();
+
+        for (int i = 0; i < way.size() - 1; i++) {
+            ArrayList<Cell> directWay = fs.getWayBetweenCells(field, way.get(i), way.get(i + 1));
+
+            if (way.get(i + 1).hasCheck()) {
+                throw new GameProcessException("There are checkers on the way");
+            }
+
+            eatenChecks.addAll(fs.checkersOnLine(directWay));
+            for (Cell cell : directWay) {
+                cell.removeCheck();
+            }
+        }
+
+
+
+        game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
+        fs.moveChecker(field, way.get(0), way.get(way.size() - 1));
+        return eatenChecks;
     }
 
     /**
@@ -151,7 +224,7 @@ public class GameService {
         for (Cell cell : field) {
             if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && !cell.getCheck().isKing()) {
-                List<List<Cell>> possibleWays = scm.getPossibleAttacksToSimpleCheck(cell, game);
+                List<List<Cell>> possibleWays = getPossibleAttacksToSimpleCheck(cell, game);
                 if (possibleWays.size() > 0) {
                     attacks.put(cell, possibleWays);
                 }
@@ -159,7 +232,7 @@ public class GameService {
 
             if (cell.getCheck() != null && game.getCurrentPlayer().hasCheck(cell.getCheck())
                     && cell.getCheck().isKing()) {
-                List<List<Cell>> possibleWays = kms.getPossibleAttacksToKing(cell, game);
+                List<List<Cell>> possibleWays = getPossibleAttacksToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     attacks.put(cell, possibleWays);
                 }
@@ -169,7 +242,7 @@ public class GameService {
                     && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
 
-                List<List<Cell>> possibleWays = scm.getPossibleWaysToSimpleCheck(cell, game);
+                List<List<Cell>> possibleWays = getPossibleWaysToSimpleCheck(cell, game);
                 if (possibleWays.size() > 0) {
                     steps.put(cell, possibleWays);
                 }
@@ -178,7 +251,7 @@ public class GameService {
             if (cell.hasCheck() && cell.getCheck().isKing()
                     && game.getCurrentPlayer().hasCheck(cell.getCheck()) &&  attacks.size() == 0) {
 
-                List<List<Cell>> possibleWays = kms.getPossibleWaysToKing(cell, game);
+                List<List<Cell>> possibleWays = getPossibleWaysToKing(cell, game);
                 if (possibleWays.size() > 0) {
                     steps.put(cell, possibleWays);
                 }
