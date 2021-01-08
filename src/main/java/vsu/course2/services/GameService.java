@@ -383,7 +383,8 @@ public class GameService {
         TwoDimensionalDirection[] directions = {TwoDimensionalDirection.DOWN_LEFT,
                 TwoDimensionalDirection.DOWN_RIGHT,
                 TwoDimensionalDirection.UP_RIGHT,
-                TwoDimensionalDirection.UP_LEFT};
+                TwoDimensionalDirection.UP_LEFT
+        };
 
         for (TwoDimensionalDirection direction : directions) {
             List<Cell> way = fs.getWayToBoard(cell, direction, game.getField());
