@@ -19,13 +19,31 @@ public class FieldService {
         Graph<Cell> field = new Graph<>();
         for (int i = 0; i < h - 1; i++) {
             for (int j = i % 2 == 0 ? 0 : 1; j < w; j += 2) {
-                if (j == 0) {
-                    field.addEdge(new Cell(j, i), new Cell(j + 1, i + 1));
-                } else if (j == w - 1) {
-                    field.addEdge(new Cell(j, i), new Cell(j - 1, i + 1));
-                } else {
-                    field.addEdge(new Cell(j, i), new Cell(j + 1, i + 1));
-                    field.addEdge(new Cell(j, i), new Cell(j - 1, i + 1));
+                try {
+                    Cell first = field.hasVertex(new Cell(j, i)) ? field.getVertex(new Cell(j, i)) : new Cell(j, i);
+                    if (j == 0) {
+                        Cell second = field.hasVertex(new Cell(j + 1, i + 1)) ?
+                                field.getVertex(new Cell(j + 1, i + 1))
+                                    : new Cell(j + 1, i + 1);
+                        field.addEdge(first, second);
+                    } else if (j == w - 1) {
+                        Cell second = field.hasVertex(new Cell(j - 1, i + 1)) ?
+                                field.getVertex(new Cell(j - 1, i + 1))
+                                : new Cell(j +-1, i + 1);
+                        field.addEdge(first, second);
+                    } else {
+                        Cell second = field.hasVertex(new Cell(j + 1, i + 1)) ?
+                                field.getVertex(new Cell(j + 1, i + 1))
+                                : new Cell(j + 1, i + 1);
+
+                        Cell third = field.hasVertex(new Cell(j - 1, i + 1)) ?
+                                field.getVertex(new Cell(j - 1, i + 1))
+                                : new Cell(j +-1, i + 1);
+                        field.addEdge(first, second);
+                        field.addEdge(first, third);
+                    }
+                } catch (GraphException e) {
+                    e.printStackTrace();
                 }
             }
         }

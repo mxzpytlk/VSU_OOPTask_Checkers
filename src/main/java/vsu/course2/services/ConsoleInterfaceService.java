@@ -5,6 +5,7 @@ import vsu.course2.models.game.Player;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
+import vsu.course2.models.game.json.JsonService;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
+
 
 /**
  * Service which present checkers game in console.
@@ -59,11 +61,10 @@ public class ConsoleInterfaceService {
      * @throws IOException
      */
     private Game loadGame(String[] args) throws IOException {
-        Gson gson = new Gson();
         String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
         String JSONGame = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)
                 .reduce("", (prev, cur) -> prev + "" + cur);
-        return gson.fromJson(JSONGame, Game.class);
+        return new JsonService<Game>().deserialize(JSONGame, Game.class);
     }
 
     /**
@@ -74,8 +75,7 @@ public class ConsoleInterfaceService {
     private void saveGame(Game game, String[] args) {
         String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
 
-        Gson gson = new Gson();
-        String JSONGame = gson.toJson(game);
+        String JSONGame = new JsonService<Game>().serialize(game);
         try {
             FileWriter fw = new FileWriter(fileName);
             fw.write(JSONGame);

@@ -8,6 +8,7 @@ import vsu.course2.models.game.field.Field;
 import java.util.*;
 
 import static java.lang.Math.abs;
+import static vsu.course2.utills.Cloner.makeClone;
 
 public class GameService {
     private final FieldService fs = new FieldService();
@@ -352,7 +353,7 @@ public class GameService {
     }
 
     private List<List<Cell>> getPossibleAttacksToSimpleCheck(Cell cell, Game game) {
-        List<List<Cell>> ways = new ArrayList<>();
+        List<List<Cell>> ways = new LinkedList<>();
         Field field = game.getField();
 
         for (Cell neighbour : fs.neighbours(cell, game.getField())) {
@@ -375,7 +376,28 @@ public class GameService {
                 e.printStackTrace();
             }
         }
-        return ways;
+
+        List<List<Cell>> finalWays = new LinkedList<>();
+
+        for (List<Cell> way : ways) {
+            Game newGame = (Game) makeClone(game);
+
+            try {
+                attackCheckers(newGame, way);
+                newGame.changeTurnOrder();
+                List<List<Cell>> newWays = getPossibleAttacksToSimpleCheck(way.get(way.size() - 1), newGame);
+                for (List<Cell> newWay : newWays) {
+                    List<Cell> addedWay = new LinkedList<>(way);
+                    addedWay.addAll(newWay.subList(1, newWay.size() - 1));
+                    finalWays.add(addedWay);
+                }
+            } catch (GameProcessException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return finalWays;
     }
 
     private List<List<Cell>> getPossibleWaysToKing(Cell cell, Game game) {

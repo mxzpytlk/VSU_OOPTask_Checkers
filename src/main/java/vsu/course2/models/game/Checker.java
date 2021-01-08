@@ -19,8 +19,8 @@ public class Checker {
         this.ID = (int) (Math.random() * Integer.MAX_VALUE);
     }
 
-    public int getID() {
-        return ID;
+    public Checker(int ID) {
+        this.ID = ID;
     }
 
     @Override

@@ -12,6 +12,15 @@ public class Graph<T> implements Iterable<T> {
         return vEdjLists.size();
     }
 
+    public boolean hasVertex(T vertex) {
+        for (List<T> edj : vEdjLists) {
+            if (edj.get(0).equals(vertex)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int edgeCount() {
         return eCount;
     }
