@@ -1,17 +1,13 @@
 package vsu.course2.services;
 
-import vsu.course2.models.game.Player;
-import vsu.course2.models.game.exceptions.CellNotExistException;
-import vsu.course2.models.game.field.Cell;
-import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
-import vsu.course2.services.json.JsonService;
+import vsu.course2.services.console.IConsoleGameConsumer;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Scanner;
+
+import static vsu.course2.services.console.ConsoleCommand.getCommandByName;
 
 
 /**
@@ -19,17 +15,14 @@ import java.util.*;
  */
 public class ConsoleInterfaceService {
     private final GameService gs = new GameService();
-    private final ArtificialIntelligenceService ais = new ArtificialIntelligenceService();
-    private final FieldService fs = new FieldService();
-
 
     /**
      * Show game process from start to end by step in console.
      * @param game Current game
      */
-    public void startGame(Game game) throws IOException {
+    public void startGame(Game game) {
         Scanner scn = new Scanner(System.in);
-        drawField(game);
+        ((IConsoleGameConsumer) (game1, args) -> null).drawField(game);
         while (!gs.gameOver(game)) {
             String[] inputArr = scn.nextLine().split("\\s+");
             String command = "";
@@ -41,117 +34,7 @@ public class ConsoleInterfaceService {
                 }
             }
 
-            switch (command) {
-                case "save":
-                    saveGame(game, args);
-                    break;
-                case "load":
-                    game = loadGame(args);
-                    drawField(game);
-                    break;
-                case "steps":
-                    shawSteps(game, args);
-                    break;
-                default:
-                    ais.makeStep(game);
-                    drawField(game);
-                    break;
-            }
+            game = getCommandByName(command).getConsumer().consume(game, args);
         }
-    }
-
-    /**
-     * Load game from JSON.
-     * @param args Load command arguments. First argument is fileName which is in directory src/main/resources/.
-     * @return Game from JSON format.
-     * @throws IOException
-     */
-    private Game loadGame(String[] args) throws IOException {
-        String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
-        String JSONGame = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)
-                .reduce("", (prev, cur) -> prev + "" + cur);
-        return new JsonService<Game>().deserialize(JSONGame, Game.class);
-    }
-
-    /**
-     * Save game in JSON file;
-     * @param game Current game.
-     * @param args Save command arguments. First argument is fileName which is in directory src/main/resources/.
-     */
-    private void saveGame(Game game, String[] args) {
-        String fileName = "src/main/resources/" + (args.length == 0 ? "game.json" : args[0]);
-
-        String JSONGame = new JsonService<Game>().serialize(game);
-        try {
-            FileWriter fw = new FileWriter(fileName);
-            fw.write(JSONGame);
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void shawSteps(Game game, String[] args) {
-        try {
-            int letter = Integer.parseInt(args[0]);
-            int number = Integer.parseInt(args[1]);
-            List<List<Cell>> possibleWays = gs.getPossibleWays(game).get(fs.getCell(letter, number, game.getField()));
-            List<Cell> markedCells = new LinkedList<>();
-            for (List<Cell> way : possibleWays) {
-                markedCells.addAll(way);
-            }
-            drawField(game, markedCells);
-        } catch (CellNotExistException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void drawField(Game game) {
-        drawField(game, new ArrayList<>());
-    }
-
-    /**
-     * Draw game field in current state.
-     * @param game Current game.
-     */
-    private void drawField(Game game, List<Cell> markedCells) {
-        char[][] desk = new char[8][8];
-        Field field = game.getField();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                try {
-                    desk[i][j] = (i + j) % 2 == 0 ?
-                            (markedCells.contains(fs.getCell(j, i, field)) ? 'x' : '\u009f')
-                            : ' ';
-                } catch (CellNotExistException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        Player firstPlayer = game.getPlayers()[0];
-        for (Cell cell : field) {
-            if (cell.hasCheck()) {
-                if (firstPlayer.hasCheck(cell.getCheck())) {
-                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u25CF';
-                } else {
-                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u0BE6' : '\u06DE';
-                }
-            }
-        }
-
-        for (int i = game.getField().getHeight() - 1; i >= 0; i--) {
-            for (int j = 0; j < game.getField().getWidth(); j++) {
-                System.out.print(desk[i][j]);
-            }
-            System.out.println();
-        }
-
-        for (int i = 0; i < 30; i++) {
-            System.out.print("-");
-        }
-        System.out.println();
     }
 }

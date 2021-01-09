@@ -23,18 +23,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="Реализовано движение дамки">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/become_king_and_attack.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/ConsoleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameContinuer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameSaver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/IConsoleGameConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/StepsShower.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/json/FieldDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/json/FieldDeserializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/models/game/json/JsonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/json/JsonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/utills/CloneService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/utills/CloneService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/attack_several_by_simple.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/attack_several_by_simple.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/attack_several_by_simple.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/attack_several_by_simple.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/json/FieldDeserializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/models/game/json/JsonService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/utills/CloneService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/utills/CloneService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +43,7 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -102,6 +100,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -142,7 +153,7 @@
       <workItem from="1610077516861" duration="8034000" />
       <workItem from="1610115849846" duration="2335000" />
       <workItem from="1610151310189" duration="572000" />
-      <workItem from="1610225651255" duration="1448000" />
+      <workItem from="1610225651255" duration="6661000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>
@@ -311,15 +322,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Реализовано движение дамки" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="vsu.course2.models.game.field.Field" memberName="field" />
