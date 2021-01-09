@@ -1,4 +1,4 @@
-package vsu.course2.models.game.json;
+package vsu.course2.services.json;
 
 import com.google.gson.*;
 import vsu.course2.models.game.Checker;

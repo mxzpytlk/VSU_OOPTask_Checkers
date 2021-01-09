@@ -333,7 +333,8 @@ public class GameService {
 
                     ways.add(Arrays.asList(cell, fs.getCell(cell.getLetter() - direction.getVerticalCoef(),
                             cell.getNumber() + direction.getVerticalCoef(), field)));
-                } else if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
+                }
+                if(abs(playerStartPoint.getLetter() - cell.getLetter()) != field.getHeight() -  1 &&
                         !fs.getCell(cell.getLetter() + direction.getVerticalCoef(), cell.getNumber()
                                 + direction.getVerticalCoef(), field).hasCheck()) {
 

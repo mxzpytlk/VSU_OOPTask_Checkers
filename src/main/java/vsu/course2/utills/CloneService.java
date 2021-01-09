@@ -1,6 +1,6 @@
 package vsu.course2.utills;
 
-import vsu.course2.models.game.json.JsonService;
+import vsu.course2.services.json.JsonService;
 
 public class CloneService<T> {
     public T makeClone(T o) {

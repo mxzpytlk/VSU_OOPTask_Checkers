@@ -1,17 +1,17 @@
 package vsu.course2.services;
 
 import vsu.course2.models.game.Player;
+import vsu.course2.models.game.exceptions.CellNotExistException;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.models.game.Game;
-import vsu.course2.models.game.json.JsonService;
+import vsu.course2.services.json.JsonService;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -20,6 +20,7 @@ import java.util.Scanner;
 public class ConsoleInterfaceService {
     private final GameService gs = new GameService();
     private final ArtificialIntelligenceService ais = new ArtificialIntelligenceService();
+    private final FieldService fs = new FieldService();
 
 
     /**
@@ -34,21 +35,27 @@ public class ConsoleInterfaceService {
             String command = "";
             String[] args = new String[0];
             if (inputArr.length > 0) {
-                command = inputArr[0];
+                command = inputArr[0].toLowerCase(Locale.ROOT);
                 if (inputArr.length > 1) {
                     args = Arrays.copyOfRange(inputArr, 1, inputArr.length);
                 }
             }
 
-            if (command.equals("save")) {
-                saveGame(game, args);
-            } else if (command.equals("load")) {
-                game = loadGame(args);
-                drawField(game);
-            }
-            else {
-                ais.makeStep(game);
-                drawField(game);
+            switch (command) {
+                case "save":
+                    saveGame(game, args);
+                    break;
+                case "load":
+                    game = loadGame(args);
+                    drawField(game);
+                    break;
+                case "steps":
+                    shawSteps(game, args);
+                    break;
+                default:
+                    ais.makeStep(game);
+                    drawField(game);
+                    break;
             }
         }
     }
@@ -84,24 +91,51 @@ public class ConsoleInterfaceService {
         }
     }
 
+    private void shawSteps(Game game, String[] args) {
+        try {
+            int letter = Integer.parseInt(args[0]);
+            int number = Integer.parseInt(args[1]);
+            List<List<Cell>> possibleWays = gs.getPossibleWays(game).get(fs.getCell(letter, number, game.getField()));
+            List<Cell> markedCells = new LinkedList<>();
+            for (List<Cell> way : possibleWays) {
+                markedCells.addAll(way);
+            }
+            drawField(game, markedCells);
+        } catch (CellNotExistException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void drawField(Game game) {
+        drawField(game, new ArrayList<>());
+    }
+
     /**
      * Draw game field in current state.
      * @param game Current game.
      */
-    private void drawField(Game game) {
+    private void drawField(Game game, List<Cell> markedCells) {
         char[][] desk = new char[8][8];
+        Field field = game.getField();
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                desk[i][j] = (i + j) % 2 == 0 ? '\u009f' : ' ';
+                try {
+                    desk[i][j] = (i + j) % 2 == 0 ?
+                            (markedCells.contains(fs.getCell(j, i, field)) ? 'x' : '\u009f')
+                            : ' ';
+                } catch (CellNotExistException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        Field field = game.getField();
         Player firstPlayer = game.getPlayers()[0];
         for (Cell cell : field) {
             if (cell.hasCheck()) {
                 if (firstPlayer.hasCheck(cell.getCheck())) {
-                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u2741';
+                    desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u229B' : '\u25CF';
                 } else {
                     desk[cell.getNumber()][cell.getLetter()] = !cell.getCheck().isKing() ? '\u0BE6' : '\u06DE';
                 }
