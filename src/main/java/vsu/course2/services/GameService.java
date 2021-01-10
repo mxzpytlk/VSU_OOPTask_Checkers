@@ -57,64 +57,17 @@ public class GameService {
      * @return True if current player can attack enemy.
      */
     private boolean playerCanHitEnemy(Game game) {
-        return playerCanHitEnemyBySimpleCheck(game) || playerCanHitEnemyByKing(game);
-    }
-
-    private boolean playerCanHitEnemyByKing(Game game) {
-        //TODO
-        return playerCanHitEnemyBySimpleCheck(game) ;
-    }
-
-    /**
-     * Check if current player have simple check, which could attack enemy check.
-     * @param game Current game.
-     * @return True if current player have simple check, which could attack enemy check.
-     */
-    private boolean playerCanHitEnemyBySimpleCheck(Game game) {
+        var allWaysForCells = new LinkedList<>(getPossibleWays(game).values());
+        var possibleWay = allWaysForCells.get(0).get(0);
         try {
-            if (checkPlayerCanHitBySimple(game)) return true;
-        } catch (GameProcessException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if current player have simple check, which could attack enemy check.
-     * @param game Current game.
-     * @return True if current player have simple check, which could attack enemy check.
-     * @throws CellNotExistException Thrown if method implementation had logic mistakes.
-     */
-    private boolean checkPlayerCanHitBySimple(Game game) throws CellNotExistException {
-        Field field = game.getField();
-        Player curPlayer = game.getCurrentPlayer();
-        Cell playerStartPoint = game.getCurrentPlayer().getStartPoint();
-        TwoDimensionalDirection leftDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(fs.getCell(0, 0, field)) ?
-                TwoDimensionalDirection.UP_LEFT : TwoDimensionalDirection.DOWN_RIGHT;
-        TwoDimensionalDirection rightDirection = game.getCurrentPlayer().getStartPoint()
-                .equals(fs.getCell(0, 0, field)) ?
-                TwoDimensionalDirection.UP_RIGHT : TwoDimensionalDirection.DOWN_LEFT;
-
-        for (Cell cell : field) {
-            if (cell.hasCheck() && curPlayer.hasCheck(cell.getCheck())
-                    && abs(cell.getNumber() - playerStartPoint.getNumber()) < field.getHeight() - 2) {
-                if (abs(playerStartPoint.getLetter() - cell.getLetter()) > 1 &&
-                        checkOnNextCellExist(game, cell, leftDirection) &&
-                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, leftDirection).getCheck()) &&
-                        !fs.getCell(cell.getLetter() + 2 * leftDirection.getHorizontalCoef(),
-                                cell.getNumber() + 2 * leftDirection.getVerticalCoef(), field).hasCheck()) {
-                    return true;
-                } else if (abs(cell.getLetter() - playerStartPoint.getLetter()) < field.getWidth() - 2 &&
-                        checkOnNextCellExist(game, cell, rightDirection) &&
-                        game.getEnemyPlayer().hasCheck(getNextCell(game, cell, rightDirection).getCheck()) &&
-                        !fs.getCell(cell.getLetter() + 2 * rightDirection.getHorizontalCoef(),
-                                cell.getNumber() + 2 * rightDirection.getVerticalCoef(), field).hasCheck()) {
+            ;
+            for (Cell cell : fs.getWayBetweenCells(game.getField(), possibleWay.get(0), possibleWay.get(1))) {
+                if (cell.hasCheck()) {
                     return true;
                 }
-
             }
+        } catch (GameProcessException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -132,21 +85,6 @@ public class GameService {
         Field field = game.getField();
         return fs.getCell(curCell.getLetter() + direction.getHorizontalCoef(),
                 curCell.getNumber() + direction.getVerticalCoef(), field);
-    }
-
-    /**
-     * Check if enemy checks next cell in direction exist.
-     * @param game Current game.
-     * @param curCell Cell which is checked.
-     * @param direction Direction, where function check checker existing.
-     * @return True, if check on next cell exist .
-     */
-    public boolean checkOnNextCellExist(Game game, Cell curCell, TwoDimensionalDirection direction) {
-        try {
-            return getNextCell(game, curCell, direction).hasCheck();
-        } catch (CellNotExistException e) {
-            return false;
-        }
     }
 
     /**
@@ -256,8 +194,6 @@ public class GameService {
                 cell.removeCheck();
             }
         }
-
-
 
         game.getEnemyPlayer().removeCheck(eatenChecks.toArray(new Checker[0]));
         fs.moveChecker(field, way.get(0), way.get(way.size() - 1));

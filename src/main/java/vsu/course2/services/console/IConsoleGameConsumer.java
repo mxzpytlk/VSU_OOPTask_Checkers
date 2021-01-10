@@ -31,8 +31,8 @@ public interface IConsoleGameConsumer {
             for (int j = 0; j < 8; j++) {
                 try {
                     desk[i][j] = (i + j) % 2 == 0 ?
-                            (markedCells.contains(fs.getCell(j, i, field)) ? 'x' : ' ')
-                            : '\u2588';
+                            (markedCells.contains(fs.getCell(j, i, field)) ? 'x' : '\u009f')
+                            : ' ';
                 } catch (CellNotExistException e) {
                     e.printStackTrace();
                 }
