@@ -7,7 +7,7 @@ import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
 import vsu.course2.services.ArtificialIntelligenceService;
 import vsu.course2.services.FieldService;
-import vsu.course2.services.GameService;
+import vsu.course2.services.game.GameService;
 
 import java.util.ArrayList;
 import java.util.List;

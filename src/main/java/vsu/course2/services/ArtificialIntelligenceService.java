@@ -6,6 +6,7 @@ import vsu.course2.models.game.exceptions.CellsAreNotOnDirectLineException;
 import vsu.course2.models.game.exceptions.GameProcessException;
 import vsu.course2.models.game.field.Cell;
 import vsu.course2.models.game.field.Field;
+import vsu.course2.services.game.GameService;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -2,6 +2,7 @@ package vsu.course2.services;
 
 import vsu.course2.models.game.Game;
 import vsu.course2.services.console.IConsoleGameConsumer;
+import vsu.course2.services.game.GameService;
 
 import java.util.Arrays;
 import java.util.Locale;
