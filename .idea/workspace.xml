@@ -23,15 +23,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dedd44b4-caf1-467d-80b0-946664a18b11" name="Default Changelist" comment="Реализовано движение дамки">
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/ConsoleCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameContinuer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameSaver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/IConsoleGameConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/StepsShower.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/CheckMover.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/GameAttacker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/ConsoleInterfaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/ConsoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/ConsoleCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/IConsoleGameConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vsu/course2/services/console/IConsoleGameConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/become_king_and_attack.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/become_king_and_attack.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/become_king_and_attack.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/become_king_and_attack.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/game.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/ConsoleInterfaceService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/console/ConsoleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/console/ConsoleCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/vsu/course2/services/console/IConsoleGameConsumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/vsu/course2/services/console/IConsoleGameConsumer.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +45,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -100,15 +103,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -153,7 +154,8 @@
       <workItem from="1610077516861" duration="8034000" />
       <workItem from="1610115849846" duration="2335000" />
       <workItem from="1610151310189" duration="572000" />
-      <workItem from="1610225651255" duration="6661000" />
+      <workItem from="1610225651255" duration="11380000" />
+      <workItem from="1610278060739" duration="3124000" />
     </task>
     <task id="LOCAL-00001" summary="Add cells to field and checkers">
       <created>1601884485687</created>

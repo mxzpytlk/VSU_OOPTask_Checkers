@@ -34,7 +34,7 @@ public class ConsoleInterfaceService {
                 }
             }
 
-            game = getCommandByName(command).getConsumer().consume(game, args);
+            game = getCommandByName(command).consume(game, args);
         }
     }
 }

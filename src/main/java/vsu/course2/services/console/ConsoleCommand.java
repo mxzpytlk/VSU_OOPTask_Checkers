@@ -1,9 +1,13 @@
 package vsu.course2.services.console;
 
+import vsu.course2.models.game.Game;
+
 public enum ConsoleCommand {
     SAVE("save", new GameSaver()),
     LOAD("load", new GameLoader()),
     STEPS("steps", new StepsShower()),
+    MOVE("move", new CheckMover()),
+    ATTACK("attack", new GameAttacker()),
     CONTINUE("continue", new GameContinuer());
 
 
@@ -24,7 +28,7 @@ public enum ConsoleCommand {
         return CONTINUE;
     }
 
-    public IConsoleGameConsumer getConsumer() {
-        return consumer;
+    public Game consume(Game game, String[] args) {
+        return consumer.consume(game, args);
     }
 }
